@@ -1,4 +1,4 @@
-# Introduction
+# Automated checking
 
 **Learning objectives:**
 

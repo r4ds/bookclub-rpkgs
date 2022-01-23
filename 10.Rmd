@@ -1,4 +1,4 @@
-# Introduction
+# Object documentation
 
 **Learning objectives:**
 

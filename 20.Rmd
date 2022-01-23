@@ -1,4 +1,4 @@
-# Introduction
+# Releasing a package
 
 **Learning objectives:**
 
