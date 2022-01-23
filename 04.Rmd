@@ -1,4 +1,4 @@
-# Introduction
+# Package structure and state
 
 **Learning objectives:**
 

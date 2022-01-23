@@ -1,4 +1,4 @@
-# Introduction
+# R code
 
 **Learning objectives:**
 

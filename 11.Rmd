@@ -1,4 +1,4 @@
-# Introduction
+# Vignettes: long-form documentation
 
 **Learning objectives:**
 

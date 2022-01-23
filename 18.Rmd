@@ -1,4 +1,4 @@
-# Introduction
+# Git and GitHub
 
 **Learning objectives:**
 

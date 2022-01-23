@@ -1,4 +1,4 @@
-# Introduction
+# The package within
 
 **Learning objectives:**
 
