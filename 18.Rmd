@@ -1,3 +1,5 @@
+# (PART) Sharing with others {-}
+
 # Git and GitHub
 
 **Learning objectives:**
