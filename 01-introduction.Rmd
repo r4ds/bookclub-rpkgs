@@ -16,7 +16,7 @@
    * A package opens up the use of several workflow packages/tools.
    
 * R packages can be defined by their structure:
-   * What will be discussed throughout the book club
+   * Discussed throughout the book club
    * At its core, packages are defined by the conventions of how files and directories are organized: `\R`; `DESCRIPTION` file; `\tests`; `\data`; etc. 
    * [Packaging Data Analytical Work Reproducibly Using R (and Friends)](https://www.tandfonline.com/doi/abs/10.1080/00031305.2017.1375986)
 
@@ -44,8 +44,8 @@ help(package = "x")
 * Saves yourself and your team's time.
 * Opens up the use of several tools to more efficiently write code.
 * Defines a formal organizational structure of where to put things. 
-* Allows us to develop more robust, rigorous analyses
-* Helps us write better code
+* Allows us to develop more robust, rigorous, reproducible analyses.
+* Helps us write better code.
 
 ## Philosophy behind the tools of R Package development
 
