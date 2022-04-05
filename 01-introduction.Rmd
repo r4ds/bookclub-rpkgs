@@ -1,0 +1,94 @@
+# (PART) Getting started {-}
+
+# Introduction
+
+**Learning objectives:**
+
+* Explain the book club format
+* Define the term R package
+* Describe the reasons behind why we should develop packages
+* Discuss the philosophy behind the use of the `devtools` and `usethis` package in package development.
+
+## What is an R package?
+
+* R packages can be defined based on their utility:
+   * A means to bundle code, data, documentation, and tests that can easily be shared with others. 
+   * A package opens up the use of several workflow packages/tools.
+   
+* R packages can be defined by their structure:
+   * Discussed throughout the book club
+   * At its core, packages are defined by the conventions of how files and directories are organized: `\R`; `DESCRIPTION` file; `\tests`; `\data`; etc. 
+   * [Packaging Data Analytical Work Reproducibly Using R (and Friends)](https://www.tandfonline.com/doi/abs/10.1080/00031305.2017.1375986)
+
+## Installing and using packages
+
+* Packages are available via [Comprehensive R Archive Network (CRAN)](https://cran.r-project.org/index.html)
+
+* Packages are also available via different public repos
+   - [GitHub is the most popular](https://github.com/).
+
+### Installing packages
+
+```{r install-packages, eval=FALSE}
+install.packages("x")
+library("x")
+
+# Getting help
+package?x
+help(package = "x")
+```
+
+## Why develop packages?
+
+* Allows us to more easily share and use code amongst the team and other collaborators.
+* Saves yourself and your team's time.
+* Opens up the use of several tools to more efficiently write code.
+* Defines a formal organizational structure of where to put things. 
+* Allows us to develop more robust, rigorous, reproducible analyses.
+* Helps us write better code.
+
+## Philosophy behind the tools of R Package development
+
+* Anything that can be automated, should be automated. 
+* Use functions for package development, avoid doing it by hand. 
+   - To do this, we need to learn the functions/workflow. 
+   - Our thinking should be on what we want the package to do, not on how to organize a package. 
+   - This is where the [`devtools`](https://devtools.r-lib.org/) and [`usethis`](https://usethis.r-lib.org/) package come into play. 
+   - Tools to insulate us from the low-level details of how packages are built.
+* `devtools` works nicely with RStudio, so that's the development environment we will use. 
+
+```{r install-devtools-usethis, eval=FALSE}
+install.packages(c("devtools", "usethis"))
+```
+
+## What if we need more detail?
+
+* The official manual is [Writing R Extensions](https://cran.r-project.org/doc/manuals/R-exts.html).
+   - This document is exhaustive. 
+
+## A note 
+
+* Don't get overwhelmed
+  - Some stuff you may never use.
+  - Remember, an R package at it's core is just an `R/` directory.
+  
+* You are not expected to know everything.
+  - We are all learning.
+  - None of us is as smart as all of us.
+  - It's okay to say "I don't know."
+  - We can stop at anytime to discuss.
+
+
+## Meeting Videos
+
+### Cohort 1
+
+`r knitr::include_url("https://www.youtube.com/embed/URL")`
+
+<details>
+<summary> Meeting chat log </summary>
+
+```
+LOG
+```
+</details>
