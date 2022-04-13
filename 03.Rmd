@@ -9,6 +9,8 @@
 
 ## Prepare your system
 
+To start the preparation of development environment, lets get our bearings.
+
 ```{r, How to check your R version, eval=TRUE}
 R.Version()
 
@@ -20,7 +22,7 @@ sessionInfo()
 
 Ok, that was fun, but the version check isn't in the book! We need to follow the author, right?
 
-Lets load some packages to prepare authoring some packages!
+Let's load some packages to prepare authoring some packages!
 
 ```{r, Prepare your system, eval=FALSE}
 install.packages(c("devtools", "roxygen2", "testthat", "knitr"))
@@ -30,7 +32,7 @@ install.packages(c("devtools", "roxygen2", "testthat", "knitr"))
 
 The author recommends increasing to the *Preview* version of RStudio Integrated Development Environment (IDE). We are considering outselves developers, right?
 
-- Usually this isn't needed or required for a common users (we're not common)
+- Usually this isn't needed or required for common users (we're not common)
 - It puts you in a position to be subject to bugs (not as many as the daily builds though)
 - [Preview version](https://www.rstudio.com/products/rstudio/download/preview/)
 - [Released version]( https://www.rstudio.com/products/rstudio/download/)
@@ -47,7 +49,7 @@ At some point in your development career...you will find you need to reorder to 
 - `{sessioninfo}`
 - `{usethis}`
 
-What is cool here, we already used of these packages!!!
+What is cool here, we already used one of these packages!!!
 
 You can think of devtools as a wrapper providing the ability to:
 
@@ -59,7 +61,7 @@ There is a difference in useRs and developeRs. They are:
 
 - useRs should attach devtools and think of it as the provider of your favorite functions for package development
 - developeRs should **NOT** depend on devtools, but should instead access functions via the package that is their primary home
-  - devtools should rarely appear in the role of foo in a qualified call of the form `foo::fcn()`. Instead, foo should be the package where `fcn()` is defined.
+  - devtools should rarely appear in the role of `foo` in a qualified call of the form `foo::fcn()`. Instead, `foo` should be the package where `fcn()` is defined.
   - An exception to this is that we continue to feature `devtools::install_github()` as the way to install the development version of a package in its README
 - If required, ensure you report bugs to each sub-package
 
@@ -86,12 +88,12 @@ library(devtools)
 
 Doing this everytime you restart your session gets old...quick! Lets be more efficient with our keystrokes.
 
-Lets edit our `.Rprofile` file. If it does not exist on your computer, you can run `use_devtools() to create it.
+Let's edit our `.Rprofile` file. If it does not exist on your computer, you can run `use_devtools()` to create it.
 
 The output of my command looks like this:
 
-```{r}
-> use_devtools()
+```{r, Example .Rprofile entry, eval=FALSE}
+use_devtools()
 • Include this code in '.Rprofile' to make devtools available in all interactive sessions.
   if (interactive()) {
     suppressMessages(require(devtools))
@@ -101,17 +103,19 @@ The output of my command looks like this:
 • Restart R for changes to take effect
 ```
 
-Caution, Warning, HUGE RED FLAG!!!! You are not Super-person yet!
+Caution, Warning, HUGE RED FLAG!!!! You are not a Super-person yet!
 
-In general, it’s a bad idea to attach packages in .Rprofile, as it invites you to create R scripts that don’t reflect all of their dependencies via explicit calls to library(foo). But devtools is a workflow package that smooths the process of package development and is, therefore, unlikely to get baked into any analysis scripts. Note how we still take care to only attach in interactive sessions.
+In general, it’s a bad idea to attach packages in .Rprofile, as it invites you to create R scripts that don’t reflect all of their dependencies via explicit calls to library(foo). But devtools is a workflow package that smooths the process of package development and is, therefore, unlikely to get baked into any analysis scripts.
+
+> Note how we still take care to only attach in interactive sessions.
 
 I may be too harsh. The following is a good example when `usethis` helps and can be added to your .Rprofile.
 
-```{r}
+```{r, Example R Code, eval=FALSE}
 options(
   usethis.full_name = "Jane Doe",
   usethis.description = list(
-    `Authors@R` = 'person("Jane", "Doe", email = "jane@example.com", role = c("aut", "cre"), 
+    `Authors@R` = 'person("Jane", "Doe", email = "jane@example.com", role = c("aut", "cre")), 
     comment = c(ORCID = "YOUR-ORCID-ID"))',
     License = "MIT + file LICENSE",
     Version = "0.0.0.9000"
@@ -150,7 +154,7 @@ If development is on a Mac, you will require Xcode.
 
 In shell/terminal run the following code:
 
-```{bash}
+```{bash, eval=FALSE}
 xcode-select --install
 ```
 
@@ -160,7 +164,7 @@ Alternatively, you can also download Xcode from the [Mac App Store](https://itun
 
 ### Linux
 
-Linux install is the simplist (dependent on your distro of choice and package manager).
+Linux install is the simplest (dependent on your distro of choice and package manager).
 
 Ensure you include the following:
 
@@ -169,7 +173,7 @@ Ensure you include the following:
 
 For example, on Ubuntu (and Debian):
 
-```{bash}
+```{bash, eval=FALSE}
 sudo apt-get update & upgrade
 sudo apt-get install r-base-dev package
 ```
