@@ -2,23 +2,140 @@
 
 **Learning objectives:**
 
-- THESE ARE NICE TO HAVE BUT NOT ABSOLUTELY NECESSARY
+- Convert implicit knowledge into the explicit knowledge to create and modify R packages
+- Learn about the various states a package
+- Identify the difference between a package and library
+- Understand the use of `.Rbuildignore`
 
-## SLIDE 1
+## Package states
 
-- ADD SLIDES AS SECTIONS (`##`).
-- TRY TO KEEP THEM RELATIVELY SLIDE-LIKE; THESE ARE NOTES, NOT THE BOOK ITSELF.
+- When you create or modify a package, you work on its *source code* or *source files*
+- You interact with the in-development package in its **source** form
 
-## Meeting Videos
+R Packages can be in five different states:
 
-### Cohort 1
+- source: Raw form, editable
+- bundled: Compressed to a single archive file (.tar)
+- binary: Compiled, OS Specific (Windows or Mac). It is implied Linux already has the ability to compile if required.
+- installed: Decompressed into a package library
+- in-memory: Explicitly referenced for use
 
-`r knitr::include_url("https://www.youtube.com/embed/URL")`
+Function calls like `install.packages()` and `devtools::install_github()` move a package from source, bundled, or binary states into the installed state. Functions like `library()` bring your package into memory for immediate use.
 
-<details>
-<summary> Meeting chat log </summary>
+## Source package
 
+- A **source** package is just a directory of files with a specific structure
+- **Source** package contains a `DESCRIPTION` file, and `R` directory containing `.R` files, etc...
+
+Some of our group have mentioned authoring or writing packages. Many, this is a new subject. Therefore you can view source files by first navigating to CRAN and by extension to its source repository. (Please correct me if my terminology is incorrect).
+
+Examples of CRAN landing page:
+
+- [forcats](https://cran.r-project.org/package=forcats)
+- [readxl](https://cran.r-project.org/package=readxl)
+
+Examples of GitHub/GitLab (or equivelent) version storage:
+
+- [forcats](https://github.com/tidyverse/forcats)
+- [readxl](https://github.com/tidyverse/readxl)
+
+> Note: Some maintainers fail to link their source repos. In this case, google is your friend!
+
+Even if a package is not developed on a public platform, you can visit its source in the [unofficial, read-only mirror maintained by R-hub](https://docs.r-hub.io/#cranatgh). 
+
+Examples:
+
+- [MASS](https://github.com/cran/MASS)
+- [car](https://github.com/cran/car)
+
+> Note: This mirror is not the same as exploring the package’s true development venue, because this source and its evolution is just reverse-engineered from the package’s CRAN releases.
+
+## Bundled package
+
+- A **bundled** package is a package that’s been compressed into a single file
+- By extension of Linux, **source tarballs** or `tar.gz` files
+  - Implying, source files and directories have been archived using the tar utility
+    - `.tar` stands for **T**ape **Ar**chive
+    - creates one file out of many files (with some compression)
+  - The files are fully compressed using `gzip` or *GNU Zip*
+    - gzip creates the `.gz` extension
+- a **bundled** package is not source nor installed, but rather, an OS-agnostic storage medium
+
+If you need to bundle a packege your developing, use `devtools::build()`. 
+
+*TLDR*: The `devtools::build()` calls `pkgbuild::build()` under the hood and ultimately `R CMD build`. For more information see [Building package tarballs](https://cran.r-project.org/doc/manuals/R-exts.html#Building-package-tarballs).
+
+All CRAN packages are available in *bundled* form and can be downloaded from their CRAN landing page.
+
+On Mac or Linux, run the following, from shell/terminal, to decompress and un-archive:
+
+```{bash, UnTar, eval=FALSE}
+tar xvf forcats_0.4.0.tar.gz
 ```
-LOG
+
+Quick explanation, you are calling on the `tar` utility. `-x` is *extract*, `-v` is *verbose* (show the output...makes you feel good to know something is happening), and `-f` is *filename*, uses the same filename as the archive.
+
+Windows users, I'm sorry, you're going to have to use some type of utility like 7-Zip, WinZip, or WinRAR to decompress and un-archive. Windows does not have a native utility to accomplish this action. (Feel welcome to share your PowerShell examples if I'm incorrect).
+
+> Note: A bit of research turns up, the `tar` utility was added to Windows 10, circa 2018. Earlier versions of Windows would require a third-party application.
+
+```{r package-files, echo = FALSE, out.width = "100%", fig.cap = "Side-by-side comparison of source, bundled, and binary package."}
+knitr::include_graphics("diagrams/package-files.png")
 ```
-</details>
+
+The main differences between a source package and an uncompressed bundle are:
+
+- Vignettes have been built, so rendered outputs, such as HTML, appear below `inst/doc/` and a vignette index appears in the `build/` directory, usually alongside a PDF package manual.
+
+- A local source package might contain temporary files used to save time during development, like compilation artifacts in `src/`. These are never found in a bundle.
+
+- Any files listed in `.Rbuildignore` are not included in the bundle. These are typically files that facilitate your development process, but that should be excluded from the distributed product.
+
+### .Rbuildignore
+It is rare to contemplate the `.tar.gz` structure. However, it ***IS*** important to understand the `.Rbuildignore` file.
+
+- `Rbuildignore` controls which files from the source package make it into the downstream forms
+  - The concept is similar to other `.*ignore` files.
+  - Exclude versus Include
+- Each line of `.Rbuildignore` is a Perl-compatible regular expression
+  - case insensitive
+  - if the regex matches, the file is excluded
+- You must **anchor** the regular expression
+  - for example `^notes$` will exclude any filename string containing *notes*.
+- a less specific (or more automated method) is to use `usethis::use_build_ignore("notes")`
+
+`Rbuildignore` is a means to compromise your development environment with CRAN's requirements.
+
+The affected files fall into two broad, semi-overlapping classes:
+
+- Files that help you generate package contents programmatically. Examples:
+  - Using README.Rmd to generate an informative and current README.md.
+  - Storing .R scripts to create and update internal or exported data.
+- Files that drive package development, checking, and documentation, outside of CRAN’s purview. Examples:
+  - Files relating to the RStudio IDE.
+  - Using the pkgdown package to generate a website.
+  - Configuration files related to continuous integration/deployment and monitoring test coverage.
+  
+A non-exhaustive list of typical entries in the .Rbuildignore file
+
+```{r, Non-Exhaustive list of .Rbuildignore entries, eval=FALSE}
+^.*\.Rproj$         # Designates the directory as an RStudio Project
+^\.Rproj\.user$     # Used by RStudio for temporary files
+^README\.Rmd$       # An Rmd file used to generate README.md
+^LICENSE\.md$       # Full text of the license
+^cran-comments\.md$ # Comments for CRAN submission
+^data-raw$          # Code used to create data included in the package
+^pkgdown$           # Resources used for the package website
+^_pkgdown\.yml$     # Configuration info for the package website
+^\.github$          # Contributing guidelines, CoC, issue templates, etc.
+```
+
+> Note: The commmented text above should not be included in the `Rbuildignore` file and are only used for explination of each entry.
+
+> Note: Remember that `usethis::use_build_ignore()` is an attractive way to manage this file.
+
+
+## Binary package
+## Installed package
+## In-memory package
+## Package libraries
