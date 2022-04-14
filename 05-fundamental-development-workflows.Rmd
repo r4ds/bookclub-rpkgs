@@ -1,0 +1,181 @@
+# Fundamental development workflows
+
+**Learning objectives:**
+
+- When and how to make an R package.
+- RStudio projects.
+- Why not to mess with your working directory.
+- Test driving code.
+
+
+## Survey the existing landscape
+
+- Be sure that the package doesn't overlap *too* much with existing packages: 
+  * Is there an existing package that does what you need?
+  * Could you contribute to a similar, existing package to add the functionality you need?
+  
+[List of packages on CRAN](https://cran.r-project.org/web/packages/available_packages_by_name.html)
+
+- Payoffs:
+  * Product: your life will be better when this functionality is implemented formally, in a package.
+  * Process: greater mastery of R will make you more effective in your work.
+
+## Considerations
+
+Ensure that the package fits in well within the domain of existing R packages.
+For modelling packages, using the [hardhat](https://hardhat.tidymodels.org/) package helps the developer use best practices and ensures that the resulting package can be used within the tidymodels ecosystem (and get used more). 
+
+You may also want to include consider including appropriate methods to be consistent with other related, packages. For example, many modelling packages have predict, plot, and summary methods, and users may expect this functionality from a new package that you create.
+
+
+## Naming your package
+
+See the naming convention used for existing packages:
+[List of packages on CRAN](https://cran.r-project.org/web/packages/available_packages_by_name.html)
+
+Laws:
+
+1. The name can only consist of letters, numbers, and periods, i.e., ..
+2. It must start with a letter.
+3. It cannot end with a period.
+
+(no underscores or hyphens)
+
+Recommendations:
+
+1. No periods.
+2. Easy to Google.
+3. Avoid confusion with an existing R package (not on CRAN/Bioconductor/GitHub) or well known package from other language (numpy, pandas)
+4. All lower case if possible.
+5. Abbreviations to reduce name length (brms = Bayesian Regression Models using Stan)
+6. Adding in capital R's for fun.
+7. Not getting sued (~~facebook~~ Rfacebook, ~~Dropbox~~ RDrop, ~~apple~~ appler)
+
+
+[Here](https://www.njtierney.com/post/2018/06/20/naming-things/) is a fun blog post on naming R packages by Nick Tierney. Also recommend checking out his package `greta` which is really cool and has useful example of using python (to access tensorflow) from R in a package. He also has a guide on [renaming an R package](https://www.njtierney.com/post/2017/10/27/change-pkg-name/)
+
+## Creating a new package
+
+- Call `usethis::create_package('yourPackageName')`
+- In RStudio, do File > New Project > New Directory > R Package. This ultimately calls usethis::create_package(), so really there’s just one way.
+
+(I prefer to use RStudio)
+
+### What does this do?
+
+This creates your project structure for you:
+
+- `R/` directory
+- `DESCRIPTION` file
+- `NAMESPACE` file
+- `pkgName.Rproj` file
+- `.Rbuildignore` & `.gitignore`
+
+DO NOT use package.skeleton() - it creates a package which will lead to errors when running `R CMD build` and is not consistent with the devtools style of development.
+
+
+### Where to put this package?
+This is distinct from where your R packages are installed. It makes sense to put this in a similar area to where you keep your other R projects.
+
+Within my `/user/documents/`, I have `R_projects/` and `R_pkgs/`
+
+## Using RStudio Projects
+
+You can use devtools without using RStudio and visa versa, but it's not as nice.
+
+### Benefits of RStudio Projects
+
+- Each project is isolated and code is contained within the project.
+- Easy to start up a project in a fresh instance of RStudio.
+- Useful features that we probably all already use from RStudio.
+- Keyboard shortcuts for common code development tasks (build, load, test, document, check)
+  * alt-shift-k for shortcuts
+
+### Make an R Project for an existing package
+
+If you already have an R package which isn't within an R Project, you can:
+
+- In RStudio, do File > New Project > Existing Directory.
+- Call `create_package()` with the path to the pre-existing R source package.
+- Call `usethis::use_rstudio()`, with the active usethis project set to an existing R package. In practice, this probably means you just need to make sure working directory is inside the pre-existing package.
+
+
+### R Project tidbits
+A directory for an R Project will have a `.Rproj` file, typically with the same name as the directory (and the package if the project is a package). It's best case for all of these names to be the same. (If you want to change the name, refer to that guide from Nick on [renaming an R package](https://www.njtierney.com/post/2017/10/27/change-pkg-name/).)
+
+This file is just a text file and you don't need to modify it by hand. I can't think of a reason why I'd need to but it's possible from 'Project Options...' in RStudio (drop down on top right).
+
+Launch an R Project by double clicking the `.Rproj` file or from within RStudio.
+
+
+## RStudio, `usethis` and working directories
+`usethis` functions don't take a path (i.e. `usethis::use_r("new_fx")`)
+
+`usethis` assumes that the following coincide:
+
+- The current RStudio Project.
+- The active usethis project.
+- Current working directory for the R process.
+
+It's therefore much easier to not mess with your working directory for your R console. Leave it as the project directory so that when you're calling functions from `usethis`, it puts things in the right place.
+
+You can double check that these three directories are coinciding by running:
+
+```{r}
+usethis::proj_sitrep()
+```
+
+
+Similarly, when you run helper functions from devtools to develop your package (`document()`, `check()`, `test()`), these are also expecting your working directory to be the project directory. The also expect that your project follows the conventions of project structure (test scripts living in `tests/`, R code living in `R/`, vignettes living in `vignettes/` compiled code living in `src/`, images living in `man/figures/` etc).
+
+
+## Test driving a package 
+
+![pkgload diagram](https://d33wubrfki0l68.cloudfront.net/0462d72ce5858871dbc2a9b72cecb32a0ad0237c/2daa4/diagrams/loading.png)
+
+### Using `load_all()`
+
+Running `load_all()` is the fastest way to re-load the functions in your package as if you had installed it and run `library(pkgName)`. It is *MUCH* faster than `install()` (especially if you have compiled code in the package).
+
+
+### Using `test()`
+
+Running `test()` runs `load_all()` and then the test files that live in `tests/testthat/`.  If you have a test file which captures the behaviour in the function that you desire, you can quickly assess whether the changes you make in the function have worked by running `test()`.
+
+
+### Coping with being impatient
+
+`check()` can take a long time and leave your console occupied. A solution to this is to run using the build tab (ctrl-shift-E) or as a separate job:
+
+`job::job({check()})`
+
+To test examples in your documentation without running `check()`:
+`run_examples()` 
+
+### My (bad) habit
+I like to have a `working_space.Rmd` in the package directory which I use to test package code away from the console. You'll get a NOTE on the check:
+
+> N  checking top-level files ...
+>
+>    Non-standard file/directory found at top level:
+>
+>      'working_space.Rmd'
+     
+But you could also add this to `.Rbuildignore` and/or `.gitignore`.
+
+It can be tricky to incorporate everything into a test script, and sometimes you may want to have a closer look at what's going on within a function. This can more easily be done by throwing some earlier `return()`s into your package functions, run `load_all()` to make them effective and then running code in your `working_space.Rmd` file.
+
+
+## Meeting Videos
+
+### Cohort 1
+
+`r knitr::include_url("https://www.youtube.com/embed/URL")`
+
+<details>
+<summary> Meeting chat log </summary>
+
+```
+LOG
+```
+</details>
