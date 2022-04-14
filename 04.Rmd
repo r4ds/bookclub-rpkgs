@@ -134,8 +134,10 @@ A non-exhaustive list of typical entries in the .Rbuildignore file
 
 > Note: Remember that `usethis::use_build_ignore()` is an attractive way to manage this file.
 
-
 ## Binary package
+
+
+
 ## Installed package
 ## In-memory package
 ## Package libraries
