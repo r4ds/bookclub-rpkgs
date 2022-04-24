@@ -1,12 +1,12 @@
 # The whole game
 
-### Learning objectives {-}
+**Learning objectives:**
 
-1. Overview the entire workflow for developing a package
-2. Observe the use of some common functions used in the package development workflow
-3. Understand the process to develop, document, and test a function
-4. Describe the process to install and experiment with the package's functions
-5. Discuss the role `git` and GitHub plays in the development of a package
+1. Become acquainted with the **entire workflow** for **developing a package.**
+2. Observe the use of **some common functions** used in the **package development workflow.**
+3. **Understand the process** to develop, document, and test a function.
+4. Describe the process to **install and experiment** with a package's functions.
+5. Discuss the roles **git and GitHub** play in the development of a package.
 
 ## Warmup/Ice breaker
 
@@ -18,19 +18,19 @@
    - If you have a question, most likely someone else will have the same question.
    - We are all here to learn.
 * Camera is optional, but encouraged.
-* Sessions are recorded and uploaded YouTube
-* The schedule and sign-up sheet can be found [here](https://docs.google.com/spreadsheets/d/188z71TbrgTtAWMAtKcwNXvtBhvCwqCvLO5F3hSYI1tM/edit#gid=0).
+* Sessions are recorded and uploaded YouTube.
+* See the pins in the Slack channel for the schedule and sign-ups.
 
 ## Load devtools and friends
 
-```{r load-devtools}
+```{r 02-load-devtools}
 library(devtools)
 
 # Check package version
 packageVersion("devtools")
 ```
 
-* Latest version is [2.4.3](https://github.com/r-lib/devtools/releases/tag/v2.4.3).
+* Latest version as of the writing of these notes is  [2.4.3](https://github.com/r-lib/devtools/releases/tag/v2.4.3).
 
 ## What types of functions/tools are used during package development?
 
@@ -112,7 +112,7 @@ packageVersion("devtools")
    - Any other resources?
 * Not a novel function. Used for demonstration purposes.
 
-```{r}
+```{r 02-simple-function, eval = FALSE}
 #' Create a file name with a date time prefix
 #' 
 #' @param file_name string A string element representing a file name
