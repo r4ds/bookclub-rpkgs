@@ -4,10 +4,10 @@
 
 **Learning objectives:**
 
-* Explain the book club format
-* Define the term R package
-* Describe the reasons behind why we should develop packages
-* Discuss the philosophy behind the use of the `devtools` and `usethis` package in package development.
+1. Explain the **book club format.**
+2. Explain **what** an **R package** is.
+3. Describe **why** we should **develop packages.**
+4. Discuss the philosophy behind the use of the **`devtools` and `usethis` packages** in **package development.**
 
 ## What is an R package?
 
@@ -29,7 +29,7 @@
 
 ### Installing packages
 
-```{r install-packages, eval=FALSE}
+```{r 01-install-packages, eval=FALSE}
 install.packages("x")
 library("x")
 
@@ -57,7 +57,7 @@ help(package = "x")
    - Tools to insulate us from the low-level details of how packages are built.
 * `devtools` works nicely with RStudio, so that's the development environment we will use. 
 
-```{r install-devtools-usethis, eval=FALSE}
+```{r 01-install-devtools-usethis, eval=FALSE}
 install.packages(c("devtools", "usethis"))
 ```
 
