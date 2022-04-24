@@ -80,11 +80,11 @@ packageVersion("devtools")
 
 * Diagram taken from Happy Git and GitHub for the useR
 
-![](images/fork-triangle-happy.png)
+![](images/02-the-whole-game/fork-triangle-happy.png)
    
 ### Basic workflow
 
-![](images/git-basic-workflow.png)
+![](images/02-the-whole-game/git-basic-workflow.png)
 
 ### Simplify this workflow
 
