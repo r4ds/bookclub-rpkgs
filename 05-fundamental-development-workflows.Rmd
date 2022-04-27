@@ -59,7 +59,7 @@ Recommendations:
 - Call `usethis::create_package('yourPackageName')`
 - In RStudio, do File > New Project > New Directory > R Package. This ultimately calls usethis::create_package(), so really there’s just one way.
 
-(I prefer to use RStudio)
+(I prefer to use RStudio - show using create_package from bash)
 
 ### What does this do?
 
@@ -96,9 +96,10 @@ You can use devtools without using RStudio and visa versa, but it's not as nice.
 If you already have an R package which isn't within an R Project, you can:
 
 - In RStudio, do File > New Project > Existing Directory.
-- Call `create_package()` with the path to the pre-existing R source package.
+- Call `usethis::create_package()` with the path to the pre-existing R source package.
 - Call `usethis::use_rstudio()`, with the active usethis project set to an existing R package. In practice, this probably means you just need to make sure working directory is inside the pre-existing package.
 
+(using `usethis::use_rstudio()` from bash fixes the problem of the other not being created)
 
 ### R Project tidbits
 A directory for an R Project will have a `.Rproj` file, typically with the same name as the directory (and the package if the project is a package). It's best case for all of these names to be the same. (If you want to change the name, refer to that guide from Nick on [renaming an R package](https://www.njtierney.com/post/2017/10/27/change-pkg-name/).)
@@ -135,7 +136,7 @@ Similarly, when you run helper functions from devtools to develop your package (
 
 ### Using `load_all()`
 
-Running `load_all()` is the fastest way to re-load the functions in your package as if you had installed it and run `library(pkgName)`. It is *MUCH* faster than `install()` (especially if you have compiled code in the package).
+Running `load_all()` is the fastest way to re-load the functions in your package as if you had installed it and run `library(pkgName)`. It is *MUCH* faster than `install()` (especially if you have compiled code in the package - show edits in DSSP).
 
 
 ### Using `test()`
@@ -161,7 +162,7 @@ I like to have a `working_space.Rmd` in the package directory which I use to tes
 >
 >      'working_space.Rmd'
      
-But you could also add this to `.Rbuildignore` and/or `.gitignore`.
+But you could also add this to `.Rbuildignore`/`.gitignore`.
 
 It can be tricky to incorporate everything into a test script, and sometimes you may want to have a closer look at what's going on within a function. This can more easily be done by throwing some earlier `return()`s into your package functions, run `load_all()` to make them effective and then running code in your `working_space.Rmd` file.
 
