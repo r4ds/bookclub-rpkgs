@@ -126,7 +126,7 @@ options(
 
 For history purposes (or at some point it may change....)
 
-```{r, Install DevTools and UseThis, eval=TRUE}
+```{r, Install DevTools and UseThis, eval=FALSE}
 devtools::install_github("r-lib/devtools")
 devtools::install_github("r-lib/usethis")
 ```

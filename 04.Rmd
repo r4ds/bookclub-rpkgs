@@ -80,7 +80,7 @@ Windows users, I'm sorry, you're going to have to use some type of utility like 
 > Note: A bit of research turns up, the `tar` utility was added to Windows 10, circa 2018. Earlier versions of Windows would require a third-party application.
 
 ```{r package-files, echo = FALSE, out.width = "100%", fig.cap = "Side-by-side comparison of source, bundled, and binary package."}
-knitr::include_graphics("diagrams/package-files.png")
+knitr::include_graphics("images/04/package-files.png")
 ```
 
 The main differences between a source package and an uncompressed bundle are:
@@ -150,7 +150,7 @@ A non-exhaustive list of typical entries in the .Rbuildignore file
  - Examples of downloading binary packages (image)
  
 ```{r, echo = FALSE, out.width = "100%", fig.cap = "Forcats CRAN Binary Download Options"}
-knitr::include_graphics("diagrams/Screen Shot 2022-04-20 at 5.19.02 PM.png")
+knitr::include_graphics("images/04/Screen Shot 2022-04-20 at 5.19.02 PM.png")
 ```
  
  - Ironically, this download process is exactly what is happening when you call `install.packages()`
@@ -221,7 +221,7 @@ knitr::include_graphics("diagrams/Screen Shot 2022-04-20 at 5.19.02 PM.png")
   - In the *REAL* world, it isn't as simple
   
 ```{r installation, echo = FALSE, out.width = "100%", fig.cap = "Many methods for converting between package states."}
-knitr::include_graphics("diagrams/installation.png")
+knitr::include_graphics("images/04/installation.png")
 ```
 
 The cool part of this process, and why this figure is important is, the `R CMD INSTALL` is the primary service for all forms of packaging. For more information check out [Installing packages section](https://cran.r-project.org/doc/manuals/R-admin.html#Installing-packages) of [Installing packages section](https://cran.r-project.org/doc/manuals/R-admin.html#Installing-packages).
