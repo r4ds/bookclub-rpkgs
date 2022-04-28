@@ -58,3 +58,7 @@ To present, follow these instructions:
 10. Open a Pull Request (PR) to let us know that your slides are ready.
 
 When your PR is checked into the main branch, the bookdown site will rebuild, adding your slides to [this site](https://r4ds.io/rpkgs).
+
+## Images
+
+If any static files are used in the `.Rmd` for a chapter, please add them into the directory `./images/<chapter_number>-<title_stub>/`. For example, to include images for the "02-the-whole-game" chapter, please place them in `./images/02-the-whole-game/`. Name files in a manner that is informative on what the image represents. 
