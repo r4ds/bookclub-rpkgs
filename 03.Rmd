@@ -182,9 +182,9 @@ Other Linux distributions may have alternative commands.
 
 ### Verify system prep
 
-To validate everying is installed or up to date, run the following:
+To validate everything is installed or up to date, run the following:
 
-```{r, Validation and Update if required, eval=TRUE}
+```{r, Validation and Update if required, eval=FALSE}
 devtools::dev_sitrep()
 ```
 
