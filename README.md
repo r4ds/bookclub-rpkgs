@@ -12,7 +12,7 @@ If you would like to present, please add your name next to a chapter using the [
 
 *Cohort 1 & 2 met using an old club style*
 
-*Cohort 3: DAY-TBD, TIME-TBD CST/CDT*
+*Cohort 3: Wednesdays, 8:00pm CDT*
 
 <details>
   <summary> Past Meetings </summary>
@@ -20,9 +20,23 @@ If you would like to present, please add your name next to a chapter using the [
 (none yet)
 </details>
 
-- YYYY-MM-DD: Introduction - Collin Berke
-- YYYY-MM-DD: Chapter 1 (TITLE) - Presenter TBD
-
+- 2022-03-29: Introduction; git; Chapter 1 (Introduction) - Collin Berke
+- 2022-04-06: Chapter 2 (The whole game) - Presenter TBD
+- 2022-04-13: Chapter 3 (System setup) & 4 (Package structure and state) - Presenter TBD
+- 2022-04-20: Chapter 5 (Fundamental development workflows) - Presenter TBD
+- 2022-04-27: Chapter 6 (The package within) - Presenter TBD
+- 2022-05-04: Chapter 7 (R code) - Presenter TBD
+- 2022-05-11: Chapter 8 (Package metadata) - Presenter TBD
+- 2022-05-18: Chapter 9 (Licensing) - Presenter TBD
+- 2022-05-25: Chapter 10 (Object documentation) - Presenter TBD
+- 2022-06-01: Chapter 11 (Vignettes: long-form documentation) - Presenter TBD
+- 2022-06-08: Chapter 12 (Testing) - Presenter TBD
+- 2022-06-15: Chapter 13 (Namespace) - Presenter TBD
+- 2022-06-22: Chapter 15 (Compiled code) - Presenter TBD
+- 2022-06-29: Chapter 14 (External data), Chapter 16 (Installed files), & Chapter 17 (Other components) - Presenter TBD
+- 2022-07-06: Chapter 18 (Git and GitHub) - Presenter TBD
+- 2022-07-13: Chapter 19 (Automated checking) - Presenter TBD
+- 2022-07-20: Chapter 20 (Releasing a package) - Presenter TBD
 
 <hr>
 
@@ -44,3 +58,7 @@ To present, follow these instructions:
 10. Open a Pull Request (PR) to let us know that your slides are ready.
 
 When your PR is checked into the main branch, the bookdown site will rebuild, adding your slides to [this site](https://r4ds.io/rpkgs).
+
+## Images
+
+If any static files are used in the `.Rmd` for a chapter, please add them into the directory `./images/<chapter_number>-<title_stub>/`. For example, to include images for the "02-the-whole-game" chapter, please place them in `./images/02-the-whole-game/`. Name files in a manner that is informative on what the image represents. 
