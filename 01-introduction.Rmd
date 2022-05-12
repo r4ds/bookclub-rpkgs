@@ -83,12 +83,33 @@ install.packages(c("devtools", "usethis"))
 
 ### Cohort 1
 
-`r knitr::include_url("https://www.youtube.com/embed/URL")`
+`r knitr::include_url("https://www.youtube.com/embed/QOmdmGMxl_Q")`
 
 <details>
 <summary> Meeting chat log </summary>
 
 ```
-LOG
+00:07:46	Rex:	Brisbane, Australia
+00:36:26	Collin Berke:	On a scale from 1 - 5, how familiar are you with using git for version control?
+00:36:51	Ryan Metcalf:	4
+00:36:52	Brendan Lam:	2
+00:36:52	Arun Chavan:	3
+00:36:53	Larissa Shaughnessy:	2
+00:36:54	Isabella Velásquez:	4
+00:36:57	Rex Parsons:	3
+00:37:19	Collin Berke:	On a scale from 1 - 5, how familiar are you with using GitHub?
+00:37:38	Rex Parsons:	4
+00:37:38	Arun Chavan:	4
+00:37:38	Isabella Velásquez:	5
+00:37:39	Brendan Lam:	2
+00:37:41	Larissa Shaughnessy:	3
+00:38:14	Collin Berke:	On a scale from 1 - 5, how valuable would it be to devote a week to introducing git and GitHub?
+00:38:29	Brendan Lam:	3
+00:38:31	Arun Chavan:	2
+00:38:35	Larissa Shaughnessy:	4
+00:38:35	Ryan Metcalf:	4
+00:38:36	Rex Parsons:	4
+00:38:48	Isabella Velásquez:	I am comfortable with Git, but if it’s valuable for the group!
+01:05:36	Rex Parsons:	Thanks, Collin!
 ```
 </details>

@@ -189,3 +189,23 @@ devtools::dev_sitrep()
 ```
 
 Update any packages based on recommendations.
+
+## Meeting Videos
+
+### Cohort 1
+
+`r knitr::include_url("https://www.youtube.com/embed/SEJmtdIWC-g")`
+
+<details>
+<summary> Meeting chat log </summary>
+
+```
+00:10:39	Ryan Metcalf:	20C = 68F. Awesome Temp!
+00:36:24	Brendan Lam:	12.3.1 is my version
+00:37:54	Larissa Shaughnessy:	This just made me realize I need to update from 12.2 so thanks Brendan!
+00:48:53	collinberke:	Package for styling your console messages: https://cli.r-lib.org/
+01:05:50	Arun Chavan:	Mac
+01:05:54	Isabella Velásquez:	Also Mac
+01:05:59	Larissa Shaughnessy:	Mac
+```
+</details>
