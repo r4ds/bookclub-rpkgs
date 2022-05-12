@@ -421,12 +421,16 @@ The locale in our timestamp is only temporarily modified with the `withr::with_l
 
 ### Cohort 1
 
-`r knitr::include_url("https://www.youtube.com/embed/URL")`
+`r knitr::include_url("https://www.youtube.com/embed/bsGCgJr60as")`
 
 <details>
 <summary> Meeting chat log </summary>
 
 ```
-LOG
+00:45:32	collinberke:	Check this out regarding side effects: https://withr.r-lib.org/articles/changing-and-restoring-state.html
+00:55:58	Arun Chavan:	https://rstats.wtf/
+00:58:05	Isabella Velásquez:	https://yihui.org/knitr/options/
+00:59:31	Arun Chavan:	+1 for knitr options because the tab autocompletion doesn’t work for them (at least for me)
+01:00:58	Brendan Lam:	I'm gonna try that
 ```
 </details>

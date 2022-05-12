@@ -318,3 +318,20 @@ The main levers that control which libraries are active:
 - Arguments to individual functions, like `install.packages(lib =)` and `library(lib.loc =)`.
 
 >NOTE: `library()` should NEVER be used inside a package. There are other mechinisims for declaring dependencies. We'll discuss this more in chapter 13.
+
+## Meeting Videos
+
+### Cohort 1
+
+`r knitr::include_url("https://www.youtube.com/embed/qXJOy8f9TCM")`
+
+<details>
+<summary> Meeting chat log </summary>
+
+```
+00:30:11	Isabella Velásquez:	RSPM: https://www.rstudio.com/products/package-manager/
+00:30:16	Isabella Velásquez:	and it’s called PyPI!
+01:04:57	Isabella Velásquez:	https://pypi.org/
+01:15:53	collinberke:	Microsoft’s capture of R Packages: https://mran.microsoft.com/documents/rro/reproducibility
+```
+</details>

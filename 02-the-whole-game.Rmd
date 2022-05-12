@@ -261,12 +261,16 @@ RoxygenNote: 7.1.2
 
 ### Cohort 1
 
-`r knitr::include_url("https://www.youtube.com/embed/URL")`
+`r knitr::include_url("https://www.youtube.com/embed/3vdXk_tYG-g")`
 
 <details>
 <summary> Meeting chat log </summary>
 
 ```
-LOG
+00:13:51	Ryan Metcalf:	I can get the ball rolling, I can try chapters 3 & 4.
+00:35:53	Ryan Metcalf:	Maybe load `use this`?
+00:44:13	Brendan Lam:	R4DS is my main reference for writing functions
+00:44:46	Rex :	looking at other packages source code - but those with s3/s4 methods I find trickier to decipher)
+00:47:27	Larissa Shaughnessy:	Collin I’m going to put something in the slack. I was digging through my docs for it while you were asking about resources - not sure if it gets into the complexity you are asking for but I do find the examples helpful
 ```
 </details>

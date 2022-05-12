@@ -171,12 +171,24 @@ It can be tricky to incorporate everything into a test script, and sometimes you
 
 ### Cohort 1
 
-`r knitr::include_url("https://www.youtube.com/embed/URL")`
+`r knitr::include_url("https://www.youtube.com/embed/Hg37VT-cWVM")`
 
 <details>
 <summary> Meeting chat log </summary>
 
 ```
-LOG
+00:25:44	Ryan Metcalf:	Mac: Opt->Shift->k
+00:32:09	Ryan Metcalf:	The first link wasn’t credible. There is a `{changer}` additional add in, that may aid in naming convention change.  https://cran.r-project.org/web/packages/changer/changer.pdf
+00:34:36	Isabella Velásquez:	here’s an article (by Nick Tierney!) on how to change package names (note, it is from 2017): https://www.njtierney.com/post/2017/10/27/change-pkg-name/
+00:57:23	Isabella Velásquez:	https://twitter.com/jayyqi/status/1228049523806617601?ref_src=twsrc%5Etfw%7Ctwcamp%5Etweetembed%7Ctwterm%5E1228049523806617601%7Ctwgr%5E%7Ctwcon%5Es1_&ref_url=https%3A%2F%2Fivelasq.rbind.io%2Fblog%2Fyou-cran-do-it%2F
+01:01:12	Brendan Lam:	This is helpful^ Thanks!
+01:01:44	Isabella Velásquez:	Is this what you are referring to? RMarkdown Driven Development (RmdDD) https://emilyriederer.netlify.app/post/rmarkdown-driven-development/
+01:03:25	collinberke:	Yes!
+01:04:04	collinberke:	https://www.youtube.com/watch?v=eMWgu9OQ0m8&list=PL3x6DOfs2NGiXMln8bxY7e0XgA5z1cp-8&index=4
+01:04:24	Isabella Velásquez:	Thanks!
+01:06:39	Ryan Metcalf:	https://www.rstudio.com/conference/
+01:06:49	Isabella Velásquez:	HAVE to
+01:10:21	Isabella Velásquez:	Here’s a video of Emily’s talk from a conf in the past : https://www.youtube.com/watch?v=B6YO5nW46SU
+01:16:22	Ryan Metcalf:	`git checkout -b  <name of your branch>`
 ```
 </details>
