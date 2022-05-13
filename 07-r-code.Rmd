@@ -2,9 +2,9 @@
 
 **Learning objectives:**
 
-- How to organize functions into files
-- Maintaining a consistent style
-- Understanding the difference between functions in a package versus in a script
+- **Organize functions** into files.
+- Maintain a **consistent coding style.**
+- Compare and contrast **functions in a package** versus **functions in a script.**
 
 ## Organise functions into files
 
