@@ -4,6 +4,8 @@
 
 - Understand the `DESCRIPTION` file and the most important package metadata
   - Declare dependencies with `Imports`, `Suggets`, `Depends`, `LinkingTo`, and `Enhances` fields
+- Add title, description, authors
+- Preview license, version
 
 ## `DESCRIPTION` File
 
@@ -137,15 +139,6 @@ test_that("basic plot builds without error", {
 })
 ```
 
-### How to write fields
-
-- Comma-separated
-- One package per line
-- Alphabetical
-- Add with `usethis::use_package(package, type = "Imports")` & `usethis::use_package(package, type = "Suggests")`
-- Use `usethis::use_tidy_description()` to put fields in standard order and alphabetize dependencies
-- Write minimum versions in parenthesis after package name `dplyr (>= 1.0.0)`. Make sure it is a *minimum* not an *exact* version.
-
 ### `Depends`
 
 Use `Depends`, `LinkingTo`, and `Enhances` for more specialized dependencies.
@@ -189,11 +182,21 @@ Remotes: hadley/testthat
 - Ignored by CRAN
 - Specialized task dependencies vs true runtime dependencies
 
+### How to write fields
+
+- Comma-separated
+- One package per line
+- Alphabetical
+- Add with `usethis::use_package(package, type = "Imports")` & `usethis::use_package(package, type = "Suggests")`
+- Use `usethis::use_tidy_description()` to put fields in standard order and alphabetize dependencies
+- Write minimum versions in parenthesis after package name `dplyr (>= 1.0.0)`. Make sure it is a *minimum* not an *exact* version.
+
+
 ## Title and description
 
 What does your package do?
 
-![](pkg-example.png)
+![](./images/08-package-metadata/pkg-example.png)
 
 ### Title
 
@@ -206,6 +209,8 @@ What does your package do?
   - Put the names of R packages, software, and APIs inside single quotes
   - Do not start with "A package for..." or "This package does...".
   
+### Description
+
 - `Description` can be up to a paragraph
   - Each line up to 80 characters
   - Indent subsequent lines with 4 spaces
@@ -222,7 +227,7 @@ Description: A system for 'declaratively' creating graphics,
 
 Shows up on CRAN like so:
 
-![](cran-pkgs.png)
+![](./images/08-package-metadata/cran-pkgs.png)
 
 ## Author
 
@@ -272,6 +277,17 @@ You can use `usethis::use_*_license()` for configuration.
 
 More in Chapter 9!
 
+**Notes from session**
+
+Jon:
+Be sure to check the license of the source package. Fortunately that's the next chapter! You want to make sure it's a permissive license.
+Still give credit to where you found it in your source code, regardless of how permissive the license might be. For example, I use %||% from {rlang} in a bunch of packages, and, if I'm not importing anything else from {rlang}, I just copy/paste the (very simple) definition and note that I copy/pasted it from {rlang}.
+
+The thing @Collin Berke showed is called re-exporting, and that's different from copy/pasting code. It is completely ok to re-export functions; it still requires the user to have the other package, and it explicitly gives credit to the other package. See usethis::use_pipe() for an example of that. usethis::use_tidy_eval() is another one.
+
+Tan:
+re-exporting also avoids some of the permissive licensing issues!
+
 ## Version
 
 - Determines if dependencies are satisfied
@@ -279,9 +295,12 @@ More in Chapter 9!
 - Starts at `0.0.0.9000`
   - Based on Semantic Versioning and by the X.Org versioning schemes
 
+Equivalent examples:
 ```
 numeric_version("1.9") == numeric_version("1.9.0")
 ```
+
+Can update version number by running `usethis::use_version()` or `usethis::use_dev_version()`.
 
 ## Other fields
 
@@ -302,21 +321,21 @@ numeric_version("1.9") == numeric_version("1.9.0")
 - Controls the order in which files are sourced
   - Most common if you're using S4 (a system for object oriented programing)
 
-
 ### `LazyData`
 
 - If true, data is lazy loaded so users don't have to run `data()`
 - `usethis::use_data()` does this for you
 
-### `Roxygen`
+### `Roxygen*`
 
 `create_package()` creates fields related to the roxygen package
 
 ## Final notes
 
-Full list is in the [R extensions manual](https://cran.r-project.org/doc/manuals/R-exts.html#The-DESCRIPTION-file).
+Full list of what can be in the `DESCRIPTION` file is in the [R extensions manual](https://cran.r-project.org/doc/manuals/R-exts.html#The-DESCRIPTION-file).
 
 You can also created your own but CRAN does have constraints
+
 - Only English words
 - Use `Config/` prefix or `Note` suffix
 
@@ -329,7 +348,15 @@ You can also created your own but CRAN does have constraints
 <details>
 <summary> Meeting chat log </summary>
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/vQSYeGwX9yQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 ```
-LOG
+00:05:04	Isabella Velásquez:	https://twitter.com/thomas_mock/status/1526977676661112832
+00:29:23	Ryan Metcalf:	I haven't found the directly answer for Maximum version of dependencies. However, the following thread is related (I'm only skimming at the moment). Adding to Arun's question. https://community.rstudio.com/t/determining-which-version-of-r-to-depend-on/4396/11
+00:51:43	Arun Chavan:	MAJOR version when you make incompatible API changes,
+    MINOR version when you add functionality in a backwards compatible manner, and
+    PATCH version when you make backwards compatible bug fixes.
+00:51:50	Arun Chavan:	from https://semver.org/
 ```
 </details>
+
