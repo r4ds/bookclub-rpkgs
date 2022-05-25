@@ -343,7 +343,7 @@ You can also created your own but CRAN does have constraints
 
 ### Cohort 1
 
-`r knitr::include_url("vQSYeGwX9yQ")`
+`r knitr::include_url("https://www.youtube.com/embed/vQSYeGwX9yQ")`
 
 <details>
 <summary> Meeting chat log </summary>
