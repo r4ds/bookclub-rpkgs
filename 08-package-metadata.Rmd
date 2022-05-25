@@ -343,12 +343,10 @@ You can also created your own but CRAN does have constraints
 
 ### Cohort 1
 
-`r knitr::include_url("https://www.youtube.com/embed/URL")`
+`r knitr::include_url("vQSYeGwX9yQ")`
 
 <details>
 <summary> Meeting chat log </summary>
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/vQSYeGwX9yQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ```
 00:05:04	Isabella Velásquez:	https://twitter.com/thomas_mock/status/1526977676661112832
