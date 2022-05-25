@@ -3,7 +3,7 @@
 **Learning objectives:**
 
 - Understand the `DESCRIPTION` file and the most important package metadata
-  - Declare dependencies with `Imports`, `Suggets`, `Depends`, `LinkingTo`, and `Enhances` fields
+  - Declare dependencies with `Imports`, `Suggests`, `Depends`, `LinkingTo`, and `Enhances` fields
 - Add title, description, authors
 - Preview license, version
 
