@@ -10,8 +10,9 @@ As we read, we are producing [notes about the book](https://r4ds.io/rpkgs).
 
 If you would like to present, please see the sign-up sheet for your cohort (linked below, and pinned in the [#book_club-rpkgs](https://rfordatascience.slack.com/archives/C014C9F4DRS) channel on Slack)!
 
-- Cohort 1 & 2 met using a different club style.
-- [Cohort 3](https://docs.google.com/spreadsheets/d/188z71TbrgTtAWMAtKcwNXvtBhvCwqCvLO5F3hSYI1tM/edit?usp=sharing) (started 2022-03-30): [Wednesdays, 8:00pm CST/CDT](https://www.timeanddate.com/worldclock/converter.html?iso=20220331T010000&p1=24)
+- Cohort 1 (started 2020-09-29, ended 2020-12-15): [meeting videos](https://youtube.com/playlist?list=PL3x6DOfs2NGiXMln8bxY7e0XgA5z1cp-8)
+- Cohort 2 (started 2021-03-13, ended 2021-06-05): [meeting videos](https://youtube.com/playlist?list=PL3x6DOfs2NGhRtG2Oj1aI9mWTGY6KKUJB)
+- [Cohort 3](https://docs.google.com/spreadsheets/d/188z71TbrgTtAWMAtKcwNXvtBhvCwqCvLO5F3hSYI1tM/edit?usp=sharing) (started 2022-03-30): [Wednesdays, 8:00pm CST/CDT](https://www.timeanddate.com/worldclock/converter.html?iso=20220331T010000&p1=24) | [meeting videos](https://youtube.com/playlist?list=PL3x6DOfs2NGi8NcKmNxw_Hk4-leUsivZv)
 
 <hr>
 
