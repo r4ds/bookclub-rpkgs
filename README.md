@@ -3,12 +3,12 @@
 Welcome to the R4DS R Packages Book Club!
 
 We are working together to read [_R Packages_](https://r-pkgs.org/) by Hadley Wickham and Jenny Bryan (work-in-progress 2nd edition, copyright 2022).
-Join the #book_club-rpkgs channel on the [R4DS Slack](https://r4ds.io/join) to participate.
+Join the [#book_club-rpkgs](https://rfordatascience.slack.com/archives/C014C9F4DRS) channel on the [R4DS Slack](https://r4ds.io/join) to participate.
 As we read, we are producing [notes about the book](https://r4ds.io/rpkgs).
 
 ## Meeting Schedule
 
-If you would like to present, please see the sign-up sheet for your cohort (linked below, and pinned in the [#book_club-BOOKABBR](https://rfordatascience.slack.com/archives/BOOKCHANNELID) channel on Slack)!
+If you would like to present, please see the sign-up sheet for your cohort (linked below, and pinned in the [#book_club-rpkgs](https://rfordatascience.slack.com/archives/C014C9F4DRS) channel on Slack)!
 
 - Cohort 1 & 2 met using a different club style.
 - [Cohort 3](https://docs.google.com/spreadsheets/d/188z71TbrgTtAWMAtKcwNXvtBhvCwqCvLO5F3hSYI1tM/edit?usp=sharing) (started 2022-03-30): [Wednesdays, 8:00pm CST/CDT](https://www.timeanddate.com/worldclock/converter.html?iso=20220331T010000&p1=24)
