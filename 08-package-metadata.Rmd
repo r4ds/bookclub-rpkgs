@@ -283,7 +283,7 @@ Jon:
 Be sure to check the license of the source package. Fortunately that's the next chapter! You want to make sure it's a permissive license.
 Still give credit to where you found it in your source code, regardless of how permissive the license might be. For example, I use %||% from {rlang} in a bunch of packages, and, if I'm not importing anything else from {rlang}, I just copy/paste the (very simple) definition and note that I copy/pasted it from {rlang}.
 
-The thing @Collin Berke showed is called re-exporting, and that's different from copy/pasting code. It is completely ok to re-export functions; it still requires the user to have the other package, and it explicitly gives credit to the other package. See usethis::use_pipe() for an example of that. usethis::use_tidy_eval() is another one.
+The thing Collin Berke showed is called re-exporting, and that's different from copy/pasting code. It is completely ok to re-export functions; it still requires the user to have the other package, and it explicitly gives credit to the other package. See usethis::use_pipe() for an example of that. usethis::use_tidy_eval() is another one.
 
 Tan:
 re-exporting also avoids some of the permissive licensing issues!

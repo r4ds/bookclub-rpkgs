@@ -1,0 +1,229 @@
+# Object documentation
+
+**Learning objectives:**
+
+- Describe the benefits of well developed object documentation
+- Discuss the definition of object documentation 
+- Identify the key components of object documentation for different R objects
+  - Functions
+  - Packages
+  - Generics, classes, and methods
+- Demonstrate the object documentation workflow
+- Discuss some general formatting and style guidelines
+
+## Why care about object documentation?
+
+- Documentation is an important component of packages 
+  - How will users know how to use your package?
+  - Inform your future self
+  - Inform other contributors
+
+## Object documentation defined
+
+- Focus for tonight is on object documentation
+  - What do you think when you hear the word object?
+  - Accessed via `?` or `help()`
+- **Object documentation**: reference documentation. 
+  - Purpose is to serve as a reference (e.g., a dictionary entry) 
+  - Great use case for standardized naming conventions (e.g., `stringr` package)
+- Difference between object documentation and vignettes
+  - **Object documentation** = A short-form reference guide
+  - **Vignettes** = A long-form document on how to use package objects to solve a problem
+
+## Object documentation, an overview
+
+![](images/10-object-documentation/10-roxygen-namespace.png)
+
+- Documentation files are rendered from a syntax loosely based on `LaTex`.
+  - `HTML`
+  - Plain text
+  - PDF
+  - More on this syntax can be found in the [`R extensions manual`](https://cran.r-project.org/doc/manuals/R-exts.html#Rd-format)
+- [`roxygen2`](https://roxygen2.r-lib.org/) provides a more user-friendly syntax to create documentation 
+  - Comments using `@tags` >> `man/.Rd` files >> `HTML` or PDFs
+  - Code is intermingled with documentation
+  - Handles some boilerplate set up
+  - Abstracts away the differences for documenting different objects
+  - Manages the `NAMESPACE` (Chapter 13) 
+  
+## The documentation workflow
+
+- Two workflows
+  1. Fast, but links don't work
+  2. Slow, but the links work
+    - You may need to adjust some settings if build and reload doesn't work 
+  
+![](images/10-object-documentation/10-object-documentation-workflow.png)  
+  
+## Rendering, behind the scenes
+
+![](images/10-object-documentation/10-object-documentation-stages.png)
+
+## The nuts and bolts of `roxygen` comments
+
+- Four basic building blocks:
+  1. **`#'`** - `roxygen` comment
+  1. **Multiple `#` lines** - a block
+      - Wrapped at 80 characters (Ctrl/Cmd + Shift + / or reflow comment)
+  1. **Tags** - Breaks up the blocks
+     - `@tagName details`
+  1. **Introduction**
+     - First sentence is the title
+     - Second paragraph is the description (what does the function do?)
+     - Paragraphs >= 3 allow for more detail 
+- All objects must have a title and description
+
+- Details are optional
+
+- Blocks and tags give documentation structure
+
+## Documenting functions
+
+- Most commonly documented object
+- Three common tags:
+  1. `@param name description`: describes the function's inputs or parameters.
+     - These need to be documented
+     - Multiple arguments can be documented in one place `@param x,y description`
+  1. `@examples`
+     - Provides executable code on how to use the function in practice
+     - Must run without errors or use `\dontrun{}`
+     - **Keep in mind:** Most users will look at examples first 
+  1. `@return`
+     - Describes the output from the function.
+
+- Addional tags
+  - `@section`
+  - `@seealso`
+  - `@family`
+  - `@alias`
+  - `@keyword`
+  - Checkout the [Rd (documentation) tags vignette](https://roxygen2.r-lib.org/articles/rd.html)
+
+- Keep style conventions top of mind
+  - Check out the book for more details
+
+- [`ggplot2` example](https://github.com/tidyverse/ggplot2/blob/main/R/aes.r)
+
+## Documenting datasets
+
+- A different process, see [Chapter 14](https://r-pkgs.org/data.html).
+
+## Documenting packages
+
+- Provide a help page for your package as a whole
+  - `package?foo`
+- Intended to describe the most important components of the package
+- Great place to put package level import statements
+- [`ggplot2` example](https://github.com/tidyverse/ggplot2/blob/main/R/ggplot2-package.R)
+
+## Documenting classes, generics, and methods
+
+- S3 generics
+    - Are regular functions, so document them as such.
+    - [`dplyr::glimpse()` example](https://github.com/r-lib/pillar/blob/main/R/glimpse.R)
+    
+- S4 classes and methods
+    - Use `@slot` to document the slots of the class.
+    - Aim to keep all your documentation together
+    - Use `@rdname` or `@describeIn` to keep docs together
+    - Control ordering of code loading by using `@include`  
+    
+- RC (reference classes)
+    - Uses the docstring in the method for the documentation
+      - Is included within the 'Methods' section
+    - You now only need one `roxygen` block per class
+    - Uses the `@field`
+    - See the `account` example in`regexcite`
+    
+## A note about special characters
+
+- `@` denotes a tag, so use `@@` for a literal `@`
+- `%` denotes start of a `LaTex` comment, so escape for a literal `%` `\%`
+- Escape your backslashes (e.g., `\\`)
+
+## Do repeat yourself
+
+- Self-contained documentation vs. [`DRY` (don't repeat yourself)](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself)
+- Limit user frustration resulting from navigating multiple help files
+- Two ways to handle:
+   1. `@inheritParams`: reuse parameter documentation
+      - From source `@inheritParams function`
+      - From another package `@inheritParams package::function`
+      
+```{r inherit_params_example, eval=FALSE}
+#' @param a This is the first argument.
+foo <- function(a) a + 10
+
+#' @param b This is the second argument.
+#' @inheritParams foo
+bar <- function(a, b) {
+  foo(a) * 10
+}
+
+# Equivalent to
+
+#' @param a This is the first argument.
+#' @param b This is the second argument.
+bar <- function(a, b) {
+  foo(a) * 10
+}
+```
+
+   1. `@describeIn` or `@rdname`: document multiple functions in one place
+      - Use with caution. Can lead to confusing documentation.
+      - See the `foobar` example
+      - See the `arithmetic` example
+
+## Text formatting
+
+- Check out the [reference sheet](https://r-pkgs.org/man.html#text-formatting) in the book
+  - Use as a reference
+- Generally follows a `LaTex` like syntax
+  - `\formatLikeThis{yourText}`
+- Formatting that can be applied:
+  - Character formatting
+  - Linking to other docs or materials
+  - Lists
+  - Mathematical notation
+  - Tables
+
+## Meeting Videos
+
+### Cohort 1
+
+`r knitr::include_url("https://www.youtube.com/embed/URL")`
+
+<details>
+<summary> Meeting chat log </summary>
+
+```
+LOG
+```
+</details>
+
+### Cohort 3
+
+#### Part 1
+`r knitr::include_url("https://www.youtube.com/embed/---BWbMr5B0?start=1821")`
+
+#### Part 2
+
+<details>
+<summary> Meeting chat log </summary>
+
+```
+#### Part 1
+00:01:58	Ryan Metcalf:	Fix for BlueTooth: sudo kill bluetoothd
+00:04:49	Brendan Lam:	https://twitter.com/lucystats/status/959504698842652672
+00:04:57	Brendan Lam:	How to pronounce it (supposedly)
+00:05:22	Ryan Metcalf:	Awesome Brendan! great thread!
+00:17:32	Ryan Metcalf:	https://creativecommons.org/Government
+00:18:59	Ryan Metcalf:	Directly related to the US: https://resources.data.gov/open-licenses/
+00:24:16	Ryan Metcalf:	Quick side note: I received a block due to API key. You can acquire one at: http://api.census.gov/data/key_signup.html
+00:41:21	Ryan Metcalf:	The Google Verse turned up this link for R as a package is GPL-2 | GPL-3. https://www.r-project.org/Licenses/#:~:text=R%20as%20a%20package%20is,to%20see%20if%20this%20applies.
+00:44:14	Isabella Velásquez:	??pivot_longer every day
+00:49:28	Rex Parsons:	I think you're right
+01:06:38	Isabella Velásquez:	I learned of this add in that helps with roxygen2 tags: https://github.com/matt-dray/snorkel
+01:11:24	Ryan Metcalf:	S3 Reference: https://adv-r.hadley.nz/s3.html?q=S3#implicit-class
+```
+</details>
