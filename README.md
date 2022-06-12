@@ -30,7 +30,7 @@ Do these steps once:
   - `usethis::edit_r_profile()` to open your profile for editing.
   - Add this line: `options(usethis.destdir = "YOURDIR")` (replace `YOURDIR` with the root directory under which you want your R projects to appear; or you can skip these steps, and the project will be saved to your Desktop).
   - Restart your R session (Session/Restart R in Rstudio).
-4. `usethis::create_from_github("r4ds/bookclub-BOOKABBR")` (cleanly creates your own copy of this repository).
+4. `usethis::create_from_github("r4ds/bookclub-rpkgs")` (cleanly creates your own copy of this repository).
 
 Do these steps each time you present another chapter:
 
