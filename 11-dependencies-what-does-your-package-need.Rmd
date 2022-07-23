@@ -23,12 +23,18 @@
 
 ### Cohort 3
 
-`r knitr::include_url("https://www.youtube.com/embed/URL")`
+`r knitr::include_url("https://www.youtube.com/embed/2-baO_E9p1s")`
 
 <details>
 <summary> Meeting chat log </summary>
 
 ```
-LOG
+00:05:44	Ryan Metcalf:	https://www.rstudio.com/conference/
+00:08:38	Brendan Lam:	https://stackoverflow.com/questions/70097126/how-to-edit-namespace-with-roxygen2-when-creating-r-packages
+00:08:51	Brendan Lam:	https://stackoverflow.com/questions/11990589/r-namespace-access-and-match-fun
+00:44:59	Rex Parsons:	https://github.com/gentrywhite/DSSP/blob/b3d7f0d10374968a43a634a1ae3f65e9231fceb0/R/plot.R#L43
+00:48:01	Rex Parsons:	https://stackoverflow.com/questions/5595512/what-is-the-difference-between-require-and-library
+00:58:13	Rex Parsons:	gotta run guys - thanks Brendan and team!
+00:58:29	collinberke:	https://stackoverflow.com/questions/64737686/why-library-or-require-should-not-be-used-in-a-r-package
 ```
 </details>

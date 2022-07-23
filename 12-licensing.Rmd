@@ -224,9 +224,11 @@ Picture from [Wikipedia](https://en.wikipedia.org/wiki/License_compatibility#Com
 ### Cohort 3
 
 #### Part 1
+
 `r knitr::include_url("https://www.youtube.com/embed/IWB1s0hDi20")`
 
 #### Part 2
+
 `r knitr::include_url("https://www.youtube.com/embed/---BWbMr5B0")`
 
 <details>

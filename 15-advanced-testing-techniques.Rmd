@@ -13,12 +13,15 @@
 
 ### Cohort 3
 
-`r knitr::include_url("https://www.youtube.com/embed/URL")`
+`r knitr::include_url("https://www.youtube.com/embed/0z7jqB8mXSo")`
 
 <details>
 <summary> Meeting chat log </summary>
 
 ```
-LOG
+01:00:06	Ryan Metcalf:	I believe the comment Collin was mentioning for testing Shiny was ShinyDriver()
+01:06:26	Collin Berke:	Jim Hester's talk: https://www.jimhester.com/talk/2020-rsc-github-actions/
+01:08:22	Rex Parsons:	https://usethis.r-lib.org/reference/github_actions.html#use-github-action-check-standard-
+01:08:29	Ryan Metcalf:	Collin has a different website: This was what I found: https://r-hub.github.io/rhub/
 ```
 </details>

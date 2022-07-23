@@ -1,4 +1,4 @@
-# Object documentation
+# Function documentation
 
 **Learning objectives:**
 
@@ -204,9 +204,12 @@ bar <- function(a, b) {
 ### Cohort 3
 
 #### Part 1
+
 `r knitr::include_url("https://www.youtube.com/embed/---BWbMr5B0?start=1821")`
 
 #### Part 2
+
+`r knitr::include_url("https://www.youtube.com/embed/F3DnD4N-s5w")`
 
 <details>
 <summary> Meeting chat log </summary>
