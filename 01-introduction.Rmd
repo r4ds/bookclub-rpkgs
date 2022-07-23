@@ -83,28 +83,12 @@ install.packages(c("devtools", "usethis"))
 
 ### Cohort 1
 
-`r knitr::include_url("https://www.youtube.com/embed/URL")`
-
-<details>
-<summary> Meeting chat log </summary>
-
-```
-LOG
-```
-</details>
+`r knitr::include_url("https://www.youtube.com/embed/FR6NsbkYhcw")`
 
 
 ### Cohort 2
 
-`r knitr::include_url("https://www.youtube.com/embed/URL")`
-
-<details>
-<summary> Meeting chat log </summary>
-
-```
-LOG
-```
-</details>
+`r knitr::include_url("https://www.youtube.com/embed/7YgH8qfyzFU")`
 
 
 ### Cohort 3
