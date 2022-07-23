@@ -1,4 +1,4 @@
-# Namespace
+# Continuous integration
 
 **Learning objectives:**
 

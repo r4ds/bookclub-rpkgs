@@ -1,6 +1,4 @@
-# (PART) Sharing with others {-}
-
-# Git and GitHub
+# Designing your test suite
 
 **Learning objectives:**
 

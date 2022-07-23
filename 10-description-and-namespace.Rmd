@@ -1,4 +1,4 @@
-# Package metadata
+# DESCRIPTION and NAMESPACE
 
 **Learning objectives:**
 

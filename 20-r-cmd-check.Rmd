@@ -1,4 +1,4 @@
-# Releasing a package
+# R CMD check
 
 **Learning objectives:**
 
