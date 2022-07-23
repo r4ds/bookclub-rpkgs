@@ -261,6 +261,32 @@ RoxygenNote: 7.1.2
 
 ### Cohort 1
 
+`r knitr::include_url("https://www.youtube.com/embed/URL")`
+
+<details>
+<summary> Meeting chat log </summary>
+
+```
+LOG
+```
+</details>
+
+
+### Cohort 2
+
+`r knitr::include_url("https://www.youtube.com/embed/URL")`
+
+<details>
+<summary> Meeting chat log </summary>
+
+```
+LOG
+```
+</details>
+
+
+### Cohort 3
+
 `r knitr::include_url("https://www.youtube.com/embed/3vdXk_tYG-g")`
 
 <details>

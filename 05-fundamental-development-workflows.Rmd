@@ -171,6 +171,32 @@ It can be tricky to incorporate everything into a test script, and sometimes you
 
 ### Cohort 1
 
+`r knitr::include_url("https://www.youtube.com/embed/URL")`
+
+<details>
+<summary> Meeting chat log </summary>
+
+```
+LOG
+```
+</details>
+
+
+### Cohort 2
+
+`r knitr::include_url("https://www.youtube.com/embed/URL")`
+
+<details>
+<summary> Meeting chat log </summary>
+
+```
+LOG
+```
+</details>
+
+
+### Cohort 3
+
 `r knitr::include_url("https://www.youtube.com/embed/Hg37VT-cWVM")`
 
 <details>

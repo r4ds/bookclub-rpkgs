@@ -421,6 +421,32 @@ The locale in our timestamp is only temporarily modified with the `withr::with_l
 
 ### Cohort 1
 
+`r knitr::include_url("https://www.youtube.com/embed/URL")`
+
+<details>
+<summary> Meeting chat log </summary>
+
+```
+LOG
+```
+</details>
+
+
+### Cohort 2
+
+`r knitr::include_url("https://www.youtube.com/embed/URL")`
+
+<details>
+<summary> Meeting chat log </summary>
+
+```
+LOG
+```
+</details>
+
+
+### Cohort 3
+
 `r knitr::include_url("https://www.youtube.com/embed/bsGCgJr60as")`
 
 <details>
