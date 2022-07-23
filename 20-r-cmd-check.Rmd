@@ -1,3 +1,5 @@
+# (PART) Maintenance and distribution {-}
+
 # R CMD check
 
 **Learning objectives:**
