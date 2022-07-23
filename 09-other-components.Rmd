@@ -1,4 +1,4 @@
-# Compiled code
+# Other components
 
 **Learning objectives:**
 
@@ -12,6 +12,18 @@
 ## Meeting Videos
 
 ### Cohort 1
+
+`r knitr::include_url("https://www.youtube.com/embed/h7BhdVYkM9o")`
+
+
+### Cohort 2
+
+`r knitr::include_url("https://www.youtube.com/embed/lg9G1R2H-f0")`
+
+`r knitr::include_url("https://www.youtube.com/embed/EjCF7LlvWgI")`
+
+
+### Cohort 3
 
 `r knitr::include_url("https://www.youtube.com/embed/URL")`
 

@@ -1,4 +1,4 @@
-# Vignettes: long-form documentation
+# Lifecycle
 
 **Learning objectives:**
 
@@ -12,6 +12,16 @@
 ## Meeting Videos
 
 ### Cohort 1
+
+`r knitr::include_url("https://www.youtube.com/embed/Dh-kbknqa3E")`
+
+
+### Cohort 2
+
+`r knitr::include_url("https://www.youtube.com/embed/aU4pQTki_tg")`
+
+
+### Cohort 3
 
 `r knitr::include_url("https://www.youtube.com/embed/URL")`
 

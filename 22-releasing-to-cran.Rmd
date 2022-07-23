@@ -1,4 +1,4 @@
-# External data
+# Releasing to CRAN
 
 **Learning objectives:**
 
@@ -12,6 +12,16 @@
 ## Meeting Videos
 
 ### Cohort 1
+
+`r knitr::include_url("https://www.youtube.com/embed/isKbovi62k4")`
+
+
+### Cohort 2
+
+`r knitr::include_url("https://www.youtube.com/embed/5VAvPvL18I0")`
+
+
+### Cohort 3
 
 `r knitr::include_url("https://www.youtube.com/embed/URL")`
 

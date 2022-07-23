@@ -1,0 +1,36 @@
+# Designing your test suite
+
+**Learning objectives:**
+
+- THESE ARE NICE TO HAVE BUT NOT ABSOLUTELY NECESSARY
+
+## SLIDE 1
+
+- ADD SLIDES AS SECTIONS (`##`).
+- TRY TO KEEP THEM RELATIVELY SLIDE-LIKE; THESE ARE NOTES, NOT THE BOOK ITSELF.
+
+## Meeting Videos
+
+### Cohort 1
+
+`r knitr::include_url("https://www.youtube.com/embed/SHAdJmjvQ44")`
+
+
+### Cohort 2
+
+`r knitr::include_url("https://www.youtube.com/embed/AM7ypzvhFoc")`
+
+
+### Cohort 3
+
+`r knitr::include_url("https://www.youtube.com/embed/uhpWtSnCXJM")`
+
+<details>
+<summary> Meeting chat log </summary>
+
+```
+00:13:29	Ryan Metcalf:	Additional resources related to `test_that`. The link is related to Shiny Apps, but related to packaging Production Grade Shiny Apps. https://engineering-shiny.org/build-yourself-safety-net.html?q=test_that#testing-the-business-logic
+01:14:17	Ryan Metcalf:	https://about.gitlab.com/topics/ci-cd/
+01:17:26	Arun Chavan:	I have to run too. Thanks for a great session -- see you both next week!
+```
+</details>

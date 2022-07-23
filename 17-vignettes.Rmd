@@ -1,0 +1,48 @@
+# Vignettes
+
+**Learning objectives:**
+
+- THESE ARE NICE TO HAVE BUT NOT ABSOLUTELY NECESSARY
+
+## SLIDE 1
+
+- ADD SLIDES AS SECTIONS (`##`).
+- TRY TO KEEP THEM RELATIVELY SLIDE-LIKE; THESE ARE NOTES, NOT THE BOOK ITSELF.
+
+## Meeting Videos
+
+### Cohort 1
+
+`r knitr::include_url("https://www.youtube.com/embed/eMWgu9OQ0m8")`
+
+
+### Cohort 2
+
+`r knitr::include_url("https://www.youtube.com/embed/yRzRiXiqPag")`
+
+
+### Cohort 3
+
+`r knitr::include_url("https://www.youtube.com/embed/F3DnD4N-s5w")`
+
+`r knitr::include_url("https://www.youtube.com/embed/EsPNsZBmVbw")`
+
+<details>
+<summary> Meeting chat log </summary>
+
+```
+PART 1:
+00:37:30	Rex Parsons:	https://github.com/gentrywhite/DSSP/blob/master/R/predict.R
+00:38:55	Ryan Metcalf:	[Data frames and tibles](https://adv-r.hadley.nz/vectors-chap.html#tibble)
+00:39:57	Rex Parsons:	https://github.com/SurajGupta/r-source/blob/master/src/library/stats/R/predict.R
+01:22:52	Rex Parsons:	https://www.youtube.com/watch?v=PGOTeN-ItXo&list=PLOkVupluCIjvfzQFgjiSQIccKiC-BJXwi
+01:28:11	Rex Parsons:	https://stackoverflow.com/a/11562457/11738294
+
+PART 2:
+01:19:19	Ryan Metcalf:	https://bookdown.org/yihui/rmarkdown-cookbook/
+01:21:06	Ryan Metcalf:	https://bookdown.org/
+01:24:14	Brendan Lam:	Sort of related, are there any packages to create cheatsheets (e.g., https://www.rstudio.com/resources/cheatsheets/ )?
+01:25:05	Rex Parsons:	https://github.com/brentthorne/posterdown
+01:25:37	Brendan Lam:	Thanks!^
+```
+</details>

@@ -1,4 +1,4 @@
-# Namespace
+# R CMD check
 
 **Learning objectives:**
 
@@ -11,7 +11,7 @@
 
 ## Meeting Videos
 
-### Cohort 1
+### Cohort 3
 
 `r knitr::include_url("https://www.youtube.com/embed/URL")`
 

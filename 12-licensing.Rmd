@@ -213,22 +213,22 @@ Picture from [Wikipedia](https://en.wikipedia.org/wiki/License_compatibility#Com
 
 ### Cohort 1
 
-`r knitr::include_url("https://www.youtube.com/embed/URL")`
+`r knitr::include_url("https://www.youtube.com/embed/C_H1oQZD7m8")`
 
-<details>
-<summary> Meeting chat log </summary>
 
-```
-LOG
-```
-</details>
+### Cohort 2
+
+`r knitr::include_url("https://www.youtube.com/embed/8PU_KT5IpWg")`
+
 
 ### Cohort 3
 
 #### Part 1
+
 `r knitr::include_url("https://www.youtube.com/embed/IWB1s0hDi20")`
 
 #### Part 2
+
 `r knitr::include_url("https://www.youtube.com/embed/---BWbMr5B0")`
 
 <details>

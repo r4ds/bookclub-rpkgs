@@ -238,4 +238,14 @@ cat(stringi::stri_escape_unicode(x))
 
 ### Cohort 1
 
+`r knitr::include_url("https://www.youtube.com/embed/BN0mBuuLKz8")`
+
+
+### Cohort 2
+
+`r knitr::include_url("https://www.youtube.com/embed/--GzGdfhCsI")`
+
+
+### Cohort 3
+
 `r knitr::include_url("https://www.youtube.com/embed/aotxnpmbLgQ")`

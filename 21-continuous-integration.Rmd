@@ -1,4 +1,4 @@
-# Installed files
+# Continuous integration
 
 **Learning objectives:**
 
@@ -12,6 +12,18 @@
 ## Meeting Videos
 
 ### Cohort 1
+
+`r knitr::include_url("https://www.youtube.com/embed/SHAdJmjvQ44")`
+
+`r knitr::include_url("https://www.youtube.com/embed/RlE8P3f10ZU")`
+
+
+### Cohort 2
+
+`r knitr::include_url("https://www.youtube.com/embed/pedUcPFrZMQ")`
+
+
+### Cohort 3
 
 `r knitr::include_url("https://www.youtube.com/embed/URL")`
 
