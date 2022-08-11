@@ -1,15 +1,128 @@
 # (PART) Maintenance and distribution {-}
 
-# R CMD check
+# R CMD CHECK
 
-**Learning objectives:**
 
-- THESE ARE NICE TO HAVE BUT NOT ABSOLUTELY NECESSARY
+## R CMD CHECK
 
-## SLIDE 1
+- `R CMD CHECK` is the terminal command
+- `devtools::check()` and running `Ctrl/Cmd + Shift + E` run it indirectly.
 
-- ADD SLIDES AS SECTIONS (`##`).
-- TRY TO KEEP THEM RELATIVELY SLIDE-LIKE; THESE ARE NOTES, NOT THE BOOK ITSELF.
+`devtools::check()` also does:
+
+- updates documentation (`devtools::document()`)
+- bundles before checking (bit safer as it removes unnecessary files)
+- sets the `NOT_CRAN` environment variable to `TRUE`.
+
+
+### Results
+
+- `ERROR`s: Severe problems that you should fix regardless of whether or not you’re submitting to CRAN.
+- `WARNING`s: Likely problems that you must fix if you’re planning to submit to CRAN (and a good idea to look into even if you’re not).
+- `NOTE`s: Mild problems. If you are submitting to CRAN, you should strive to eliminate all NOTEs, even if they are false positives. If you have no NOTEs, human intervention is not required, and the package submission process will be easier. If it’s not possible to eliminate a NOTE, you’ll need describe why it’s OK in your submission comments, as described in Section 22.2. If you’re not submitting to CRAN, carefully read each NOTE, but don’t go out of your way to fix things that you don’t think are problems.
+
+    - pkgs with compiled code may have larger than "allowed" file size. This appears as a NOTE as is no big problem - you can just mention this in the `cran-comments.md` in the submission.
+
+
+## Checks
+
+50 checks - for a full list, see the book.
+
+The categories of checks are:
+
+- metadata
+- package structure
+
+    - files are where they should be and there aren't any non-standard top level files
+    - it can be installed
+    - package size isn't > 5MB
+    - in short: lots of pain that can be alleviated by using `{usethis}` for making any new files
+
+- `DESCRIPTION`
+
+    - `License: ____` must refer to a known license (https://svn.r-project.org/R/trunk/share/licenses/license.db) or must be a `file LICENSE` and the file must exist
+    - All dependencies including `Suggests` must be installed
+    - Every package listed in `Depends` must also be imported in the `NAMESPACE` or accessed with `pkg::foo`. If you don’t do this, your package will work when attached to the search path (with `library(mypackage)`) because it will also be attaching those packages that it depends on but will not work when only loaded (e.g. `mypackage::foo()`). In terms of good practice: don't use Depends and always access other packages that your package depends on using `pkg::foo`.
+
+- `NAMESPACE`
+- R code
+
+    - checks R scripts for errors - unlikely to get many issues here since they would have cropped up when running `devtools::load_all()` (which you probably would have before running a check)
+    - can't access functions from other packages which aren't exported (`:::`)
+
+        - you are not allowed to use `:::` to access non-exported functions from other packages. Either ask the package maintainer to export the function you need, or write your own version of it using exported functions. Alternatively, if the licenses are compatible you can copy and paste the exported function into your own package. If you do this, remember to update `Authors@R`.
+    
+    - S3 generic/method consistency
+
+    ```r
+    print <- function(x, ...){
+      UseMethod("print")
+    }
+    
+    # BAD
+    print.my_class <- function(x) {
+      cat("Hi")
+    }
+    
+    # GOOD
+    print.my_class <- function(x, ...) {
+      cat("Hi")
+    }
+    
+    # Also ok
+    print.my_class <- function(x, ..., my_arg = TRUE) {
+      cat("Hi")
+    }
+    ```
+
+    - Don’t use `assign()` to modify objects in the global environment. If you need to maintain state across function calls, create your own environment with `e <- new.env(parent = emptyenv())` and set and get values in it:
+        
+    ```r
+    e <- new.env(parent = emptyenv())
+    
+    add_up <- function(x) {
+      if (is.null(e$last_x)) {
+        old <- 0
+      } else {
+        old <- e$last_x
+      }
+    
+      new <- old + x
+      e$last_x <- new
+      new
+    }
+    add_up(10)
+    #> [1] 10
+    add_up(20)
+    #> [1] 30
+    ```
+
+    - Don't use `T` or `F` in your functions - use `TRUE` and `FALSE`
+
+- Data
+- Documentation
+
+    - checks for completeness in all documentation and all man/*.Rd files have correct syntax
+    - checks maximum linewidth
+    - checks examples in help files (can use `devtools::run_examples()` to check these alone)
+
+- Demos
+- Compiled Code
+
+    - checks all foreign function calls with in compiled code
+    - runs all tests (`devtools::test()`)
+    
+        - if the `devtools::test()` passes but test within the `R CMD CHECK` fails, there's something that's changed in your testing environment and it can be tricky to figure out. I've found restarting R before running `devtools::test()` seems to make the problem apparent.
+
+- Vignettes
+    
+    - checks for dependencies in vignettes and that the files are in right place within the pkg directory
+    - builds the vignettes
+    - running vignettes requires that the package is installed (`devtools::install()`)
+    - can be pretty slow - if you're wanting to quicky iterate through `check()`s and focus on other problems in your package:
+        
+        - add `--no-build-vignettes` to "Build Source Packages" field in project options
+        - `devtools::check(vignettes=FALSE)`
 
 ## Meeting Videos
 
