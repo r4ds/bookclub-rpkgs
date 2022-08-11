@@ -1,5 +1,7 @@
 # (PART) Maintenance and distribution {-}
 
+# R CMD CHECK
+
 
 ## R CMD CHECK
 
@@ -122,6 +124,7 @@ The categories of checks are:
         - add `--no-build-vignettes` to "Build Source Packages" field in project options
         - `devtools::check(vignettes=FALSE)`
 
+## Meeting Videos
 
 ### Cohort 3
 

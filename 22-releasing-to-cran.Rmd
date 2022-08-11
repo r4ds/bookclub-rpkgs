@@ -85,7 +85,7 @@ goodpractice::gp()
 - prompts the user to do final checks including spelling, checking on rhub, committing all changes etc
 - uploads the package bundle to CRAN and includes `cran-comments.md`
 
-Afterwards, you'll get a confirmation email from CRAN (to the maintainers email). Once approved, the CRAN maintainer will runt he checks and get back to you.
+Afterwards, you'll get a confirmation email from CRAN (to the maintainers email). Once approved, the CRAN maintainer will run the checks and get back to you.
 
 
 ## post-release
