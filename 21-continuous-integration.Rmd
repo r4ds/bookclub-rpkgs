@@ -25,12 +25,15 @@
 
 ### Cohort 3
 
-`r knitr::include_url("https://www.youtube.com/embed/URL")`
+`r knitr::include_url("https://www.youtube.com/embed/LkSKXeZTD-0")`
 
 <details>
 <summary> Meeting chat log </summary>
 
 ```
-LOG
+00:29:06	Ryan Metcalf:	https://blog.jdriven.com/2020/10/automating-hosting-revealjs-slides-on-gitlab/
+00:53:57	Arun Chavan:	https://rstudio.github.io/distill/website.html
+00:55:46	Brendan Lam:	Cool! I didn’t even remember what's on my repo
+01:05:13	Brendan Lam:	As someone who didn't know what Docker is, this was very informative. thanks, Ryan!
 ```
 </details>
