@@ -17,7 +17,11 @@
    
 * R packages can be defined by their structure:
    * Discussed throughout the book club
-   * At its core, packages are defined by the conventions of how files and directories are organized: `\R`; `DESCRIPTION` file; `\tests`; `\data`; etc. 
+<<<<<<< HEAD
+   * At its core, packages are defined by the conventions of how files and directories are organized: `/R`; `DESCRIPTION` file; `/tests`; `/data`; etc. 
+=======
+   * At its core, packages are defined by the conventions of how files and directories are organized: `/R`; `DESCRIPTION` file; `/tests`; `/data`; etc. 
+>>>>>>> 0b223f8a0b149ebb98e300da014c5b7dabcdbd81
    * [Packaging Data Analytical Work Reproducibly Using R (and Friends)](https://peerj.com/preprints/3192/)
 
 ## Installing and using packages
@@ -77,7 +81,7 @@ install.packages(c("devtools", "usethis"))
 
 * Don't get overwhelmed
   - Some stuff you may never use.
-  - Remember, an R package at it's core is just an `R/` directory.
+  - Remember, an R package at it's core is just an `R` directory.
   
 * You are not expected to know everything.
   - We are all learning.
