@@ -39,7 +39,7 @@ Laws:
 2. It must start with a letter.
 3. It cannot end with a period.
 
-(no underscores or hyphens)
+(no underscores `_` or hyphens `-`)
 
 Recommendations:
 
@@ -59,7 +59,7 @@ Recommendations:
 - Call `usethis::create_package('yourPackageName')`
 - In RStudio, do File > New Project > New Directory > R Package. This ultimately calls usethis::create_package(), so really there’s just one way.
 
-(I prefer to use RStudio - show using create_package from bash)
+~~(I prefer to use RStudio - show using create_package from bash)~~
 
 ### What does this do?
 
@@ -71,7 +71,7 @@ This creates your project structure for you:
 - `pkgName.Rproj` file
 - `.Rbuildignore` & `.gitignore`
 
-DO NOT use package.skeleton() - it creates a package which will lead to errors when running `R CMD build` and is not consistent with the devtools style of development.
+DO NOT use `package.skeleton()` - it creates a package which will lead to errors when running `R CMD build` and is not consistent with the devtools style of development.
 
 
 ### Where to put this package?
@@ -87,7 +87,7 @@ You can use devtools without using RStudio and visa versa, but it's not as nice.
 
 - Each project is isolated and code is contained within the project.
 - Easy to start up a project in a fresh instance of RStudio.
-- Useful features that we probably all already use from RStudio.
+- Helps mitigate workspace overlap (e.g., function masking and overwriting accidentally same-named objects)
 - Keyboard shortcuts for common code development tasks (build, load, test, document, check)
   * alt-shift-k for shortcuts
 
@@ -102,9 +102,9 @@ If you already have an R package which isn't within an R Project, you can:
 (using `usethis::use_rstudio()` from bash fixes the problem of the other not being created)
 
 ### R Project tidbits
-A directory for an R Project will have a `.Rproj` file, typically with the same name as the directory (and the package if the project is a package). It's best case for all of these names to be the same. (If you want to change the name, refer to that guide from Nick on [renaming an R package](https://www.njtierney.com/post/2017/10/27/change-pkg-name/).)
+A directory for an R Project will have a `.Rproj` file, typically with the same name as the directory (and the package if the project is a package). It's best case for all of these names to be the same. 
 
-This file is just a text file and you don't need to modify it by hand. I can't think of a reason why I'd need to but it's possible from 'Project Options...' in RStudio (drop down on top right).
+This file is just a text file and you don't need to modify it by hand. It's possible to modify it with 'Project Options...' in RStudio (drop down on top right).
 
 Launch an R Project by double clicking the `.Rproj` file or from within RStudio.
 
@@ -136,7 +136,7 @@ Similarly, when you run helper functions from devtools to develop your package (
 
 ### Using `load_all()`
 
-Running `load_all()` is the fastest way to re-load the functions in your package as if you had installed it and run `library(pkgName)`. It is *MUCH* faster than `install()` (especially if you have compiled code in the package - show edits in DSSP).
+Running `load_all()` is the fastest way to re-load the functions in your package -- much faster than installing it (`install.packages(pkgName)`) and loading it into memory `library(pkgName)`. **This is helpful for iteratively updating or tweaking functions you're working on**. 
 
 
 ### Using `test()`
@@ -153,7 +153,7 @@ Running `test()` runs `load_all()` and then the test files that live in `tests/t
 To test examples in your documentation without running `check()`:
 `run_examples()` 
 
-### My (bad) habit
+### (Previous speaker's) bad habit
 I like to have a `working_space.Rmd` in the package directory which I use to test package code away from the console. You'll get a NOTE on the check:
 
 > N  checking top-level files ...
