@@ -134,5 +134,5 @@ install.packages(c("devtools", "usethis"))
 
 ### Cohort 4
 
-`r knitr::include_url("https://youtu.be/BaGzNVLqfAE")`
+`r knitr::include_url("https://www.youtube.com/embed/BaGzNVLqfAE")`
 
