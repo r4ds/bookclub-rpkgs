@@ -130,3 +130,9 @@ install.packages(c("devtools", "usethis"))
 01:05:36	Rex Parsons:	Thanks, Collin!
 ```
 </details>
+
+
+### Cohort 4
+
+`r knitr::include_url("https://www.youtube.com/embed/BaGzNVLqfAE")`
+

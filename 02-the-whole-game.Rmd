@@ -284,3 +284,9 @@ RoxygenNote: 7.1.2
 00:47:27	Larissa Shaughnessy:	Collin I’m going to put something in the slack. I was digging through my docs for it while you were asking about resources - not sure if it gets into the complexity you are asking for but I do find the examples helpful
 ```
 </details>
+
+
+### Cohort 4
+
+`r knitr::include_url("https://www.youtube.com/embed/UKASy8ynWvg")`
+
