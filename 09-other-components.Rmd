@@ -21,3 +21,21 @@
 `r knitr::include_url("https://www.youtube.com/embed/lg9G1R2H-f0")`
 
 `r knitr::include_url("https://www.youtube.com/embed/EjCF7LlvWgI")`
+
+
+### Cohort 3
+
+There was no meeting that specifically covered this material.
+
+
+### Cohort 4
+
+`r knitr::include_url("https://www.youtube.com/embed/VIDURL")`
+
+<details>
+<summary> Meeting chat log </summary>
+
+```
+LOG
+```
+</details>

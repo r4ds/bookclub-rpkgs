@@ -38,3 +38,16 @@
 00:58:29	collinberke:	https://stackoverflow.com/questions/64737686/why-library-or-require-should-not-be-used-in-a-r-package
 ```
 </details>
+
+
+### Cohort 4
+
+`r knitr::include_url("https://www.youtube.com/embed/VIDURL")`
+
+<details>
+<summary> Meeting chat log </summary>
+
+```
+LOG
+```
+</details>

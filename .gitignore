@@ -7,3 +7,6 @@ _book
 _bookdown_files
 bookclub-rpkgs.Rmd
 bookclub-rpkgs_files
+*.html
+bookclub-rpkgs.knit.md
+libs

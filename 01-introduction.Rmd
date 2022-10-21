@@ -136,3 +136,39 @@ install.packages(c("devtools", "usethis"))
 
 `r knitr::include_url("https://www.youtube.com/embed/BaGzNVLqfAE")`
 
+<details>
+<summary> Meeting chat log </summary>
+
+```
+00:10:03	Schafer, Toryn:	https://docs.google.com/spreadsheets/d/161KcusuKQlNcmYyjVszV6hdzBSJzDA6GpulS_Bj5RwU/edit#gid=0
+00:15:59	Schafer, Toryn:	Who are you?
+Where are you calling in from?
+How long have you been using R?
+What are you most looking forward to during the group?
+00:16:11	Jamie Hogg:	Hi all, I can't use my microphone right now. Apologies. I am a PhD student at QUT in Brisbane, Australia. I have been using R for about 2 years or so.
+00:23:48	Schafer, Toryn:	2.5
+00:23:50	Virgilio Gonzenbach:	Q1: 4 (dont handle merges like a pro :c )
+00:23:51	Howard Baek:	3.3
+00:23:54	Sofi GS:	2
+00:23:55	defuneste:	3
+00:23:59	Oluwafemi Oyedele:	3
+00:24:04	Jamie Hogg:	maybe 3. Same here, never worked on a true collaborative project
+00:24:15	Jamie Hogg:	2
+00:24:20	Howard Baek:	5
+00:24:23	Schafer, Toryn:	5
+00:24:24	defuneste:	3
+00:24:26	Sofi GS:	3
+00:24:27	Virgilio Gonzenbach:	4
+00:24:32	Oluwafemi Oyedele:	3
+00:24:51	defuneste:	1
+00:24:54	Virgilio Gonzenbach:	1.5
+00:24:56	Schafer, Toryn:	2
+00:24:58	Howard Baek:	1.4
+00:24:59	Sofi GS:	2
+00:25:06	Jamie Hogg:	3
+00:25:21	Oluwafemi Oyedele:	4
+00:32:50	Jamie Hogg:	where is this signup document your discussing?
+00:33:03	Schafer, Toryn:	https://docs.google.com/spreadsheets/d/161KcusuKQlNcmYyjVszV6hdzBSJzDA6GpulS_Bj5RwU/edit#gid=0
+00:33:35	Jamie Hogg:	great! Thank you
+```
+</details>

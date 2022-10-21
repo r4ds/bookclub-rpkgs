@@ -444,3 +444,16 @@ The locale in our timestamp is only temporarily modified with the `withr::with_l
 01:00:58	Brendan Lam:	I'm gonna try that
 ```
 </details>
+
+
+### Cohort 4
+
+`r knitr::include_url("https://www.youtube.com/embed/VIDURL")`
+
+<details>
+<summary> Meeting chat log </summary>
+
+```
+LOG
+```
+</details>
