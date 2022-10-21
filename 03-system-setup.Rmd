@@ -219,3 +219,46 @@ Update any packages based on recommendations.
 01:05:59	Larissa Shaughnessy:	Mac
 ```
 </details>
+
+
+### Cohort 4
+
+Chapters 3 and 4 were covered together.
+
+`r knitr::include_url("https://www.youtube.com/embed/Trrc57hCtVo")`
+
+<details>
+<summary> Meeting chat log </summary>
+
+```
+00:10:54	defuneste:	bad connection tonight
+00:12:27	defuneste:	I was there with Oluwafemi
+00:12:49	defuneste:	my main take is that I should move to quarto
+00:13:46	Jamie:	Good take defuneste. Three core reasons?
+00:14:26	defuneste:	new stuff will not be implemented in rmd
+00:14:46	defuneste:	and rmd will just be maintained
+00:16:03	Jamie:	sweet!
+00:16:06	Schafer, Toryn:	https://docs.google.com/spreadsheets/d/1AlgFwMR42NjjoG2lcm0hf_pk5ZACw-n8UCwnrny91bU/edit#gid=0
+00:16:46	defuneste:	surprise test !
+00:24:52	defuneste:	https://www.openblas.net/
+00:28:49	Schafer, Toryn:	require is designed for use inside other functions; it returns FALSE and gives a warning (rather than an error as library() does by default) if the package does not exist.
+00:36:30	defuneste:	https://gitlab.com/dickoa/prepr/
+00:37:04	defuneste:	her it say windows user need to add rtools
+00:37:23	defuneste:	as a linux users I nened to install gmp and mpfr
+00:37:29	defuneste:	needed
+00:47:28	defuneste:	https://xkcd.com/1168/
+00:59:38	defuneste:	sudo su -c "R -e \"install.packages('devtools')\"" this in command line to instll a package from shell as a super user
+01:02:01	defuneste:	see the lengthy manual : https://cran.r-project.org/doc/manuals/r-release/R-intro.html#Invoking-R-from-the-command-line
+01:03:18	Schafer, Toryn:	"/Users/torynschafer/Library/R/x86_64/4.2/library"
+01:03:48	Schafer, Toryn:	Sys.getenv("R_LIBS_USER")
+01:04:13	defuneste:	"/home/defuneste/R/x86_64-pc-linux-gnu-library/4.2"
+01:04:18	Ryan McShane:	Mine on Windows: 
+"C:\\Program Files\\R\\library"
+01:09:01	defuneste:	~/ is the same for me /home/defuneste/
+01:10:25	Neil Birrell:	Sorry - I need to head off as someone else has booked the meeting room. Possibly a good question to add to the sheet as well :)
+01:12:39	Oluwafemi Oyedele:	Thank you !!!
+01:16:16	Howard Baek:	Thanks for coming!
+01:16:45	Jamie:	Thanks everyone. I have to go now. See you next week.
+01:18:50	Howard Baek:	Sorry I had to leave my desk! See everyone next week.
+```
+</details>
