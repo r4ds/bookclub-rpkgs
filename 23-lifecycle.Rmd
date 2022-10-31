@@ -61,6 +61,7 @@ Questions: (link no longer available)
 </details>
 
 
+<!--
 ### Cohort 4
 
 `r knitr::include_url("https://www.youtube.com/embed/VIDURL")`
@@ -72,3 +73,19 @@ Questions: (link no longer available)
 LOG
 ```
 </details>
+-->
+
+
+<!--
+### Cohort 5
+
+`r knitr::include_url("https://www.youtube.com/embed/VIDURL")`
+
+<details>
+<summary> Meeting chat log </summary>
+
+```
+LOG
+```
+</details>
+-->

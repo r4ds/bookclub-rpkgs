@@ -172,3 +172,18 @@ What are you most looking forward to during the group?
 00:33:35	Jamie Hogg:	great! Thank you
 ```
 </details>
+
+
+<!--
+### Cohort 5
+
+`r knitr::include_url("https://www.youtube.com/embed/VIDURL")`
+
+<details>
+<summary> Meeting chat log </summary>
+
+```
+LOG
+```
+</details>
+-->

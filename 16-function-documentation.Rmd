@@ -234,6 +234,7 @@ bar <- function(a, b) {
 </details>
 
 
+<!--
 ### Cohort 4
 
 `r knitr::include_url("https://www.youtube.com/embed/VIDURL")`
@@ -245,3 +246,19 @@ bar <- function(a, b) {
 LOG
 ```
 </details>
+-->
+
+
+<!--
+### Cohort 5
+
+`r knitr::include_url("https://www.youtube.com/embed/VIDURL")`
+
+<details>
+<summary> Meeting chat log </summary>
+
+```
+LOG
+```
+</details>
+-->
