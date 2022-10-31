@@ -28,6 +28,7 @@
 There was no meeting that specifically covered this material.
 
 
+<!--
 ### Cohort 4
 
 `r knitr::include_url("https://www.youtube.com/embed/VIDURL")`
@@ -39,3 +40,19 @@ There was no meeting that specifically covered this material.
 LOG
 ```
 </details>
+-->
+
+
+<!--
+### Cohort 5
+
+`r knitr::include_url("https://www.youtube.com/embed/VIDURL")`
+
+<details>
+<summary> Meeting chat log </summary>
+
+```
+LOG
+```
+</details>
+-->

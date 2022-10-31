@@ -206,6 +206,22 @@ It can be tricky to incorporate everything into a test script, and sometimes you
 
 ### Cohort 4
 
+`r knitr::include_url("https://www.youtube.com/embed/RMeQx0u05Ok")`
+
+<details>
+<summary> Meeting chat log </summary>
+
+```
+00:25:00	Oluwafemi Oyedele:	Sorry for jumping in late!!!
+00:25:05	Schafer, Toryn:	Welcome!
+00:48:52	defuneste:	https://r4ds.github.io/bookclub-do4ds/the-5-tenets-of-devops.html
+```
+</details>
+
+
+<!--
+### Cohort 5
+
 `r knitr::include_url("https://www.youtube.com/embed/VIDURL")`
 
 <details>
@@ -215,3 +231,4 @@ It can be tricky to incorporate everything into a test script, and sometimes you
 LOG
 ```
 </details>
+-->
