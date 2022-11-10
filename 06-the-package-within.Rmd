@@ -1,19 +1,33 @@
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
+```
+
+
 # The package within
 
 **Purpose**
 
-To walk through the building of a toy package, with an emphasis on the __package's__ R code and how it differs from R code in a __script__.
+To walk through the development of a small toy package, with an emphasis on the __package's__ R code and how it differs from R code in a __script__.
 
-Data analysis script $\rightarrow$ Isolate and extract the reusable data and logic from the script $\rightarrow$ Put code into an R package $\rightarrow$ Use package in a newly simplified script    
+Roadmap:
 
+1. Data analysis script 
+2. Isolate and extract the reusable data and logic from the script 
+3. Put code into an R package 
+4. Use package in a newly simplified script.
+
+This chapter purposefully makes mistakes along the way, in order to highlight special considerations for the R code inside a package.
+
+*Section headers incorporate the NATO phonetic alphabet.*
 
 ## Alfa: a script that works
 
-A fictional script for a dataset of people who went for a swim.
+A fictional script for a dataset of people who went for a swim:
 
 > Where did you swim and how hot was it outside?
 
-```
+```{r}
 infile <- "swim.csv"
 (dat <- read.csv(infile))
 #>   name    where temp
@@ -25,14 +39,17 @@ infile <- "swim.csv"
 ```
 
 1. Observations were classified as American or British based on how they described the beach:
-```
+
+```{r}
 dat$english[dat$where == "beach"] <- "US"
 dat$english[dat$where == "coast"] <- "US"
 dat$english[dat$where == "seashore"] <- "UK"
 dat$english[dat$where == "seaside"] <- "UK"
 ```
+
 2. Temperatures were converted to Celsius:
-```
+
+```{r}
 dat$temp[dat$english == "US"] <- (dat$temp[dat$english == "US"] - 32) * 5/9
 dat
 #>   name    where temp english
@@ -42,8 +59,10 @@ dat
 #> 4 Dale    beach 29.4      US
 #> 5 Evan  seaside 31.0      UK
 ```
-3. Data is written back to a csv file. A timestamp is also captured in the filename.
-```
+
+3. Data is written back out to a CSV file. A timestamp is also captured in the filename.
+
+```{r}
 now <- Sys.time()
 timestamp <- format(now, "%Y-%B-%d_%H-%M-%S")
 (outfile <- paste0(timestamp, "_", sub("(.*)([.]csv$)", "\\1_clean\\2", infile)))
@@ -52,11 +71,14 @@ write.csv(dat, file = outfile, quote = FALSE, row.names = FALSE)
 ```
 
 ## Bravo: a better script that works
-- There's a package that lurks within the original script (apparently)
-    - Suboptimal coding practices like repetitive code and mixing of code and data
+
+- There's a package that lurks within the original script.
+    - Suboptimal coding practices like repetitive code and mixing of code and data makes it hard to catch.
+- A good first step is to refactor this code.
     
 Next version of the script:
-```
+
+```{r}
 library(tidyverse)
 
 infile <- "swim.csv"
@@ -98,14 +120,30 @@ write_csv(dat, outfile_path(infile))
 
 **Key features of this code:**
 
-- using functions from tidyverse packages
-- different “beach” words are stored in a lookup table. This makes it easier to add words in the future.
+- Functions from the `tidyverse` packages, `readr` and `dplyr`.
+- Different “beach” words are stored in a _lookup table_. This makes it easier to add words in the future.
 - `f_to_c()`, `timestamp()`, and `outfile_path()` functions now hold the logic for converting temperatures and forming the timestamped output file name.
 
+
+Easier to recognize the reusable bits of this script, i.e. the bits that have nothing to do with a specific input file, like `swim.csv`
+
 ## Charlie: external helpers
+
 Move reusable data and logic out of the analysis script and into separate files.
 
+Here is the content of `beach-lookup-table.csv`:
+
 ```
+where,english
+beach,US
+coast,US
+seashore,UK
+seaside,UK
+```
+
+Here is the content of `cleaning-helpers.R`:
+
+```{r}
 library(tidyverse)
 
 localize_beach <- function(dat) {
@@ -129,9 +167,9 @@ outfile_path <- function(infile) {
 }
 ```
 
-- High-level helper functions like localize_beach() and celsify_temp(), were added to the pre-existing helpers (f_to_c(), timestamp(), and outfile_path())
+- High-level helper functions like `localize_beach()` and `celsify_temp()`, were added to the pre-existing helpers (`f_to_c()`, `timestamp()`, and `outfile_path()`)
 
-```
+```{r}
 library(tidyverse)
 source("cleaning-helpers.R")
 
@@ -153,19 +191,24 @@ dat <- read_csv(infile, col_types = cols(name = "c", where = "c", temp = "d"))
 
 write_csv(dat, outfile_path(infile))
 ```
+
 Script is now much shorter (and cleaner). However, whether it's easier depends on personal preference and what "feels" easier to work with.
+
+For more information, refer to the [Tidyverse design guide](https://design.tidyverse.org/)
+
 
 ## Delta: an attempt at a package
 
-- Use usethis::create_package() to scaffold a new R package
-- Copy cleaning-helpers.R into the new package, specifically, to R/cleaning-helpers.R
-- Copy beach-lookup-table.csv into the top-level of the new source package
-- install package
+- Use `usethis::create_package()` to scaffold a new R package
+- Copy `cleaning-helpers.R` into the new package, specifically, to `R/cleaning-helpers.R`
+- Copy `beach-lookup-table.csv` into the top-level of the new source package
+- Install package
 
 Script we're trying to run:
-```
+
+```{r}
 library(tidyverse)
-library(delta) # originally source("cleaning-helpers.R")
+library(delta) # instead of source("cleaning-helpers.R")
 
 infile <- "swim.csv"
 dat <- read_csv(infile, col_types = cols(name = "c", where = "c", temp = "d"))
@@ -176,8 +219,10 @@ dat <- dat %>%
 
 write_csv(dat, outfile_path(infile))
 ```
+
 Results when we try to run this code:
-```
+
+```{r}
 library(tidyverse)
 library(delta)
 
@@ -193,13 +238,14 @@ write_csv(dat, outfile_path(infile))
 > Error in outfile_path(infile) : could not find function "outfile_path"
 ```
 
-Despite calling our library(delta), none of the functions were actually available to use.
+Despite calling `library(delta)`, none of the functions were actually available to use.
 
-- This is because we only attached the package, rather than sourcing the file with helper functions. 
-   - Attaching a package does not put the functions in the global workspace.
-      - We can export these functions properly by putting `@export` in the roxygen comment above each function
+- Attaching a package does not put the functions in the global workspace.
+      - In contrast to `source()`-ing a file of helper functions, attaching a package does not dump its functions into the global workspace. 
+      - By default, functions in a package are only for internal use
+      - We can export these functions properly by putting `@export` in the roxygen comment above each function (See Section 10.4 for more information on DESCRIPTION)
 
-```
+```{r}
 #' @export
 celsify_temp <- function(dat) {
   mutate(dat, temp = if_else(english == "US", f_to_c(temp), temp))
@@ -208,7 +254,7 @@ celsify_temp <- function(dat) {
 
 Now our script works (sort of)!
 
-```
+```{r}
 library(tidyverse)
 library(delta)
 
@@ -240,14 +286,17 @@ ERROR: lazy loading failed for package ‘delta’
 * removing ‘/Users/brendan/RScripts/delta.Rcheck/delta’
 ```
 
-What are the reasons behing these errors?
+What is the reason behind this error?
 
 - Package was declared incorrectly
    - While you can load a package using `library(tidyverse)` in a script, dependencies on other packages must be declared in the `DESCRIPTION` 
    
+   
 ## Echo: a working package
+
 Now we'll make a package that actually works:
-```
+
+```{r}
 lookup_table <- dplyr::tribble(
       ~where, ~english,
      "beach",     "US",
@@ -277,13 +326,14 @@ outfile_path <- function(infile) {
 }
 ```
 
-**Note:** To fix our initial problem with loading a CSV file, we've created lookup_table to create a data frame instead. However, Chapter 14 provides more guidance and recommendations on how to load datasets properly.
+**Note:** To fix our initial problem with loading a CSV file, we've created a dataframe `lookup_table`. However, Chapter 8 Data provides more guidance and recommendations on how to load datasets properly.
 
 **Other Note:** When calling functions from other packages, we should specify the package that we're using (e.g., dplyr::mutate()). Moreover, we should identify the specific package being used, rather than the meta-package (e.g., do not use tidyverse::mutate())
 
 - All of the user-facing functions have an `@export` tag in their roxygen comment, which means that devtools::document() adds them correctly to the NAMESPACE file.
 
 This package can be installed, but we receive 1 note and 1 warning:
+
 ``` 
 * checking R code for possible problems ... NOTE
 celsify_temp: no visible binding for global variable ‘english’
@@ -300,10 +350,10 @@ Extensions’ manual.
 ```
 Translation of first warnings: `no visible binding for global variable ‘english’` and `no visible binding for global variable ‘temp’`
 
-- Using bare variable names like english and temp looks suspicious because you're using unquoted variable names from dplyr inside a package.
-   - defining these variables globally eliminates the note:
+- Using bare variable names like `english` and `temp` looks suspicious because you're using unquoted variable names from `dplyr` inside a package.
+   - Defining these variables globally eliminates the note:
 
-```
+```{r}
 option 1 (then you should also put utils in Imports)
 utils::globalVariables(c("english", "temp"))
 
@@ -314,12 +364,14 @@ The other note we received from R:
 
 `"Undocumented code objects: ‘celsify_temp’ ‘localize_beach’ ‘outfile_path’ All user-level objects in a package should have documentation entries."` 
 
-This is caused by not documenting exported functions. Using roxygen comments to document it should solve the problem.
+This is caused by not documenting exported functions. Using roxygen comments to document it should solve the problem. (Function documentation is discussed in Chapter 16).
+
 
 ## Foxtrot: build time vs. run time
 
-Another problem: For this package, the timestamps don't seem to work properly..
-```
+**Another problem::** timestamps don't seem to work properly.
+
+```{r}
 Sys.time()
 #> [1] "2022-02-24 20:49:59 PST"
 
@@ -328,24 +380,37 @@ outfile_path("INFILE.csv")
 ```
 The timestamp reflects the time that the function was initially run, rather than the current time.
 
-**Source of the problem:** The `Sys.time()` function outside the `outfile_path` definition. The `Sys.time` is executed when the package is built, but never again. *Code outside your functions is only built once at build time.*
+Recall how we form the filepath for output files:
 
-Moving `Sys.time` so that it's no longer top level code:
+```{r}
+now <- Sys.time()
+timestamp <- function(time) format(time, "%Y-%B-%d_%H-%M-%S")
+outfile_path <- function(infile) {
+  paste0(timestamp(now), "_", sub("(.*)([.]csv$)", "\\1_clean\\2", infile))
+}
 ```
+
+
+**Source of the problem:** The `now <- Sys.time()` function lies outside the `outfile_path` definition, so it is executed when the package is built, but never again. *Code outside your functions is only built once at build time.*
+
+Moving `now <- Sys.time` so that it's no longer top level code:
+
+```{r}
 # always timestamp as "now"
 outfile_path <- function(infile) {
-  ts <- timestamp(Sys.time())
-  paste0(ts, "_", sub("(.*)([.]csv$)", "\\1_clean\\2", infile))
+  now <- timestamp(Sys.time())
+  paste0(now, "_", sub("(.*)([.]csv$)", "\\1_clean\\2", infile))
 }
 
 # allow user to provide a time, but default to "now"
 outfile_path <- function(infile, time = Sys.time()) {
-  ts <- timestamp(time)
-  paste0(ts, "_", sub("(.*)([.]csv$)", "\\1_clean\\2", infile))
+  now <- timestamp(time)
+  paste0(now, "_", sub("(.*)([.]csv$)", "\\1_clean\\2", infile))
 }
 ```
 
-**Takeaway:** Need to have a different mindset when defining objects for a package. The objects should be functions and these functions should (generally) only use data they create or that is passed via an argument.
+> Need to have a different mindset when defining objects inside a package. The objects should be functions and these functions should (generally) only use data they create or that is passed via an argument.
+
 
 ## Golf: side effects
 
@@ -364,6 +429,8 @@ tz <- c("Europe/Rome", "Europe/Warsaw", "America/Sao_Paulo", "Europe/London")
 tibble::tibble(location, timestamp, LC_TIME, tz) %>% 
   knitr::kable()
 ```
+
+**Problem:** The month names vary, as does the time, and even the date.
 
 **Proposed Solution:** Create timestamps that are all in a fixed time zone.
 
@@ -416,6 +483,8 @@ The locale in our timestamp is only temporarily modified with the `withr::with_l
 - In this example, the mistake we made was changing the user's overall state. 
    - If you have to do this, make sure this is documented explicitly or try to make them reversible
 
+
+> You need to adopt a different mindset when defining functions inside a package. Try to avoid making any changes to the user’s overall state. If such changes are unavoidable, make sure to reverse them (if possible) or to document them explicitly (if related to the function’s primary purpose).
 
 ## Meeting Videos
 
