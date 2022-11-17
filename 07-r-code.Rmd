@@ -7,6 +7,7 @@
 - **Organize functions** into files.
 - Maintain a **consistent coding style.**
 - Compare and contrast **functions in a package** versus **functions in a script.**
+- Use the fundamental workflows for **test-driving** and formally **checking** an in-development package.
 
 ## Organise functions into files
 
@@ -25,11 +26,14 @@
   - Main function and supporting function in one file (e.g. [tidyr/R/separate](https://github.com/tidyverse/tidyr/blob/v1.1.2/R/separate.R))
   - A family of related functions in one file (e.g. [tidyr/R/rectangle.R](https://github.com/tidyverse/tidyr/blob/v1.1.2/R/rectangle.R))
   - One function in one file if the function doesn't neatly fit any other grouping (e.g [tidyr/R/uncount.R](https://github.com/tidyverse/tidyr/blob/v1.1.2/R/uncount.R)) 
-  - Small helper functions used in functions across different files are typically stored in `R/utils.R` by convention
+  - Small helper functions used in functions across different files are typically stored in `R/utils.R` by convention (e.g [spotifyr/R/utils.R](https://github.com/charlie86/spotifyr/blob/master/R/utils.R))
+  - If its hard to predict in which file a function lives in, it's time to separate your functions into more files.
 
 ## Fast feedback via `load_all()`
 
-Reminder to use `load_all()` to try out the functions in file under `/R`.
+Reminder to use `devtools::load_all()` to try out the functions in file under `/R`.
+
+Compared to the alternatives (like using `source`), `load_all()` helps you to iterate more quickly and provides an excellent approximation to the namespace regime of an installed package.
 
 ## Code style
 
@@ -108,6 +112,9 @@ foo <- pkgB::blah
 ```
 foo <- function(...) pkgB::blah(...)
 ```
+The first definition will cause foo() in your package to reflect the definition of pkgB::blah() at the version present on the machine where the binary package is built (often CRAN), at that moment in time.
+
+The main take away from the examples is: **Any R code outside of a function is suspicious and should be carefully reviewed.**
 
 ## Respect the R landscape
 
@@ -134,7 +141,7 @@ foo <- function(...) pkgB::blah(...)
   - `setwd()`
   - `Sys.setenv()`
   - `set.seed()`
-- Flip side of this is that you shouldn't rely on user's landscape. 
+- Flip side of this is that you shouldn't rely on user's landscape. For example, functions that rely on sorting strings are dangerous, because sort order depends on the system locale.
 
 
 ### What if you have to use one of the above functions and alter the landscape?
@@ -212,7 +219,7 @@ Here is a typical sequence of calls when using devtools for package development:
 6. `check()`
 
 
-Experienced developers cycle through these steps frequently and rapidly (remember, fast feedback!). Lack of comfort with these steps often leads to a dysfunctional workflow, that looks look like below, and makes it difficult to spot bugs as they arise. 
+Experienced developers cycle through these steps several times in an hour or day (remember, fast feedback!). Lack of comfort with these steps often leads to a dysfunctional workflow that is run infrequently (maybe once per month) and makes it difficult to spot bugs as they arise. That dysfunctional workflow looks like:
 
 
 1. Edit one or more files below `R/`.
@@ -220,6 +227,8 @@ Experienced developers cycle through these steps frequently and rapidly (remembe
 3. Write documentation (once the code is “done”).
 4. Write tests (once the code is “done”).
 5. Run `R CMD check` right before submitting to CRAN or releasing in some other way.
+
+The value of fast feedback also applies to running `document()`, `test()`, and `check()`. There are problem that can't be detected from using `load_all()` and running a few interactive examples. Finding and fixing bugs right after they were created is much easier than troubleshooting them weeks or months after you last touched the code.
 
 
 ## CRAN notes
