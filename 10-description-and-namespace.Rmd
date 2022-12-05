@@ -35,9 +35,6 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.0
 ```
 
-
-
-
 ## Title and description
 
 What does your package do?
@@ -121,7 +118,7 @@ If you want to share your package, include a license.
 
 You can use `usethis::use_*_license()` for configuration.
 
-More in Chapter 9!
+More in Chapter 9! -> now chapter 12 TODO see if the note from this session need to stay here or move to chapter 12
 
 **Notes from session**
 
