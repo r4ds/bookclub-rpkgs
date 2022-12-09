@@ -25,19 +25,47 @@
 There was no meeting that specifically covered this material.
 
 
-<!--
 ### Cohort 4
 
-`r knitr::include_url("https://www.youtube.com/embed/VIDURL")`
+`r knitr::include_url("https://www.youtube.com/embed/ft4l9YR8BkI")`
 
 <details>
 <summary> Meeting chat log </summary>
 
 ```
-LOG
+00:49:03	Olivier Leroy:	I cant share image in zoo chat so I will do it in slack
+00:57:57	Olivier Leroy:	https://github.com/tidyverse/googledrive/blob/main/R/sysdata.rda
+01:01:12	Olivier Leroy:	➜  readr tree
+.
+├── DESCRIPTION
+├── doc
+│   ├── column-types.html
+│   ├── column-types.R
+│   ├── column-types.Rmd
+│   ├── index.html
+│   ├── locales.html
+│   ├── locales.R
+│   ├── locales.Rmd
+│   ├── readr.html
+│   ├── readr.R
+│   └── readr.Rmd
+├── extdata
+│   ├── challenge.csv
+│   ├── chickens.csv
+│   ├── epa78.txt
+│   ├── example.log
+│   ├── fwf-sample.txt
+│   ├── massey-rating.txt
+│   ├── mtcars.csv
+│   ├── mtcars.csv.bz2
+│   ├── mtcars.csv.zip
+│   └── whitespace-sample.txt
+01:01:33	Olivier Leroy:	this is a part of what I get from readr/
+01:01:55	Olivier Leroy:	in the library folder
+01:08:00	Jamie Hogg:	Thanks Oluwafemi! I have another meeting now. See you all next time :)
+01:08:11	Olivier Leroy:	bye!
 ```
 </details>
--->
 
 
 <!--

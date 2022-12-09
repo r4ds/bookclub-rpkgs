@@ -1,10 +1,10 @@
-# Vignettes: long-form documentation
+# Dependencies: In Practice
+
+NB I just C/C previous book club part on dependencies from 1ed to the correct chapter from 2ed but I have not processed it.  
 
 **Learning objectives:**
 
 - THESE ARE NICE TO HAVE BUT NOT ABSOLUTELY NECESSARY
-
-NB I just C/C previous book club part on dependencies from 1ed to the correct chapter from 2ed but I do not have process it.  
 
 ## Dependencies
 

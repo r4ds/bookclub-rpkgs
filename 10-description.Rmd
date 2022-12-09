@@ -1,6 +1,8 @@
 # (PART) Package metadata {-}
 
-# DESCRIPTION and NAMESPACE
+# DESCRIPTION
+
+Note: These slides were written for an old version of this chapter, which incorporated NAMESPACE. The NAMESPACE section should likely be moved to chapter 11 and/or 12.
 
 **Learning objectives:**
 
@@ -257,19 +259,9 @@ You can also created your own but CRAN does have constraints
 </details>
 
 
-<!--
 ### Cohort 4
 
-`r knitr::include_url("https://www.youtube.com/embed/VIDURL")`
-
-<details>
-<summary> Meeting chat log </summary>
-
-```
-LOG
-```
-</details>
--->
+`r knitr::include_url("https://www.youtube.com/embed/Dohr28WYaX0")`
 
 
 <!--
