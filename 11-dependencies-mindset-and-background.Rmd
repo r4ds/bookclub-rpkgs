@@ -1,6 +1,6 @@
 # Dependencies: Mindset and Background
 
-NB I just C/C previous book club part on dependencies from 1ed to the correct chapter from 2ed but I have not processed it.  
+NB We copy/pasted the previous book club part on dependencies from 1ed to the correct chapter from 2ed but we have not processed it.  
 
 **Learning objectives:**
 
