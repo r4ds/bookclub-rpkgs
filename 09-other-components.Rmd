@@ -101,19 +101,9 @@ If you use `usethis::use_citation()` it will, if needed, create a `inst/` and `C
 There was no meeting that specifically covered this material.
 
 
-<!--
 ### Cohort 4
 
-`r knitr::include_url("https://www.youtube.com/embed/VIDURL")`
-
-<details>
-<summary> Meeting chat log </summary>
-
-```
-LOG
-```
-</details>
--->
+`r knitr::include_url("https://www.youtube.com/embed/Dohr28WYaX0")`
 
 
 <!--

@@ -262,19 +262,37 @@ cat(stringi::stri_escape_unicode(x))
 `r knitr::include_url("https://www.youtube.com/embed/aotxnpmbLgQ")`
 
 
-<!--
 ### Cohort 4
 
-`r knitr::include_url("https://www.youtube.com/embed/VIDURL")`
+`r knitr::include_url("https://www.youtube.com/embed/E6Mvas6V-4E")`
 
 <details>
 <summary> Meeting chat log </summary>
 
 ```
-LOG
+00:24:12	Olivier Leroy:	for linux user (ubunutu) now we have r2u (https://eddelbuettel.github.io/r2u/) so it could be the same than windows /mac
+00:36:58	Jamie Hogg:	Does anyone know why it is the zzz file?
+00:37:03	Howard Baek:	^
+00:37:08	Howard Baek:	why is it named "zzz"?
+00:37:31	Jamie Hogg:	Is it to make it be 'built' last?
+00:38:03	Howard Baek:	https://stackoverflow.com/questions/21448904/r-packages-what-is-the-file-zzz-r-used-for
+00:38:12	Howard Baek:	"zzz" is just a conventional name
+00:38:21	Jamie Hogg:	fair enough hahah
+00:39:21	Howard Baek:	maybe it has sth to do with “build order”? because they use the last letter in the alphabet
+00:39:42	Jamie Hogg:	Yeah, I was just going to say that :)
+00:40:14	Howard Baek:	Ben Bolker confirms this in that SO post
+00:40:23	Schafer, Toryn:	Maybe a question for Jenny?
+00:41:12	Schafer, Toryn:	exams
+00:42:01	Olivier Leroy:	https://www.r-exams.org/
+00:42:04	Olivier Leroy:	?
+00:43:37	Schafer, Toryn:	https://www.r-exams.org/intro/written/
+00:47:28	Olivier Leroy:	https://github.com/rsbivand/rgrass/blame/main/R/initGRASS.R
+00:49:00	Jamie Hogg:	I have to go now. Thanks for presenting today Sofi :)
+00:50:53	Schafer, Toryn:	https://github.com/haoxuanwu/dspCP
+01:06:25	Neil Birrell:	Here's a blog on the history of the assignment operator in R
+01:06:26	Neil Birrell:	https://colinfay.me/r-assignment/
 ```
 </details>
--->
 
 
 <!--

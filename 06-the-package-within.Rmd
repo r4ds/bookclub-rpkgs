@@ -515,19 +515,20 @@ The locale in our timestamp is only temporarily modified with the `withr::with_l
 </details>
 
 
-<!--
 ### Cohort 4
 
-`r knitr::include_url("https://www.youtube.com/embed/VIDURL")`
+`r knitr::include_url("https://www.youtube.com/embed/xHYtYBrNAbg")`
 
 <details>
 <summary> Meeting chat log </summary>
 
 ```
-LOG
+00:25:03	Olivier Leroy:	dplyr:::select()
+00:26:06	Olivier Leroy:	dplyr::select()
+00:28:56	Olivier Leroy:	https://docs.google.com/spreadsheets/d/1AlgFwMR42NjjoG2lcm0hf_pk5ZACw-n8UCwnrny91bU/edit#gid=0
+00:35:45	Howard Baek:	https://github.com/r-lib/conflicted
 ```
 </details>
--->
 
 
 <!--
