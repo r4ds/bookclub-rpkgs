@@ -37,3 +37,33 @@
 01:05:13	Brendan Lam:	As someone who didn't know what Docker is, this was very informative. thanks, Ryan!
 ```
 </details>
+
+
+<!--
+### Cohort 4
+
+`r knitr::include_url("https://www.youtube.com/embed/VIDURL")`
+
+<details>
+<summary> Meeting chat log </summary>
+
+```
+LOG
+```
+</details>
+-->
+
+
+<!--
+### Cohort 5
+
+`r knitr::include_url("https://www.youtube.com/embed/VIDURL")`
+
+<details>
+<summary> Meeting chat log </summary>
+
+```
+LOG
+```
+</details>
+-->

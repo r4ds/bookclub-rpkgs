@@ -232,3 +232,33 @@ bar <- function(a, b) {
 01:11:24	Ryan Metcalf:	S3 Reference: https://adv-r.hadley.nz/s3.html?q=S3#implicit-class
 ```
 </details>
+
+
+<!--
+### Cohort 4
+
+`r knitr::include_url("https://www.youtube.com/embed/VIDURL")`
+
+<details>
+<summary> Meeting chat log </summary>
+
+```
+LOG
+```
+</details>
+-->
+
+
+<!--
+### Cohort 5
+
+`r knitr::include_url("https://www.youtube.com/embed/VIDURL")`
+
+<details>
+<summary> Meeting chat log </summary>
+
+```
+LOG
+```
+</details>
+-->

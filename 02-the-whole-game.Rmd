@@ -284,3 +284,66 @@ RoxygenNote: 7.1.2
 00:47:27	Larissa Shaughnessy:	Collin I’m going to put something in the slack. I was digging through my docs for it while you were asking about resources - not sure if it gets into the complexity you are asking for but I do find the examples helpful
 ```
 </details>
+
+
+### Cohort 4
+
+`r knitr::include_url("https://www.youtube.com/embed/UKASy8ynWvg")`
+
+<details>
+<summary> Meeting chat log </summary>
+
+```
+00:04:21	Oluwafemi Oyedele:	Hello, Good Evening !!!
+00:21:15	Schafer, Toryn:	Is anyone not using RStudio?
+00:21:36	Jamie:	I'm using Rstudio
+00:21:46	Neil Birrell:	same here
+00:21:48	Meenakshi Kushwaha:	me too
+00:22:10	defuneste:	I am using emacs or rstudio
+00:22:28	Jamie:	Just a note: ensure that the create_package() path is not already in a R project.
+00:22:51	Schafer, Toryn:	Good advice, Jamie!
+00:26:42	defuneste:	to git
+00:26:48	Schafer, Toryn:	I think I had different responses 😅 someone was having fun with that
+00:28:41	Ryan McShane:	great example; I was wrestling with strsplit outputting lists or matrices only today 😂
+00:29:25	Schafer, Toryn:	I felt called out with the mention of source(“file.R”)
+00:29:40	Ryan McShane:	and now it's obvious I didn't read the chapter (it's in 2.7, I'm seeing)
+00:32:25	defuneste:	I use source() all the time attaching and reattaching the same library over and over :)
+00:32:38	Jamie:	so check() tries to install the package right?
+00:33:34	defuneste:	good question I am unsure
+00:35:00	Schafer, Toryn:	I think so. From the help page it says it builds and then checks CRAN requirements
+00:39:50	Schafer, Toryn:	Did anyone else get a note on there check() about “unable to verify current time”
+00:40:16	defuneste:	> Like other license helpers, use_mit_license() also puts a copy of the full license in LICENSE.md and adds this file to .Rbuildignore
+00:40:26	defuneste:	it was a quote
+00:48:43	Schafer, Toryn:	I was manually adding things to a NAMESPACE in a local package before today 😅
+00:49:12	Jamie:	How were you doing that? Doesn't it say read only?
+00:50:02	Schafer, Toryn:	It’s not actually… I don't know. I can type in it and save
+00:50:39	Jamie:	Good find :)
+00:53:43	Schafer, Toryn:	if you wrap the examples in \dontrun{}, then it won't affect the check()... not sure if that is CRAN compliant, but if you have a computationally expensive function
+00:54:26	Jamie:	Oh!! Nice one! I've always wondered why all examples start with dontrun! Thanks Torynm :)
+00:54:37	Jamie:	*Toryn
+00:57:15	defuneste:	I always do that by "hand"  and my readme are ugly
+01:00:45	Jamie:	I have to go now. Thanks for a great session guys. Well done Oluwafemi. See you all next week :)
+01:03:00	defuneste:	storm is here in Ohio be ready Chicago!
+01:03:04	Schafer, Toryn:	Hey! We're still looking for someone to sign up for week 4: https://docs.google.com/spreadsheets/d/161KcusuKQlNcmYyjVszV6hdzBSJzDA6GpulS_Bj5RwU/edit#gid=0
+01:03:25	Ryan McShane:	I can do week 4
+01:04:40	defuneste:	it was great !
+01:04:45	defuneste:	live coding is hard
+01:05:36	Meenakshi Kushwaha:	thanks so much for the excellent demo!
+01:05:54	defuneste:	yeah the used rename_file()
+```
+</details>
+
+
+<!--
+### Cohort 5
+
+`r knitr::include_url("https://www.youtube.com/embed/VIDURL")`
+
+<details>
+<summary> Meeting chat log </summary>
+
+```
+LOG
+```
+</details>
+-->

@@ -1,13 +1,86 @@
 # Other components
 
+**What we have seen:** 
+
+- Various states of a package (source -> in-memory)
+
+- Focus on a workflow with frequent test and documentation
+
+- Build time vs. Run time
+
+- How and where store R code
+
+- How and where to store data 
+
+
+**What we will see see:**
+
+- **"Nice to be aware of"**
+
+- Package metadata: **DESCRIPTION & NAMESPACE** dependencies, licenses
+
+- Testing 
+
+- Documentation
+
+- Maintenance and distribution
+
+
 **Learning objectives:**
 
-- THESE ARE NICE TO HAVE BUT NOT ABSOLUTELY NECESSARY
+- Getting acquainted with other part of some R package
 
-## SLIDE 1
 
-- ADD SLIDES AS SECTIONS (`##`).
-- TRY TO KEEP THEM RELATIVELY SLIDE-LIKE; THESE ARE NOTES, NOT THE BOOK ITSELF.
+## Other directories
+
+- `src/`: source and header files for compiled code: need an other book 
+    
+   * [cpp11 package](https://cpp11.r-lib.org/)  
+   * [Rcpp package](https://www.rcpp.org/)  
+     
+  
+- `inst/`: we already see it in the data chapter (`inst/extdata/` [here](https://r-pkgs.org/data.html#sec-data-extdata)). We will add `CITATION` in it
+
+- `tools/`: configure tools and store useful stuff for maintainers 
+
+- `demo/`: legacy phenomenon, we should use a good `README.md` and vignettes ([chapter 17](https://r-pkgs.org/vignettes.html))  
+
+- `exec/`: executable scripts : flagged as executables (?), apparently `inst/` is a preferred location     
+
+- `po/`: translations for messages (both internal and from the package)
+
+## Installed filled
+
+Everything in `inst/` is copied into the top-level directory of the installed package. 
+
+**Warnings**: no subdirectory with a name already in use at the top-level (ie: `inst/data`)
+
+Remember (In dev: `inst/bob` ->  for users: `/bob`): to avoid trouble you can use [`devtools::load_all()`](https://devtools.r-lib.org/reference/load_all.html) or [`fs::path_package()`](https://fs.r-lib.org/reference/path_package.html).
+
+
+### Package citation:
+
+`citation()` is fetching the `CITATION` file.
+
+- without argument -> how to cite base R
+
+- with a package name (a string: "tidyverse") -> how to cite the package
+
+If you use `usethis::use_citation()` it will, if needed, create a `inst/` and `CITATION` template.
+
+## Congiguration tools : `tools/` 
+
+- official use: Scripts needed at **compile time**, associated with `src/`, they will not be present in the installed package.  
+
+- "unofficial" use : web toolkits, specification for a web API, colour palettes, styles, themes (-> `Rbuildignore`)
+
+
+## Summary 
+
+- Packages can include a lot of different files!
+
+- Official way and an unofficial one 
+
 
 ## Meeting Videos
 
@@ -21,3 +94,28 @@
 `r knitr::include_url("https://www.youtube.com/embed/lg9G1R2H-f0")`
 
 `r knitr::include_url("https://www.youtube.com/embed/EjCF7LlvWgI")`
+
+
+### Cohort 3
+
+There was no meeting that specifically covered this material.
+
+
+### Cohort 4
+
+`r knitr::include_url("https://www.youtube.com/embed/Dohr28WYaX0")`
+
+
+<!--
+### Cohort 5
+
+`r knitr::include_url("https://www.youtube.com/embed/VIDURL")`
+
+<details>
+<summary> Meeting chat log </summary>
+
+```
+LOG
+```
+</details>
+-->

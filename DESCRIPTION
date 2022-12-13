@@ -1,6 +1,6 @@
 Package: bookclub-rpkgs
 Title: R Packages Book Club
-Version: 0.0.3
+Version: 0.0.5
 Authors@R: c(
   person(
     "R4DS Online Learning Community",
