@@ -1,16 +1,56 @@
 # Dependencies: Mindset and Background
 
-NB We copy/pasted the previous book club part on dependencies from 1ed to the correct chapter from 2ed but we have not processed it.  
+One should not have an all or nothing mindset when it comes to dependencies. This chapter aims at how to find the balance.
 
 **Learning objectives:**
 
-- THESE ARE NICE TO HAVE BUT NOT ABSOLUTELY NECESSARY
+- When should you take a dependency?  
+- Deciding between Imports, Suggests, and Depends
+- Namespace system and user's search path
 
-## Dependencies
+This chapter should be revisited "as your packages get more ambitious and sophisticated."
 
-The `DESCRIPTION` file lists the packages that your package needs to work.
+## When should you take a dependency?
 
-### `Imports`
+This section is adapted from a blog post and talk by Jim Hester. 
+
+### Dependencies are not equal 
+
+There is a cost associated with adding a dependency that make them not equal.
+
+**How can dependencies differ in cost:**
+
+1. Type: base and recommended packages vs. non-CRAN repository packages
+2. Number of upstream dependencies: potentially large number of recursive dependencies
+3. Already fulfilled dependencies: lower costs to recursive dependencies and highly downloaded packages
+4. Install burden: compilation time, binary package size, system requirements
+5. Maintenance capacity: will the package maintainers keep up?
+6. Functionality: outsourcing broadly used functions saves you time
+
+### Prefer a holistic, balanced, and quantitative approach
+
+**Holistic**: Who is the primary audience?
+
+- useRs will likely have more dependencies installed than other developeRs
+
+**Balanced**: the trade-off of adding a dependency (install time, disk space, maintenance) comparted to removing a dependency (fewer features, more development by you)
+
+**Quantitative**: use packages like itdepends and pak to quantify how "heavy" a dependency is
+
+### Dependency thoughts specific to the tidyverse
+
+- Never depend on tidyverse or devtools. Instead depend on the specific package that implements the desired functionality.
+- tidyverse and devtools have large recursive dependencies ($\geq 100$)
+- Free (low-level) tidy dependences include:
+    + rlang
+    + cli and glue
+    + withr
+    + lifecycle
+- R CMD check throws a note for including more than 20 "non-default" package dependencies
+
+### Whether to Import or Suggest
+
+#### `Imports`
 
 - **Must** be present at runtime
   - Automatically installs missing packages when your package is installed
@@ -23,7 +63,7 @@ Imports:
     tidyr
 ```
 
-### `Suggests`
+#### `Suggests`
 
 - Your package *can* use these packages, but doesn’t require them
   - "Isn’t terribly relevant for packages where the user base is approximately equal to the development team"
@@ -36,139 +76,108 @@ Suggests:
     testthat
 ```
 
-#### Guarding use of suggested packages
+## Namespace
 
-Or, how to write functions in your package with suggested packages in a way that won't cause issues for your users
+### Motivation
 
-- Use `requireNamespace("pkg", quietly = TRUE)`, which tries to load "pkg". If a package isn’t installed, loading will fail with an error
-- rlang has some functions to do the below with other handy features
-
-1) Stop function if it cannot load the package and send a message to install package
-
-```
-# the suggested package is required 
-my_fun <- function(a, b) {
-  if (!requireNamespace("pkg", quietly = TRUE)) {
-    stop(
-      "Package \"pkg\" must be installed to use this function.",
-      call. = FALSE
-    )
-  }
-  # code that includes calls such as pkg::f()
-}
-```
-
-2) Escape part that needs the package and do something else
-  - If package is installed, then package will be loaded and run `pkg::f()`
-  - If it is not installed, it will fail to load, escape first part of if-else statement, and run `g()`
-  
-```
-# the suggested package is optional; a fallback method is available
-my_fun <- function(a, b) {
-  if (requireNamespace("pkg", quietly = TRUE)) {
-    pkg::f()
-  } else {
-    g()
-  }
-}
-```
-
-**About `requireNamespace()`**
-
-Can also use `require()` for examples
-
-- From Chapter 13: `require()` loads and attaches; `requireNamespace()` just loads
-- `requireNamespace()` will fail if package is not installed; use it if that is when you want your script to fail; use `require()` want to use the package for something
-- An example is basically the only place where we would use `require()` inside a package
-  - [Pretty good Reddit thread](https://www.reddit.com/r/rstats/comments/5qtib2/what_is_the_difference_between_require_and/)
-  
-**Tests**
-
-In tests, it is not as necessary to guard the use of a suggested package
-
-- The tidyverse team assumes the package is available
-- They should be caught by `R CMD check`
-
-But if you really want to guard the use of them in a test, you can use `testthat::skip_if_not_installed()`. In the case below, it is because installing sf can be difficult and skipping this test allows the user to run the other tests.
+- Namespace provides context for looking up value of an object associated with a name. 
+- Example: `::` operator:
 
 ```r
-test_that("basic plot builds without error", {
-  skip_if_not_installed("sf")
+library(lubridate)    |  library(here)
+library(here)         |  library(lubridate)
 
-  nc_tiny_coords <- matrix(
-    c(-81.473, -81.741, -81.67, -81.345, -81.266, -81.24, -81.473,
-      36.234, 36.392, 36.59, 36.573, 36.437, 36.365, 36.234),
-    ncol = 2
-  )
-
-  nc <- sf::st_as_sf(
-    data_frame(
-      NAME = "ashe",
-      geometry = sf::st_sfc(sf::st_polygon(list(nc_tiny_coords)), crs = 4326)
-    )
-  )
-
-  expect_doppelganger("sf-polygons", ggplot(nc) + geom_sf() + coord_sf())
-})
+here() # here::here() |  here() # lubridate::here()
 ```
 
-### `Depends`
+- Recommended to use `package::function()` for dependencies in code below `R/`
+- Package namespace saves us from potential user redefinitions of functions
 
-Use `Depends`, `LinkingTo`, and `Enhances` for more specialized dependencies.
+### The `NAMESPACE` file
 
-- Do not use for packages, use `Imports` instead (Chapter 13 spoiler: `Depends` loads and attaches the package whereas `Imports` just loads it)
-- Can be used to set a minimum version of R: `R (>= 4.0.0)`
-  - If you state a minimum of R, you should have a reason and you should take reasonable measures to test your claim regularly
-  
-**An R version gotcha**
+Example:
 
-* `saveRDS()` used version 2 for twenty years
-* Version 3 became the default in 2019 with R 3.6.0
-* Older packages with version 2 `.rds` files were rebuilt with version 3 and  require R version 3.5.0 or above
-* Bundled and source package different!
-* All packages listing the original package in `Imports` or even `Suggests` inherit new dependency
-* The more dependencies, the more thought to minimum versions
+    # Generated by roxygen2: do not edit by hand
 
-### `LinkingTo`
+    S3method(compare,character)
+    S3method(print,testthat_results)
+    export(compare)
+    export(expect_equal)
+    import(rlang)
+    importFrom(brio,readLines)
+    useDynLib(testthat, .registration = TRUE)
 
-- Packages listed here rely on C or C++ code in another package
+Each line contains a **directive**:
 
-### `Enhances`
+-   `export()`: export a function (including S3 and S4 generics).
+-   `S3method()`: export an S3 method.
+-   `importFrom()`: import selected object from another namespace (including S4 generics).
+-   `import()`: import all objects from another package's namespace. package.
+-   `useDynLib()`: registers routines from a DLL.
 
-- Provide methods for classes defined in another package
-- Not recommended
+Each line is generated by roxygen2. This method is preferred because:
 
-### `Remotes`
+- Namespace tags are integrated into source code
+- Only need to learn `@export` and roxygen2 figures out the specific directive
+- Roxygen2 takes on the burden of writing `NAMESPACE` in a neat and tidy manner
 
-- Installs dependencies from outside of CRAN or Bioconductor
-  - Nonstandard dependencies are not allowed in CRAN submissions
-- Written similar to `Imports`
+## Search path
 
-```
-Remotes: hadley/testthat
-```
+More motivation for namespace
 
-### `Config/Needs/`
+### Function lookup for user code
 
-- Usually associated with continuous integration workflows (e.g., to build a website)
-  - New edition will cover this more fully
-- Ignored by CRAN
-- Specialized task dependencies vs true runtime dependencies
+Where does R look for an object?
 
-### How to write fields
+1. The global environment.
+2. The packages that have been attached in reverse order.
+3. `Autoloads`.
+4. The base environment.
 
-- Comma-separated
-- One package per line
-- Alphabetical
-- Add with `usethis::use_package(package, type = "Imports")` & `usethis::use_package(package, type = "Suggests")`
-- Use `usethis::use_tidy_description()` to put fields in standard order and alphabetize dependencies
-- Write minimum versions in parenthesis after package name `dplyr (>= 1.0.0)`. Make sure it is a *minimum* not an *exact* version.
+Adding another package changes the search path, but fortunately this is not applicable to package code.
 
+### Function lookup inside a package
 
-## SLIDE 1
+Advanced section developed from Advanced R chapter on environments.
 
-- ADD SLIDES AS SECTIONS (`##`).
-- TRY TO KEEP THEM RELATIVELY SLIDE-LIKE; THESE ARE NOTES, NOT THE BOOK ITSELF.
+Two environments:
+
+1. Package environment: external interface with parent determined by search path and exposes exported objects.
+2. Namespace environment: internal interface including all objects in package.
+
+Every namespace environment has the same ancestors:
+
+- **imports** environment: controlled by `NAMESPACE` file
+- base **namespace**: base environment bindings
+- global environment
+
+![](images/11-dependencies-mindset/namespace.png)
+
+## Attaching versus loading 
+
+If a package is installed,
+
+- **Loading** makes a package available in memory, but not added to the search path
+- **Attaching** put package in the search path
+
+*Technically*, `library()` loads then attach the package.
+
+Four functions make a package available:
+
+|        | Throws error         | Returns `FALSE`                         |
+|--------|----------------------|-----------------------------------------|
+| Load   | `loadNamespace("x")` | `requireNamespace("x", quietly = TRUE)` |
+| Attach | `library(x)`         | `require(x, quietly = TRUE)`            |
+
+- `library()` great for data analysis or vignette
+- Use `requireNamespace("x", quietly = TRUE)` to specify different behavior based on a package being installed
+- Other two unlikely to be needed in generic situations
+
+### Whether to Import or Depend
+
+- `Imports`: package will be *loaded*
+- `Depends`: package will be *attached*
+- Favor `Imports` over `Depends` as `Depends` changes the global landscape
 
 ## Meeting Videos
 
