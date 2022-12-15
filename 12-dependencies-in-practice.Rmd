@@ -1,116 +1,62 @@
 # Dependencies: In Practice
 
-NB We copy/pasted the previous book club part on dependencies from 1ed to the correct chapter from 2ed but we have not processed it.  
-
 **Learning objectives:**
 
-- THESE ARE NICE TO HAVE BUT NOT ABSOLUTELY NECESSARY
+- Practical details of working with dependencies
+- How to use different types of dependencies in your
+    + functions
+    + tests
+    + examples
+    + vignettes and articles
 
-## Dependencies
+## Confusion about `Imports`
 
-The `DESCRIPTION` file lists the packages that your package needs to work.
+The `DESCRIPTION` file lists the packages that your package needs to work, but does **not** import the package.
 
-### `Imports`
+Reminder `Imports` makes sure the packages is installed, but does not make functions available to you or your user.
 
-- **Must** be present at runtime
-  - Automatically installs missing packages when your package is installed
-  - `devtools::load_all()` checks too
-  - Installed but not attached; to attach, use `package::function()` within package
+Packages in listed in `Imports` do not need to appear in `NAMESPACE`, but every package in `NAMESPACE` must appear in `Imports` or `Depends`.
 
-```
-Imports:
-    dplyr,
-    tidyr
-```
+## `NAMESPACE` Workflow
 
-### `Suggests`
+The `NAMESPACE` file 
 
-- Your package *can* use these packages, but doesn’t require them
-  - "Isn’t terribly relevant for packages where the user base is approximately equal to the development team"
-  - Does not automatically install missing packages when your package is installed
-  - Add for development tasks or to unlock additional functionality (run tests, build vignettes / examples) or rarely needed packages or tricky packages
+- keeps track of how and when to import functions from another package and export function from your package
+- generated from comments in `R/*.R` files
+- starts with comment explaining roxygen2 generation
+- needs to be regenerated periodically
 
-```r
-Suggests:
-    ggplot2,
-    testthat
-```
+### General Workflow
 
-#### Guarding use of suggested packages
+1. Add namespace-related tags to roxygen comments in `R/*.R` files.
+2. Run `devtools::document()` which updates help topics and regenerates `NAMESPACE` 
 
-Or, how to write functions in your package with suggested packages in a way that won't cause issues for your users
+## Package is listed in `Imports`
 
-- Use `requireNamespace("pkg", quietly = TRUE)`, which tries to load "pkg". If a package isn’t installed, loading will fail with an error
-- rlang has some functions to do the below with other handy features
+Your package can assume a package listed in `Imports` is installed whenever itself is installed.
 
-1) Stop function if it cannot load the package and send a message to install package
+### In code below R/
 
-```
-# the suggested package is required 
-my_fun <- function(a, b) {
-  if (!requireNamespace("pkg", quietly = TRUE)) {
-    stop(
-      "Package \"pkg\" must be installed to use this function.",
-      call. = FALSE
-    )
-  }
-  # code that includes calls such as pkg::f()
-}
-```
+Recommendation: use the syntax `package::function()` to:
 
-2) Escape part that needs the package and do something else
-  - If package is installed, then package will be loaded and run `pkg::f()`
-  - If it is not installed, it will fail to load, escape first part of if-else statement, and run `g()`
-  
-```
-# the suggested package is optional; a fallback method is available
-my_fun <- function(a, b) {
-  if (requireNamespace("pkg", quietly = TRUE)) {
-    pkg::f()
-  } else {
-    g()
-  }
-}
-```
+- avoid importing `package` to your namespace
+- easily identify what functions live outside your package
+- eliminate name conflicts
 
-**About `requireNamespace()`**
+Exceptions:
 
-Can also use `require()` for examples
+- An operator can't be called with `::`. ex: magrittr pipe
+- A function you use a **lot**: makes code more readable
+- A function used in a tight loop: `::` has minor performance penalty on order of 100ns
 
-- From Chapter 13: `require()` loads and attaches; `requireNamespace()` just loads
-- `requireNamespace()` will fail if package is not installed; use it if that is when you want your script to fail; use `require()` want to use the package for something
-- An example is basically the only place where we would use `require()` inside a package
-  - [Pretty good Reddit thread](https://www.reddit.com/r/rstats/comments/5qtib2/what_is_the_difference_between_require_and/)
-  
-**Tests**
+If making an exception, generate roxygen tag with `usethis::use_import_from()` and place either:
 
-In tests, it is not as necessary to guard the use of a suggested package
+- as close as possible to usage of external function
+- in a central location
 
-- The tidyverse team assumes the package is available
-- They should be caught by `R CMD check`
+`usethis::use_import_from()` updates documentation and calls `load_all()`
 
-But if you really want to guard the use of them in a test, you can use `testthat::skip_if_not_installed()`. In the case below, it is because installing sf can be difficult and skipping this test allows the user to run the other tests.
-
-```r
-test_that("basic plot builds without error", {
-  skip_if_not_installed("sf")
-
-  nc_tiny_coords <- matrix(
-    c(-81.473, -81.741, -81.67, -81.345, -81.266, -81.24, -81.473,
-      36.234, 36.392, 36.59, 36.573, 36.437, 36.365, 36.234),
-    ncol = 2
-  )
-
-  nc <- sf::st_as_sf(
-    data_frame(
-      NAME = "ashe",
-      geometry = sf::st_sfc(sf::st_polygon(list(nc_tiny_coords)), crs = 4326)
-    )
-  )
-
-  expect_doppelganger("sf-polygons", ggplot(nc) + geom_sf() + coord_sf())
-})
-```
+Importing entire package namespace should be rare and is least recommended.
 
 ### `Depends`
 
@@ -148,13 +94,6 @@ Use `Depends`, `LinkingTo`, and `Enhances` for more specialized dependencies.
 Remotes: hadley/testthat
 ```
 
-### `Config/Needs/`
-
-- Usually associated with continuous integration workflows (e.g., to build a website)
-  - New edition will cover this more fully
-- Ignored by CRAN
-- Specialized task dependencies vs true runtime dependencies
-
 ### How to write fields
 
 - Comma-separated
@@ -165,10 +104,7 @@ Remotes: hadley/testthat
 - Write minimum versions in parenthesis after package name `dplyr (>= 1.0.0)`. Make sure it is a *minimum* not an *exact* version.
 
 
-## SLIDE 1
 
-- ADD SLIDES AS SECTIONS (`##`).
-- TRY TO KEEP THEM RELATIVELY SLIDE-LIKE; THESE ARE NOTES, NOT THE BOOK ITSELF.
 
 ## Meeting Videos
 
