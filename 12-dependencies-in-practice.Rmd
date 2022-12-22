@@ -2,16 +2,16 @@
 
 **Learning objectives:**
 
-- Practical details of working with dependencies
-- How to use different types of dependencies in your
-    + functions
-    + tests
-    + examples
-    + vignettes and articles
+-   Practical details of working with dependencies
+-   How to use different types of dependencies in your
+    -   functions
+    -   tests
+    -   examples
+    -   vignettes and articles
 
 ## Confusion about `Imports`
 
-The `DESCRIPTION` file lists the packages that your package needs to work, but does **not** import the package.
+<!-- The `DESCRIPTION` file lists the packages that your package needs to work, but does **not** import the package. -->
 
 Reminder `Imports` makes sure the packages is installed, but does not make functions available to you or your user.
 
@@ -19,19 +19,23 @@ Packages in listed in `Imports` do not need to appear in `NAMESPACE`, but every 
 
 ## `NAMESPACE` Workflow
 
-The `NAMESPACE` file 
+The `NAMESPACE` file
 
-- keeps track of how and when to import functions from another package and export function from your package
-- generated from comments in `R/*.R` files
-- starts with comment explaining roxygen2 generation
-- needs to be regenerated periodically
+-   keeps track of how and when to import functions from another package and export function from your package
+-   generated from comments in `R/*.R` files
+-   starts with comment explaining roxygen2 generation
+-   needs to be regenerated periodically
 
 ### General Workflow
 
-1. Add namespace-related tags to roxygen comments in `R/*.R` files.
-2. Run `devtools::document()` which updates help topics and regenerates `NAMESPACE` 
+1.  Add namespace-related tags to roxygen comments in `R/*.R` files.
+2.  Run `devtools::document()` which updates help topics and regenerates `NAMESPACE`
 
 ## Package is listed in `Imports`
+
+Recall from [Chapter 10](https://r-pkgs.org/description.html#sec-description-imports-suggests):
+
+> `Imports` are needed by your users at runtime and will be installed (or potentially updated) when users install your package via `install.packages()`
 
 Your package can assume a package listed in `Imports` is installed whenever itself is installed.
 
@@ -39,72 +43,214 @@ Your package can assume a package listed in `Imports` is installed whenever itse
 
 Recommendation: use the syntax `package::function()` to:
 
-- avoid importing `package` to your namespace
-- easily identify what functions live outside your package
-- eliminate name conflicts
+-   avoid importing `package` to your namespace
+-   easily identify what functions live outside your package
+-   eliminate name conflicts
 
 Exceptions:
 
-- An operator can't be called with `::`. ex: magrittr pipe
-- A function you use a **lot**: makes code more readable
-- A function used in a tight loop: `::` has minor performance penalty on order of 100ns
+-   An operator can't be called with `::`. ex: magrittr pipe
+-   A function you use a **lot**: makes code more readable
+-   A function used in a tight loop: `::` has minor performance penalty on order of 100ns
 
 If making an exception, generate roxygen tag with `usethis::use_import_from()` and place either:
 
-- as close as possible to usage of external function
-- in a central location
+-   as close as possible to usage of external function
+-   in a central location
 
 `usethis::use_import_from()` updates documentation and calls `load_all()`
 
 Importing entire package namespace should be rare and is least recommended.
 
-### `Depends`
+-   example is rlang in tidyverse
 
-Use `Depends`, `LinkingTo`, and `Enhances` for more specialized dependencies.
+-   generally only done when you rely heavily on functions from another package
 
-- Do not use for packages, use `Imports` instead (Chapter 13 spoiler: `Depends` loads and attaches the package whereas `Imports` just loads it)
-- Can be used to set a minimum version of R: `R (>= 4.0.0)`
-  - If you state a minimum of R, you should have a reason and you should take reasonable measures to test your claim regularly
-  
-**An R version gotcha**
+-   makes code harder to read
 
-* `saveRDS()` used version 2 for twenty years
-* Version 3 became the default in 2019 with R 3.6.0
-* Older packages with version 2 `.rds` files were rebuilt with version 3 and  require R version 3.5.0 or above
-* Bundled and source package different!
-* All packages listing the original package in `Imports` or even `Suggests` inherit new dependency
-* The more dependencies, the more thought to minimum versions
+-   increases risk of function name conflicts
 
-### `LinkingTo`
+### How to *not* use a package in Imports
 
-- Packages listed here rely on C or C++ code in another package
+Sometimes you have a package listed in Imports but R thinks you don't use it
 
-### `Enhances`
+e.g., you only use aaapkg to call `aaapkg::aaa_fun()` in the default for a function argument in your package
 
-- Provide methods for classes defined in another package
-- Not recommended
+This leads to `R CMD check` giving the following note:
 
-### `Remotes`
+> `checking dependencies in R code ... NOTE Namespace in Imports field not imported from: 'aaapkg' All declared Imports should be used.`
 
-- Installs dependencies from outside of CRAN or Bioconductor
-  - Nonstandard dependencies are not allowed in CRAN submissions
-- Written similar to `Imports`
+To get around this, create a function in a file below `R/` directory:
+
+-   This function doesn't need to be called.
+
+-   It shouldn't be exported
+
+For example:
+
+```{r eval=FALSE}
+ignore_unused_imports <- function() {
+  aaapkg::aaa_fun()
+}
 
 ```
-Remotes: hadley/testthat
+
+This is preferable to importing the `aaapkg::aaa_fun()` into your namespace as this will cause aaapkg to be loaded whenever your package is loaded. It is good practice to minimise the loading of packages until it is actually needed.
+
+### In test code
+
+Generally, external functions in a test are referred to in the same way as code below `R/`
+
+-   Call `aaapkg::aaa_fun()`
+
+Using `library(aaapkg)` in your tests is usually a bad idea:
+
+-   It makes the search paths for your tests different to how your package works (more in [Chapter 15](https://r-pkgs.org/testing-design.html#sec-testing-design-tension))
+
+### In examples and vignettes
+
+If you use a package listed in `Imports` in your example/vignette either:
+
+-   attach the package with library(aaapkg), or,
+
+-   use a `aaapkg::aaa_fun()` call
+
+## Package is listed in `Suggests`
+
+Recall from [Chapter 10](https://r-pkgs.org/description.html#sec-description-imports-suggests):
+
+> Packages listed in `Suggests` are either needed for development tasks or might unlock optional functionality for your users.
+
+You can NOT assume that every user has installed aaapkg (but you can assume that a developer has).
+
+They could be installed through:
+
+-   `install.packages("pkg", dependencies = TRUE)`
+
+### In code below `R/`
+
+You can check for the availability of a suggested package using `requireNamespace("aaapkg", quietly = TRUE)`
+
+Two scenarios:
+
+1)  The dependency is required and the function wont work without it
+
+```{r}
+# the suggested package is required 
+my_fun <- function(a, b) {
+  if (!requireNamespace("aaapkg", quietly = TRUE)) {
+    stop(
+      "Package \"aaapkg\" must be installed to use this function.",
+      call. = FALSE
+    )
+  }
+  # code that includes calls such as aaapkg::aaa_fun()
+}
 ```
 
-### How to write fields
+2)  You have a fallback in the function/package if the user does not have the required package
 
-- Comma-separated
-- One package per line
-- Alphabetical
-- Add with `usethis::use_package(package, type = "Imports")` & `usethis::use_package(package, type = "Suggests")`
-- Use `usethis::use_tidy_description()` to put fields in standard order and alphabetize dependencies
-- Write minimum versions in parenthesis after package name `dplyr (>= 1.0.0)`. Make sure it is a *minimum* not an *exact* version.
+```{r}
+# the suggested package is optional; a fallback method is available
+my_fun <- function(a, b) {
+  if (requireNamespace("aaapkg", quietly = TRUE)) {
+    aaapkg::aaa_fun()
+  } else {
+    g()
+  }
+}
+```
 
+`rlang` has useful functions for checking package availability, offering to install the package for the user and programming (such as vectorization over `pkg`).
 
+### In test code
 
+Including packages from `Suggests` when writing tests depends on the maintainer/developer.
+
+The tidyverse team *generally* writes tests as if all suggested packages are available.
+
+-   `testthat` package is in the `Suggests` field so we can assume all suggested packages are available
+
+-   They will skip sometimes e.g. if package is cumbersome to install and not already installed
+
+### In examples and vignettes
+
+An example is a common place to use a suggested package and is one of the few places we would use `require()` or `requireNamespace()` in a package.
+
+A vignette needs packages contained in the `Suggests` field.
+
+-   Similar to tests, we can assume all suggested packages are available and use suggested packages unconditionally.
+
+-   *If* you want to use suggested packages conditionally, the knitr chunk option `eval` can be used (more in a later chapter).
+
+## Package is listed in `Depends`
+
+Recall from [Chapter 10](https://r-pkgs.org/description.html#depends-and-linkingto):
+
+> Prior to the roll-out of namespaces in R 2.14.0 in 2011, `Depends` was the only way to "depend" on another package... The most legitimate current use of Depends is to state a minimum version for R itself, e.g. Depends: R (\>= 4.0.0).
+
+`Depends` shouldn't be used for packages.. but if you do use it will be similar to `Imports` e.g. your package can assume that `aaapkg` will be installed but unlike `Imports`, `aaapkg` will be attached as well.
+
+### In code below `R/` and in test code
+
+Same as using functions from a package listed in `Imports`
+
+-   use aaapkg::aaa_fun()
+
+-   Import an individual function using an `@importFrom` roxygen tag
+
+-   Import the entire namespace using `@import` roxygen tag
+
+### In examples and vignettes
+
+Because your package is attached when the examples are executed you wont need to use `library()`.
+
+Similarly, if your vignette starts with `library(pkg)`, your package will be loaded and attached along with any packages listed in the `Depends` field.
+
+## Package is a nonstandard dependency
+
+A package developed using [Devtools](https://devtools.r-lib.org/articles/dependencies.html) may have non-standard fields in the `DESCRIPTION` file. The `Remotes` field can be used to install packages from non standard locations e.g. GitHUb.
+
+-   Still need to declare the dependency in the correct `DESCRIPTION` field e.g. `Imports`
+
+### `Config/Needs/*` field
+
+-   Not directly related to devtools
+-   Used for continuous integration workflows e.g. GitHub Actions
+-   Allows to differentiate between true runtime dependencies and those only needed for specialised development tasks
+
+## Export
+
+You need to export a function to make it usable outside of your package. When you first create a package, nothing will be exported, even when you have added some functions.
+
+### What to export
+
+-   Export functions that you want others to use.
+-   Too little is better than too much
+-   It is hard to remove/change a function once others are using it
+
+### What not to export
+
+-   All functions not related to the problem your package addresses should not be exported
+-   Functions that are internally useful can be placed into a `utils.R` file
+
+## Re-exporting
+
+Making available to users of your package a function/object that is actually provided by one of your dependencies.
+
+To do this you would:
+
+1)  List the package that host the re-exported object in the `imports` field in `DESCRIPTION`
+2)  In one of the `R/*.R` have a reference to the target function and include the import and export roxygen tags
+3)  Regenerate the `NAMESPACE`
+
+This will also lead to the generation of `man/reexports.Rd` which is where you keep a record of all of your re-exported objects with links to their documentation.
+
+## Imports and exports related to S3
+
+R has multiple object-oriented programming (OOP) systems e.g. S3, S4, R6
+
+If your package owns an S3 class, it makes sense to export a user-friendly constructor function
 
 ## Meeting Videos
 
@@ -112,31 +258,29 @@ Remotes: hadley/testthat
 
 `r knitr::include_url("https://www.youtube.com/embed/C_H1oQZD7m8")`
 
-
 ### Cohort 2
 
 `r knitr::include_url("https://www.youtube.com/embed/8PU_KT5IpWg")`
-
 
 ### Cohort 3
 
 `r knitr::include_url("https://www.youtube.com/embed/2-baO_E9p1s")`
 
 <details>
-<summary> Meeting chat log </summary>
 
-```
-00:05:44	Ryan Metcalf:	https://www.rstudio.com/conference/
-00:08:38	Brendan Lam:	https://stackoverflow.com/questions/70097126/how-to-edit-namespace-with-roxygen2-when-creating-r-packages
-00:08:51	Brendan Lam:	https://stackoverflow.com/questions/11990589/r-namespace-access-and-match-fun
-00:44:59	Rex Parsons:	https://github.com/gentrywhite/DSSP/blob/b3d7f0d10374968a43a634a1ae3f65e9231fceb0/R/plot.R#L43
-00:48:01	Rex Parsons:	https://stackoverflow.com/questions/5595512/what-is-the-difference-between-require-and-library
-00:58:13	Rex Parsons:	gotta run guys - thanks Brendan and team!
-00:58:29	collinberke:	https://stackoverflow.com/questions/64737686/why-library-or-require-should-not-be-used-in-a-r-package
-```
+<summary>Meeting chat log</summary>
+
+    00:05:44    Ryan Metcalf:   https://www.rstudio.com/conference/
+    00:08:38    Brendan Lam:    https://stackoverflow.com/questions/70097126/how-to-edit-namespace-with-roxygen2-when-creating-r-packages
+    00:08:51    Brendan Lam:    https://stackoverflow.com/questions/11990589/r-namespace-access-and-match-fun
+    00:44:59    Rex Parsons:    https://github.com/gentrywhite/DSSP/blob/b3d7f0d10374968a43a634a1ae3f65e9231fceb0/R/plot.R#L43
+    00:48:01    Rex Parsons:    https://stackoverflow.com/questions/5595512/what-is-the-difference-between-require-and-library
+    00:58:13    Rex Parsons:    gotta run guys - thanks Brendan and team!
+    00:58:29    collinberke:    https://stackoverflow.com/questions/64737686/why-library-or-require-should-not-be-used-in-a-r-package
+
 </details>
 
-
+````{=html}
 <!--
 ### Cohort 4
 
@@ -150,8 +294,9 @@ LOG
 ```
 </details>
 -->
+````
 
-
+````{=html}
 <!--
 ### Cohort 5
 
@@ -165,3 +310,4 @@ LOG
 ```
 </details>
 -->
+````
