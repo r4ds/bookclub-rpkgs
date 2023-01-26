@@ -4,12 +4,9 @@
 
 **Learning objectives:**
 
-- Describe the benefits of well developed object documentation
+- Describe the benefits of well developed function documentation
+- roxygen2 basics
 - Discuss the definition of object documentation 
-- Identify the key components of object documentation for different R objects
-  - Functions
-  - Packages
-  - Generics, classes, and methods
 - Demonstrate the object documentation workflow
 - Discuss some general formatting and style guidelines
 
@@ -19,6 +16,257 @@
   - How will users know how to use your package?
   - Inform your future self
   - Inform other contributors
+
+## roxygen2 advantages
+
+- code and documentation co-located
+- use markdown rather than learning the markup language of `.Rd`
+- automation of `.Rd` boilerplate
+- tools for sharing content across documentation topics and vignettes
+
+# roxygen2 basics
+
+## Documentation workflow
+
+Four main steps: 
+
+1. Opening move is add roxygen comments above your functions in your `R/.R` files
+2. Run `devtools::document()`
+3. Preview documentation with `?function`
+4. Rinse and repeat
+
+![](images/10-object-documentation/10-object-documentation-stages.png)
+
+## roxygen2 comments, blocks, and tags
+
+- Four basic building blocks:
+  1. **`#'`** - `roxygen` comment
+  1. **Multiple `#` lines** - a block
+      - Wrapped at 80 characters (Ctrl/Cmd + Shift + / or reflow comment)
+  1. **Tags** - Breaks up the blocks
+     - `@tagName details`
+  1. **Introduction**
+     - First sentence is the title
+     - Second paragraph is the description (what does the function do?)
+     - Paragraphs >= 3 allow for more detail 
+- All objects must have a title and description
+
+- Details are optional
+
+- Blocks and tags give documentation structure
+
+Here's a simple first example: the documentation for `str_unique()`.
+
+```{r}
+#' Remove duplicated strings
+#'
+#' `str_unique()` removes duplicated values, with optional control over
+#' how duplication is measured.
+#'
+#' @param string Input vector. Either a character vector, or something
+#'  coercible to one.
+#' @param ... Other options used to control matching behavior between duplicate
+#'   strings. Passed on to [stringi::stri_opts_collator()].
+#' @returns A character vector, usually shorter than `string`.
+#' @seealso [unique()], [stringi::stri_unique()] which this function wraps.
+#' @examples
+#' str_unique(c("a", "b", "c", "b", "a"))
+#'
+#' # Use ... to pass additional arguments to stri_unique()
+#' str_unique(c("motley", "mötley", "pinguino", "pingüino"))
+#' str_unique(c("motley", "mötley", "pinguino", "pingüino"), strength = 1)
+#' @export
+str_unique <- function(string, ...) {
+  ...
+}
+```
+
+## Key markdown features
+
+1. Backticks for inline code
+```{r}
+#' I like `thisfunction()`, because it's great.
+```
+
+1. Square brackets for auto-linked function
+
+```{r}
+#' It's obvious that `thisfunction()` is better than [otherpkg::otherfunction()]
+#' or even our own [olderfunction()].
+```
+
+1. Vignettes
+
+-   `vignette("rd-formatting", package = "roxygen2")`
+
+-   `vignette("reuse", package = "roxygen2")`
+
+-   `vignette("linking", package = "pkgdown")`
+
+1. Lists
+
+```{r}
+#' Best features of `thisfunction()`:
+#' * Smells nice
+#' * Has good vibes
+```
+
+# Title, description, details
+
+## Title recommendations
+
+1. Sentence case
+1. not end in a full stop
+1. followed by a blank line
+1. succinct description of function
+
+Bad titles: 
+
+-   `str_detect()`: Detect the presence or absence of a pattern in a string
+-   `str_extract()`: Extract matching patterns from a string
+-   `str_locate()`: Locate the position of patterns in a string
+-   `str_match()`: Extract matched groups from a string
+
+Good titles:
+
+-   `mutate()`: Create, modify, and delete columns
+-   `summarise()`: Summarize each group to fewer rows
+-   `filter()`: Subset rows using column values
+-   `select()`: Subset columns using their names and types
+-   `arrange()`: Arrange rows by column values
+
+## Description recommendation
+
+1. summarize goal of the function in single paragraph
+1. Explicitly tag `@description` if multi-paragraph (or just need an empty line)
+1. Write description after you've come back and forgot what your function does
+
+## Details recommendation
+
+1. most functions don't need this
+1. use informative markdown headings
+
+# Arguments
+
+- This is where most of the work will be
+- Use `@param` tag
+- succinct summary of the inputs and what parameter does
+- best practice to describe default argument values even if more work when they later change
+- list fixed set of possible parameter values
+- bulleted lists possible
+
+## Multiple Arguments
+
+document tightly coupled arguments by separating names with commas
+
+```{r}
+#' @param x,y A pair of character vectors.
+```
+
+## Inheriting Arguments
+
+`@inheritParams`: reuse parameter documentation
+      - From source `@inheritParams function`
+      - From another package `@inheritParams package::function`
+      
+```{r inherit_params_example, eval=FALSE}
+#' @param a This is the first argument.
+foo <- function(a) a + 10
+
+#' @param b This is the second argument.
+#' @inheritParams foo
+bar <- function(a, b) {
+  foo(a) * 10
+}
+
+# Equivalent to
+
+#' @param a This is the first argument.
+#' @param b This is the second argument.
+bar <- function(a, b) {
+  foo(a) * 10
+}
+```
+
+# Return Value
+
+`@returns`
+     - Describes the output from the function.
+
+# Examples
+
+`@examples`
+     - Provides executable code on how to use the function in practice
+     - Must run without errors or use `\dontrun{}`
+     - **Keep in mind:** Most users will look at examples first 
+
+Tension between readable and realistic example code vs. no errors and side effects
+
+Examples executed in 4 situations:
+
+1. interactively with `example()`
+1. `R CMD check` on your computer(s)
+1. `R CMD check` by CRAN
+1. pkgdown website building
+
+## Contents
+
+- Show basic functionality
+- highlight easy to miss features
+- avoid edge cases 
+- sectioning is awkward
+- try to use built-in datasets
+
+## Leave the world as you found it
+
+There is no way to schedule clean up in examples like there are in functions and testing.
+
+## Errors
+
+If you need to demonstrate an error you can
+- wrap code in `try()`
+- wrap code in `\dontrun{}`
+
+Recommend using `try()` 
+
+## Dependencies and conditional execution
+
+Ok to do `library()` in the examples as
+- expect suggested packages available during `R CMD check`
+- cost of putting code inside `{...}` is high
+
+Recommendation for conditional cases is to use `@examplesIf` tag
+- hides machinery from users
+- example code renders in pkgdown
+- doesn't break CRAN's prohibition of putting code in `\dontrun{}`
+
+## Intermixing examples and text
+
+Alternative is using RMarkdown but downsides:
+- code in ````R` blocks is never run
+- codes in ````{r}` is run every time you document
+
+# Re-using documentation
+
+## Multiple functions
+
+`@rdname`: document multiple functions in one place that have a lot in common
+      - Use with caution. Can lead to confusing documentation.
+
+## Inheriting documentation
+
+-   `@inherit source_function` will inherit all supported components from `source_function()`.
+
+-   `@inheritSection source_function Section title` will inherit the single section with title "Section title" from `source_function()`.
+
+-   `@inheritDotParams` automatically generates parameter documentation for `...` for the common case where you pass `...` on to another function.
+
+
+## Child documents
+
+Can call a `.Rmd` file for frequently repeated text
+
+# Past edition notes:
 
 ## Object documentation defined
 
@@ -31,6 +279,7 @@
 - Difference between object documentation and vignettes
   - **Object documentation** = A short-form reference guide
   - **Vignettes** = A long-form document on how to use package objects to solve a problem
+
 
 ## Object documentation, an overview
 
@@ -57,27 +306,7 @@
   
 ![](images/10-object-documentation/10-object-documentation-workflow.png)  
   
-## Rendering, behind the scenes
 
-![](images/10-object-documentation/10-object-documentation-stages.png)
-
-## The nuts and bolts of `roxygen` comments
-
-- Four basic building blocks:
-  1. **`#'`** - `roxygen` comment
-  1. **Multiple `#` lines** - a block
-      - Wrapped at 80 characters (Ctrl/Cmd + Shift + / or reflow comment)
-  1. **Tags** - Breaks up the blocks
-     - `@tagName details`
-  1. **Introduction**
-     - First sentence is the title
-     - Second paragraph is the description (what does the function do?)
-     - Paragraphs >= 3 allow for more detail 
-- All objects must have a title and description
-
-- Details are optional
-
-- Blocks and tags give documentation structure
 
 ## Documenting functions
 
@@ -152,7 +381,7 @@
       - From source `@inheritParams function`
       - From another package `@inheritParams package::function`
       
-```{r inherit_params_example, eval=FALSE}
+```{r inherit_params_example2, eval=FALSE}
 #' @param a This is the first argument.
 foo <- function(a) a + 10
 
