@@ -10,23 +10,23 @@
 - Demonstrate the object documentation workflow
 - Discuss some general formatting and style guidelines
 
-## Why care about object documentation?
+### Why care about object documentation?
 
 - Documentation is an important component of packages 
   - How will users know how to use your package?
   - Inform your future self
   - Inform other contributors
 
-## roxygen2 advantages
+### roxygen2 advantages
 
 - code and documentation co-located
 - use markdown rather than learning the markup language of `.Rd`
 - automation of `.Rd` boilerplate
 - tools for sharing content across documentation topics and vignettes
 
-# roxygen2 basics
+## roxygen2 basics
 
-## Documentation workflow
+### Documentation workflow
 
 Four main steps: 
 
@@ -37,7 +37,7 @@ Four main steps:
 
 ![](images/10-object-documentation/10-object-documentation-stages.png)
 
-## roxygen2 comments, blocks, and tags
+### roxygen2 comments, blocks, and tags
 
 - Four basic building blocks:
   1. **`#'`** - `roxygen` comment
@@ -81,21 +81,21 @@ str_unique <- function(string, ...) {
 }
 ```
 
-## Key markdown features
+### Key markdown features
 
 1. Backticks for inline code
 ```{r}
 #' I like `thisfunction()`, because it's great.
 ```
 
-1. Square brackets for auto-linked function
+2. Square brackets for auto-linked function
 
 ```{r}
 #' It's obvious that `thisfunction()` is better than [otherpkg::otherfunction()]
 #' or even our own [olderfunction()].
 ```
 
-1. Vignettes
+3. Vignettes
 
 -   `vignette("rd-formatting", package = "roxygen2")`
 
@@ -103,7 +103,7 @@ str_unique <- function(string, ...) {
 
 -   `vignette("linking", package = "pkgdown")`
 
-1. Lists
+4. Lists
 
 ```{r}
 #' Best features of `thisfunction()`:
@@ -111,9 +111,9 @@ str_unique <- function(string, ...) {
 #' * Has good vibes
 ```
 
-# Title, description, details
+## Title, description, details
 
-## Title recommendations
+### Title recommendations
 
 1. Sentence case
 1. not end in a full stop
@@ -135,18 +135,18 @@ Good titles:
 -   `select()`: Subset columns using their names and types
 -   `arrange()`: Arrange rows by column values
 
-## Description recommendation
+### Description recommendation
 
 1. summarize goal of the function in single paragraph
 1. Explicitly tag `@description` if multi-paragraph (or just need an empty line)
 1. Write description after you've come back and forgot what your function does
 
-## Details recommendation
+### Details recommendation
 
 1. most functions don't need this
 1. use informative markdown headings
 
-# Arguments
+## Arguments
 
 - This is where most of the work will be
 - Use `@param` tag
@@ -155,7 +155,7 @@ Good titles:
 - list fixed set of possible parameter values
 - bulleted lists possible
 
-## Multiple Arguments
+### Multiple Arguments
 
 document tightly coupled arguments by separating names with commas
 
@@ -163,9 +163,10 @@ document tightly coupled arguments by separating names with commas
 #' @param x,y A pair of character vectors.
 ```
 
-## Inheriting Arguments
+### Inheriting Arguments
 
 `@inheritParams`: reuse parameter documentation
+
       - From source `@inheritParams function`
       - From another package `@inheritParams package::function`
       
@@ -188,14 +189,15 @@ bar <- function(a, b) {
 }
 ```
 
-# Return Value
+## Return Value
 
 `@returns`
      - Describes the output from the function.
 
-# Examples
+## Examples
 
 `@examples`
+
      - Provides executable code on how to use the function in practice
      - Must run without errors or use `\dontrun{}`
      - **Keep in mind:** Most users will look at examples first 
@@ -209,7 +211,7 @@ Examples executed in 4 situations:
 1. `R CMD check` by CRAN
 1. pkgdown website building
 
-## Contents
+### Contents
 
 - Show basic functionality
 - highlight easy to miss features
@@ -217,43 +219,48 @@ Examples executed in 4 situations:
 - sectioning is awkward
 - try to use built-in datasets
 
-## Leave the world as you found it
+### Leave the world as you found it
 
 There is no way to schedule clean up in examples like there are in functions and testing.
 
-## Errors
+### Errors
 
 If you need to demonstrate an error you can
+
 - wrap code in `try()`
 - wrap code in `\dontrun{}`
 
 Recommend using `try()` 
 
-## Dependencies and conditional execution
+### Dependencies and conditional execution
 
 Ok to do `library()` in the examples as
+
 - expect suggested packages available during `R CMD check`
 - cost of putting code inside `{...}` is high
 
 Recommendation for conditional cases is to use `@examplesIf` tag
+
 - hides machinery from users
 - example code renders in pkgdown
 - doesn't break CRAN's prohibition of putting code in `\dontrun{}`
 
-## Intermixing examples and text
+### Intermixing examples and text
 
 Alternative is using RMarkdown but downsides:
+
 - code in ````R` blocks is never run
 - codes in ````{r}` is run every time you document
 
-# Re-using documentation
+## Re-using documentation
 
-## Multiple functions
+### Multiple functions
 
 `@rdname`: document multiple functions in one place that have a lot in common
+
       - Use with caution. Can lead to confusing documentation.
 
-## Inheriting documentation
+### Inheriting documentation
 
 -   `@inherit source_function` will inherit all supported components from `source_function()`.
 
@@ -262,11 +269,11 @@ Alternative is using RMarkdown but downsides:
 -   `@inheritDotParams` automatically generates parameter documentation for `...` for the common case where you pass `...` on to another function.
 
 
-## Child documents
+### Child documents
 
 Can call a `.Rmd` file for frequently repeated text
 
-# Past edition notes:
+## Past edition notes:
 
 ## Object documentation defined
 
