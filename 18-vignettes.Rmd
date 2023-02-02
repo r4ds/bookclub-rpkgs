@@ -20,7 +20,7 @@
 
 To create your first vignette, run:
 
-```{r}
+```{r eval = FALSE}
 usethis::use_vignette("my-vignette")
 ```
 This does the following:
@@ -56,8 +56,14 @@ It’s very easy to overlook this issue and be puzzled when your vignette previe
 
 The first few lines of the vignette contain important metadata. The default template contains the following information:
 
-![](images/metadata/metadata.png)
-
+    ---
+    title: "Vignette Title"
+    output: rmarkdown::html_vignette
+    vignette: >
+      %\VignetteIndexEntry{Vignette Title}
+      %\VignetteEngine{knitr::rmarkdown}
+      %\VignetteEncoding{UTF-8}
+    ---
 
 This metadata is written in [YAML](https://yaml.org/), a format designed to be both human and computer readable. YAML frontmatter is a common feature of RMarkdown files. The syntax is much like that of the DESCRIPTION file, where each line consists of a field name, a colon, then the value of the field. The one special YAML feature we’re using here is >. It indicates that the following lines of text are plain text and shouldn’t use any special YAML features.
 
@@ -89,7 +95,7 @@ knitr::opts_chunk$set(
 
 The second chunk just attaches the package the vignette belongs to.
 
-```{r setup1,eval=FALSE}
+```{r setup18,eval=FALSE}
 library(yourpackage)
 ```
 
@@ -170,7 +176,8 @@ The eval option can be set for an individual chunk, but in a vignette it’s lik
 Here are the first few chunks in a vignette from googlesheets4, which wraps the Google Sheets API. The vignette code can only be run if we are able to decrypt a token that allows us to authenticate with the API. That fact is recorded in can_decrypt, which is then set as the vignette-wide default for eval.
 
 
-```{r setup, include = TRUE}
+```
+{r setup, include = TRUE}
 can_decrypt <- gargle:::secret_can_decrypt("googlesheets4")
 knitr::opts_chunk$set(
   collapse = TRUE,
@@ -180,15 +187,18 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r eval = !can_decrypt, comment = NA,include=TRUE}
+```
+{r eval = !can_decrypt, comment = NA, include = TRUE}
 message("No token available. Code chunks will not be evaluated.")
 ```
 
-```{r index-auth, include = TRUE,echo=TRUE}
+```
+{r index-auth, include = TRUE, echo = TRUE}
 googlesheets4:::gs4_auth_docs()
 ```
 
-```{r}
+```
+{r}
 library(googlesheets4)
 ```
 
