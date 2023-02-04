@@ -388,18 +388,3 @@ Chapters 3 and 4 were covered together.
 01:18:50	Howard Baek:	Sorry I had to leave my desk! See everyone next week.
 ```
 </details>
-
-
-<!--
-### Cohort 5
-
-`r knitr::include_url("https://www.youtube.com/embed/VIDURL")`
-
-<details>
-<summary> Meeting chat log </summary>
-
-```
-LOG
-```
-</details>
--->

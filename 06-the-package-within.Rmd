@@ -529,18 +529,3 @@ The locale in our timestamp is only temporarily modified with the `withr::with_l
 00:35:45	Howard Baek:	https://github.com/r-lib/conflicted
 ```
 </details>
-
-
-<!--
-### Cohort 5
-
-`r knitr::include_url("https://www.youtube.com/embed/VIDURL")`
-
-<details>
-<summary> Meeting chat log </summary>
-
-```
-LOG
-```
-</details>
--->

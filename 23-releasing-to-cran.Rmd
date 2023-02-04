@@ -138,7 +138,6 @@ If you get accepted:
 </details>
 
 
-<!--
 ### Cohort 4
 
 `r knitr::include_url("https://www.youtube.com/embed/VIDURL")`
@@ -150,19 +149,3 @@ If you get accepted:
 LOG
 ```
 </details>
--->
-
-
-<!--
-### Cohort 5
-
-`r knitr::include_url("https://www.youtube.com/embed/VIDURL")`
-
-<details>
-<summary> Meeting chat log </summary>
-
-```
-LOG
-```
-</details>
--->

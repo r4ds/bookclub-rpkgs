@@ -217,18 +217,3 @@ It can be tricky to incorporate everything into a test script, and sometimes you
 00:48:52	defuneste:	https://r4ds.github.io/bookclub-do4ds/the-5-tenets-of-devops.html
 ```
 </details>
-
-
-<!--
-### Cohort 5
-
-`r knitr::include_url("https://www.youtube.com/embed/VIDURL")`
-
-<details>
-<summary> Meeting chat log </summary>
-
-```
-LOG
-```
-</details>
--->

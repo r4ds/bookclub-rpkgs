@@ -104,18 +104,3 @@ There was no meeting that specifically covered this material.
 ### Cohort 4
 
 `r knitr::include_url("https://www.youtube.com/embed/Dohr28WYaX0")`
-
-
-<!--
-### Cohort 5
-
-`r knitr::include_url("https://www.youtube.com/embed/VIDURL")`
-
-<details>
-<summary> Meeting chat log </summary>
-
-```
-LOG
-```
-</details>
--->

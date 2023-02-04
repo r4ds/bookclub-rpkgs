@@ -27,31 +27,17 @@
 </details>
 
 
-<!--
 ### Cohort 4
 
-`r knitr::include_url("https://www.youtube.com/embed/VIDURL")`
+`r knitr::include_url("https://www.youtube.com/embed/87HCGV-gkLI/edit")`
 
 <details>
 <summary> Meeting chat log </summary>
 
 ```
-LOG
+00:39:30	olivier leroy:	foofy
+00:39:43	olivier leroy:	foofy.Routsave
+00:39:55	olivier leroy:	https://github.com/r-spatial/sf/tree/main/tests
+01:05:45	Schafer, Toryn:	https://www.r-bloggers.com/2017/12/conference-cost/
 ```
 </details>
--->
-
-
-<!--
-### Cohort 5
-
-`r knitr::include_url("https://www.youtube.com/embed/VIDURL")`
-
-<details>
-<summary> Meeting chat log </summary>
-
-```
-LOG
-```
-</details>
--->

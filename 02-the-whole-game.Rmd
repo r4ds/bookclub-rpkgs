@@ -334,16 +334,16 @@ RoxygenNote: 7.1.2
 </details>
 
 
-<!--
 ### Cohort 5
 
-`r knitr::include_url("https://www.youtube.com/embed/VIDURL")`
+`r knitr::include_url("https://www.youtube.com/embed/WNIUmfvc5ws")`
 
 <details>
 <summary> Meeting chat log </summary>
 
 ```
-LOG
+00:09:00	Trevin Flickinger:	https://rstudio-conf-2022.github.io/build-tidy-tools/
+00:19:57	Trevin Flickinger:	https://github.com/yogat3ch/UU
+00:34:55	shamsuddeen:	https://www.warp.dev
 ```
 </details>
--->
