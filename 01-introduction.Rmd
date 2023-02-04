@@ -178,16 +178,17 @@ What are you most looking forward to during the group?
 </details>
 
 
-<!--
 ### Cohort 5
 
-`r knitr::include_url("https://www.youtube.com/embed/VIDURL")`
+`r knitr::include_url("https://www.youtube.com/embed/iJahyHlPz0I")`
 
 <details>
 <summary> Meeting chat log </summary>
 
 ```
-LOG
+00:08:26	shamsuddeen:	https://docs.google.com/spreadsheets/d/1ygvVSCNuGRYy78KCtBsmmH0boZpWJi-XshTvIQMHe2s/edit
+00:19:43	Trevin Flickinger:	GitLab and Bitbucket are two other public options for packages
+00:27:29	Trevin Flickinger:	I’m okay with a two week break
+00:27:44	Trevin Flickinger:	Advanced R is on a break those two weeks as well
 ```
 </details>
--->

@@ -27,31 +27,17 @@
 `r knitr::include_url("https://www.youtube.com/embed/qbogIs0-BBo")`
 
 
-<!--
 ### Cohort 4
 
-`r knitr::include_url("https://www.youtube.com/embed/VIDURL")`
+`r knitr::include_url("https://www.youtube.com/embed/iztgh1qYHN4")`
 
 <details>
 <summary> Meeting chat log </summary>
 
 ```
-LOG
+00:35:23	olivier leroy:	str_dup() duplicates the characters within a string, e.g. str_dup("xy", 3) returns "xyxyxy".
+00:35:28	olivier leroy:	from the doc
+01:04:41	olivier leroy:	test driven developemt
+01:04:45	Neil Birrell:	https://en.wikipedia.org/wiki/Test-driven_development
 ```
 </details>
--->
-
-
-<!--
-### Cohort 5
-
-`r knitr::include_url("https://www.youtube.com/embed/VIDURL")`
-
-<details>
-<summary> Meeting chat log </summary>
-
-```
-LOG
-```
-</details>
--->

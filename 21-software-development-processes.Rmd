@@ -1,4 +1,6 @@
-# Other markdown files
+# (PART) Maintenance and distribution {-}
+
+# Software development practices
 
 **Learning objectives:**
 
@@ -11,19 +13,7 @@
 
 ## Meeting Videos
 
-### Cohort 3
-
-`r knitr::include_url("https://www.youtube.com/embed/G852fyvKl8A")`
-
-<details>
-<summary> Meeting chat log </summary>
-
-```
-00:37:08	Rex Parsons:	https://fromthebottomoftheheap.net/2020/04/30/rendering-your-readme-with-github-actions/
-00:59:25	Ryan Metcalf:	Was it `cast1?
-```
-</details>
-
+This chapter did not exist for cohorts 1-3.
 
 ### Cohort 4
 

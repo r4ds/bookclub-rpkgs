@@ -293,18 +293,3 @@ cat(stringi::stri_escape_unicode(x))
 01:06:26	Neil Birrell:	https://colinfay.me/r-assignment/
 ```
 </details>
-
-
-<!--
-### Cohort 5
-
-`r knitr::include_url("https://www.youtube.com/embed/VIDURL")`
-
-<details>
-<summary> Meeting chat log </summary>
-
-```
-LOG
-```
-</details>
--->

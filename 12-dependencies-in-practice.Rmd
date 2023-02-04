@@ -280,34 +280,21 @@ If your package owns an S3 class, it makes sense to export a user-friendly const
 
 </details>
 
-````{=html}
-<!--
+
 ### Cohort 4
 
-`r knitr::include_url("https://www.youtube.com/embed/VIDURL")`
+`r knitr::include_url("https://www.youtube.com/embed/vlHK-D24wd0")`
 
 <details>
 <summary> Meeting chat log </summary>
 
 ```
-LOG
+00:31:39	Olivier Leroy:	https://stackoverflow.com/questions/13401977/what-does-the-autoloads-environment-do#13419964
+00:31:57	Olivier Leroy:	apparently an envt that store function that could be called letter
+00:32:28	Olivier Leroy:	latter*
+00:32:55	Olivier Leroy:	Pointer maybe
+00:54:34	Oluwafemi Oyedele:	I have to go now, thank you very much for the presentation @Toryn, I will catch up with the rest of the discussion, see you all next week!!!
 ```
 </details>
--->
-````
 
-````{=html}
-<!--
-### Cohort 5
-
-`r knitr::include_url("https://www.youtube.com/embed/VIDURL")`
-
-<details>
-<summary> Meeting chat log </summary>
-
-```
-LOG
-```
-</details>
--->
-````
+`r knitr::include_url("https://www.youtube.com/embed/vlHKrK7NRXBN18A")`

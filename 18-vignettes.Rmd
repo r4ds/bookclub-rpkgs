@@ -296,3 +296,8 @@ PART 2:
 01:25:37	Brendan Lam:	Thanks!^
 ```
 </details>
+
+
+### Cohort 4
+
+`r knitr::include_url("https://www.youtube.com/embed/7pki71W8g88")`

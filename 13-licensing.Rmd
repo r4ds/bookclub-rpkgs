@@ -259,7 +259,6 @@ Picture from [Wikipedia](https://en.wikipedia.org/wiki/License_compatibility#Com
 </details>
 
 
-<!--
 ### Cohort 4
 
 `r knitr::include_url("https://www.youtube.com/embed/VIDURL")`
@@ -271,19 +270,3 @@ Picture from [Wikipedia](https://en.wikipedia.org/wiki/License_compatibility#Com
 LOG
 ```
 </details>
--->
-
-
-<!--
-### Cohort 5
-
-`r knitr::include_url("https://www.youtube.com/embed/VIDURL")`
-
-<details>
-<summary> Meeting chat log </summary>
-
-```
-LOG
-```
-</details>
--->
