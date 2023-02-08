@@ -3,10 +3,11 @@
 **Learning objectives:**
 
 - We will learn:
-  - What README.md & NEWS.md files are  
+  - What `README.md` & `NEWS.md` files are  
+  - What information to include  
+  - Who the files are targetted towards  
   - What `usethis::` functions we can use to automate the creation of these files  
-  - How the `.md` files interact with repositories e.g. github, CRAN 
-
+  
 ## What other documentation should we include in our package?  
 
 - Two other important documents are `README.md` & `NEWS.md`  
@@ -14,7 +15,8 @@
 
 ## `README.md`  
 
-- a `README` file is important for CRAN, pkgdown sites and, GitHub  
+- A `README` file is targetted towards a new user who is wondering whether they want to use your package  
+- a `README` file is important for CRAN, pkgdown sites and GitHub  
 - They go way back to the early days of computers. Here's an example from [1974](http://pdp-10.trailing-edge.com/decus_20tap3_198111/01/decus/20-0079/readme.txt.html)  
 - In essence a `README` file tells someone who has come across your package:  
   - a high level description of the package  
@@ -26,7 +28,7 @@
 ## `.Rmd` and `.md`  
 
 - Markdown (`.md`) files play nicely with CRAN, github & pkgdown sites  
-- However, as we should include examples, a `.Rmd` file would allow us to run R code  
+- However, as our `README` file should include examples, a `.Rmd` file would allow us to run R code  
 - One way to do this is use a `.Rmd` file as the main source file, which can then be rendered into a `.md` file  
 - As usual, there is a handy function in `usethis::`:  
   - `usethis::use_readme_rmd()`  
