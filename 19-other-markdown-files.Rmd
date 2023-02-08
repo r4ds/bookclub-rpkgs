@@ -2,13 +2,97 @@
 
 **Learning objectives:**
 
-- THESE ARE NICE TO HAVE BUT NOT ABSOLUTELY NECESSARY
+- We will learn:
+  - What README.md & NEWS.md files are  
+  - What `usethis::` functions we can use to automate the creation of these files  
+  - How the `.md` files interact with repositories e.g. github, CRAN 
 
-## SLIDE 1
+## What other documentation should we include in our package?  
 
-- ADD SLIDES AS SECTIONS (`##`).
-- TRY TO KEEP THEM RELATIVELY SLIDE-LIKE; THESE ARE NOTES, NOT THE BOOK ITSELF.
+- Two other important documents are `README.md` & `NEWS.md`  
+- They don't have to be in `.md` files but it is strongly recommended  
 
+## `README.md`  
+
+- a `README` file is important for CRAN, pkgdown sites and, GitHub  
+- They go way back to the early days of computers. Here's an example from [1974](http://pdp-10.trailing-edge.com/decus_20tap3_198111/01/decus/20-0079/readme.txt.html)  
+- In essence a `README` file tells someone who has come across your package:  
+  - a high level description of the package  
+  - a couple of simple examples  
+  - installation instructions  
+  - an overview of the main components of a package  
+- example of the readme for [`dplyr`](https://github.com/tidyverse/dplyr)  
+
+## `.Rmd` and `.md`  
+
+- Markdown (`.md`) files play nicely with CRAN, github & pkgdown sites  
+- However, as we should include examples, a `.Rmd` file would allow us to run R code  
+- One way to do this is use a `.Rmd` file as the main source file, which can then be rendered into a `.md` file  
+- As usual, there is a handy function in `usethis::`:  
+  - `usethis::use_readme_rmd()`  
+
+## `usethis::use_readme_rmd()`  
+
+- This function:  
+  - Creates a template `README.Rmd` file  
+  - File has a yaml header which outputs into a [`github_document`](https://rmarkdown.rstudio.com/github_document_format.html)  
+  - Adds the `.Rmd` file to `.Rbuildignore` (as we just want our `README.md` included)  
+- If we need to make changes to the `README` file, we will edit the `.Rmd` file and render it (use `devtools::build_readme()`) to generate the updated `.md` file  
+- If your package is also a git repo, then there is a neat pre-commit hook that compares the `.Rmd` file to the `.md` file  
+  - if the `.Rmd` file is more recent than the `.md` file, it will show a warning:  
+  
+  ```
+ > README.md is out of date; please re-knit README.Rmd
+  ```
+
+## `NEWS.md`  
+
+- The `NEWS` file is aimed at existing users  
+- Basically a change log showing any changes a user might want to find out more about  
+- Like `README`, it is recommended that you use `.md` files  
+- As usual, there is a handy function in `usethis::`:  
+  - `usethis::use_news_md()`  
+  
+## `usethis::use_news_md()`  
+
+- generates a template `NEWS.md` file
+
+> "Many other lifecycle- and release-related functions in the devtools ecosystem will make appropriate changes to NEWS.md as your package evolves"
+
+## How to structure your `NEWS` file  
+
+- Use a top level heading for each version, most recent at top  
+- Each change should be in a bulleted list  
+- If lots of changes, use a subheading to break it up  
+- If related to a github issue, include pull request number and user name
+
+e.g.:
+
+```
+# foofy (development version)
+
+* Better error message when grooving an invalid grobble (#206).
+
+# foofy 1.0.0
+
+## Major changes
+
+* Can now work with all grooveable grobbles!
+
+## Minor improvements and bug fixes
+
+* Printing scrobbles no longer errors (@githubusername, #100).
+
+* Wibbles are now 55% less jibbly (#200).
+
+```
+
+## Get in the habit 
+
+- It can be hard to remember to keep the `NEWS` file up to date  
+- `usethis::use_release_issue()` will remind you to polish the `NEWS` file  
+- Using your version control system e.g. `git diff` to compare between your current version and past release can help to prompt you
+  
 ## Meeting Videos
 
 ### Cohort 3
