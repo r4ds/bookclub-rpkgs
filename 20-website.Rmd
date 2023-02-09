@@ -2,7 +2,10 @@
 
 **Learning objectives:**
 
-- THESE ARE NICE TO HAVE BUT NOT ABSOLUTELY NECESSARY
+- Why a website benefits your package  
+- Some handy `usethis::` and `pkgdown::` functions to automatically generate the website  
+- A workflow to publish to the internet using Git, GitHub Actions & GitHub Pages  
+- Optional extras to customise your pkgdown site  
 
 ## A website to call home  
 
@@ -21,10 +24,10 @@
 - This will:  
   - Create a `_pkgdown.yml` file (the main config file for pkgdown)  
   - Adds things to `.Rbuildignore` (stops pkgdown things being included in your package bundle)  
-  - Adds `docs` to `.gitignore`. This co-opts you into building and deploying your website elsewhere (GitHub Actions & Pages). `docs` would just be used to render as a local preview  
+  - Adds `docs/` to `.gitignore`. This co-opts you into building and deploying your website elsewhere (GitHub Actions & Pages). `docs/` would just be used to render as a local preview  
   
-## `usethis::use_pkgdown` - render your site  
-- You will repeatedly use `usethis::use_pkgdown` to render your website locally  
+## `pkgdown::build_site()` - render your site  
+- You will repeatedly use `pkgdown::build_site()` to render your website locally  
 - This should render and open your website in your default browser  
 - You can look in the `docs/` directory to see the files that make up your package  
 - Congrats! You now have a barebones, locally rendered website... but how to deploy to the internet?  
@@ -39,7 +42,7 @@
 ## `usethis::use_pkgdown_github_pages()`  
 
 - `usethis::use_pkgdown_github_pages()` is called once and will run through several steps:  
-  - Initialises an empty orphan branch in you GitHub repo (`gh-pages`)  
+  - Initialises an empty orphan branch in your GitHub repo (`gh-pages`)  
     - This branch only exists on GitHub and only tracks the files that make up the website (i.e. what we see in `docs/`)  
   - Turns on GitHub Pages for your repo and points it to the `gh-pages` branch  
   - Copies the config file for a GHA workflow (shows up in `.github/workflows/pkgdown.yaml`)  
@@ -63,7 +66,7 @@
 - There's an [R package](https://github.com/GuangchuangYu/hexSticker) for that  
 - When you have your logo, `usethis::use_logo()` will scale and add your logo to your `man/figures/` folder. pkgdown will also discover this and add to your site  
 
-## Reference Index  
+## Functions Reference Index  
 
 - the `reference/` contains a page for each function that has a `.Rd` help topic in `man/`  
 - pkgdown will execute and render all of your examples  
@@ -82,6 +85,7 @@
 - The reference index is an alphabetically ordered list of functions  
 - You might like to curate this if you have lots of functions  [(e.g. dplyr)](https://dplyr.tidyverse.org/reference/)  
 - This can be done by providing a `reference` field in `_pkgdown.yml` e.g. for dplyr:
+
   ```
   reference:
   - title: Data Frame Verbs
@@ -94,7 +98,7 @@
   - distinct
   ...
 
-- subtitle: Columns
+  - subtitle: Columns
   desc: >
     Verbs that principally operate on columns.
   contents:
@@ -102,6 +106,7 @@
   - mutate
   ...
   ```
+  
 ## Vignettes and articles  
 
 - A packages vignettes will appear (rendered) in the _Articles_ drop down menu  
@@ -114,13 +119,35 @@
     ```
     `thisfunction()` or `otherpkg::otherfunction()`
     ```  
+    
 ## Vignettes and articles Index organisation  
 
 - The default is to have your vignettes/articles appear alphabetically  
 - You can customise this
 - `?pkgdown::build_articles` has more info on this
 
-## Non-vignette ar
+## Non-vignette articles  
+
+- Non-vignette articles are not shipped with the package bundle  
+- The main reason to have a non-vignette article is to avoid executing gnarly code  
+- This might be due to:  
+  - The code requiring authentication (e.g. googledrive package)  
+  - You use a package but don't want to formally depend on it  
+  - Content with lots of figures that causes size issues (e.g. larger than CRAN's size constraints)  
+
+## Development Mode
+
+> The development field allows you to generate different sites for the development and released versions of your package. ~ [pkgdown](https://pkgdown.r-lib.org/reference/build_site.html#development-mode)  
+
+- In the `_pkgdown.yml` file there is a `mode:` field. This can be set to `release`, `development`, `auto` and more.  
+- `release` is default and site gets written to `docs/` (just use this if you have a small user base). This will generate a single site, but a user downloading from CRAN may get documentation from your in development documents (e.g. functions that may not exist in the CRAN package yet)  
+- `devel` site is writen to `docs/dev/` and gets a danger class, and a tool tip warning these documents are in development. A `noindex` tag stops search engines indexing this site. You would have two sites the CRAN release in `docs/` and the development release in `docs/dev/`  
+
+  - Example of this:    
+    - readr.tidyverse.org documents the released version, i.e. what install.packages("readr") delivers.
+    - readr.tidyverse.org/dev/ documents the dev version, i.e. what install_github("tidyverse/readr") delivers.
+
+- `auto` will automatically determine the mode based on the version number (use if your package has a broad user base)  
 
 ## Meeting Videos
 
