@@ -2,12 +2,152 @@
 
 **Learning objectives:**
 
-- THESE ARE NICE TO HAVE BUT NOT ABSOLUTELY NECESSARY
+- Why a website benefits your package  
+- Some handy `usethis::` and `pkgdown::` functions to automatically generate the website  
+- A workflow to publish to the internet using Git, GitHub Actions & GitHub Pages  
+- Optional extras to customise your pkgdown site  
 
-## SLIDE 1
+## A website to call home  
 
-- ADD SLIDES AS SECTIONS (`##`).
-- TRY TO KEEP THEM RELATIVELY SLIDE-LIKE; THESE ARE NOTES, NOT THE BOOK ITSELF.
+- Our package has many different documents:  
+  - Function documentation (or help topics)  
+  - Documentation of data sets  
+  - Vignettes (and/or articles)  
+  - `README` and `NEWS`  
+    
+- We can bring together all of our documentation into an easy to navigate website  
+- The pkgdown package contains some easy to use functions to create a website automagically if your package has a valid structure  
+
+## `usethis::use_pkgdown` - Initiate a site  
+
+- `usethis::use_pkgdown()` is run once and will create a minimal setup where we can then start to use pkgdown  
+- This will:  
+  - Create a `_pkgdown.yml` file (the main config file for pkgdown)  
+  - Adds things to `.Rbuildignore` (stops pkgdown things being included in your package bundle)  
+  - Adds `docs/` to `.gitignore`. This co-opts you into building and deploying your website elsewhere (GitHub Actions & Pages). `docs/` would just be used to render as a local preview  
+  
+## `pkgdown::build_site()` - render your site  
+- You will repeatedly use `pkgdown::build_site()` to render your website locally  
+- This should render and open your website in your default browser  
+- You can look in the `docs/` directory to see the files that make up your package  
+- Congrats! You now have a barebones, locally rendered website... but how to deploy to the internet?  
+
+## Deployment 
+
+- The easiest way to show your website on the internet is to:  
+  - Use Git & host the package on GitHub  
+  - Use GitHub Actions to run `pkgdown::build_site()` every time you push a change to GitHub  
+  - Use GitHub Pages to serve your static website  
+
+## `usethis::use_pkgdown_github_pages()`  
+
+- `usethis::use_pkgdown_github_pages()` is called once and will run through several steps:  
+  - Initialises an empty orphan branch in your GitHub repo (`gh-pages`)  
+    - This branch only exists on GitHub and only tracks the files that make up the website (i.e. what we see in `docs/`)  
+  - Turns on GitHub Pages for your repo and points it to the `gh-pages` branch  
+  - Copies the config file for a GHA workflow (shows up in `.github/workflows/pkgdown.yaml`)  
+  - Adds the URL for your site as the homepage for your GitHub repo  
+  - Adds the URL for your site to `DESCRIPTION` and `_pkgdown.yml`  
+
+- It may take a couple of minutes, but you should now be able to visit the website URL (you will see it listed in the console output).  
+  - the default URL is in this form:  
+  `https://USERNAME.github.io/REPONAME/`
+- You have a website! Sweet as!  
+
+## C'est fini?  
+
+- You could stop here if you wanted, you have a basic website that is helpful to users  
+- Or you could make it look even more sweet by customising stuff (`vignette("pkgdown", package = "pkgdown")` is a good place to start)  
+
+## Hex logos  
+
+- The six sided logos and stickers that everyone loves  
+- Design specs and sticker printing businesses can be found [here](http://hexb.in/sticker.html)  
+- There's an [R package](https://github.com/GuangchuangYu/hexSticker) for that  
+- When you have your logo, `usethis::use_logo()` will scale and add your logo to your `man/figures/` folder. pkgdown will also discover this and add to your site  
+
+## Functions Reference Index  
+
+- the `reference/` contains a page for each function that has a `.Rd` help topic in `man/`  
+- pkgdown will execute and render all of your examples  
+  - This is a good opportunity to make sure they look the way they are supposed to  
+- The help topics will be linked to locations within/outside of your site  
+  - hark back to chapter 17 and recall enclosing functions in `[]` when mentioned in roxygen comments  
+  - pkgdown will automatically hyperlink to the relevant pages for your function.  
+  - Inbound links from other people's packages require extra work:  
+    - Published to CRAN  
+    - the `URL` field in the `DESCRIPTION` file must be populated with the URL of your pkgdown site and GitHub repo  
+    - your `_pkgdown.yml` file must include the URL for your site.  
+  - devtools generally does this configuration for you  
+  
+## Functions Index Organisation  
+
+- The reference index is an alphabetically ordered list of functions  
+- You might like to curate this if you have lots of functions  [(e.g. dplyr)](https://dplyr.tidyverse.org/reference/)  
+- This can be done by providing a `reference` field in `_pkgdown.yml` e.g. for dplyr:
+
+  ```
+  reference:
+  - title: Data Frame Verbs
+  
+  - subtitle: Rows
+  desc: >
+    Verbs that principally operate on rows.
+  contents:
+  - arrange
+  - distinct
+  ...
+
+  - subtitle: Columns
+  desc: >
+    Verbs that principally operate on columns.
+  contents:
+  - glimpse
+  - mutate
+  ...
+  ```
+  
+## Vignettes and articles  
+
+- A packages vignettes will appear (rendered) in the _Articles_ drop down menu  
+- Vignettes can also be linked to automatically (recall using `vignette("some-topic")` inline from Chapter 17)  
+- pkgdown will detect that format and automatically link to it on your website. Use this format in your roxygen comments:  
+  - for your own vignette `vignette("some-topic")`  
+  - for an external package vignette `vignette("some-topic", package = "somepackage")`  
+  - this will not work for non-vignette articles (use a normal URL for these e.g. `[]()`)  
+  - make sure to use backticks and parentheses when you refer to a function in vignettes e.g.:  
+    ```
+    `thisfunction()` or `otherpkg::otherfunction()`
+    ```  
+    
+## Vignettes and articles Index organisation  
+
+- The default is to have your vignettes/articles appear alphabetically  
+- You can customise this
+- `?pkgdown::build_articles` has more info on this
+
+## Non-vignette articles  
+
+- Non-vignette articles are not shipped with the package bundle  
+- The main reason to have a non-vignette article is to avoid executing gnarly code  
+- This might be due to:  
+  - The code requiring authentication (e.g. googledrive package)  
+  - You use a package but don't want to formally depend on it  
+  - Content with lots of figures that causes size issues (e.g. larger than CRAN's size constraints)  
+
+## Development Mode
+
+> The development field allows you to generate different sites for the development and released versions of your package. ~ [pkgdown](https://pkgdown.r-lib.org/reference/build_site.html#development-mode)  
+
+- In the `_pkgdown.yml` file there is a `mode:` field. This can be set to `release`, `development`, `auto` and more.  
+- `release` is default and site gets written to `docs/` (just use this if you have a small user base). This will generate a single site, but a user downloading from CRAN may get documentation from your in development documents (e.g. functions that may not exist in the CRAN package yet)  
+- `devel` site is writen to `docs/dev/` and gets a danger class, and a tool tip warning these documents are in development. A `noindex` tag stops search engines indexing this site. You would have two sites the CRAN release in `docs/` and the development release in `docs/dev/`  
+
+  - Example of this:    
+    - readr.tidyverse.org documents the released version, i.e. what install.packages("readr") delivers.
+    - readr.tidyverse.org/dev/ documents the dev version, i.e. what install_github("tidyverse/readr") delivers.
+
+- `auto` will automatically determine the mode based on the version number (use if your package has a broad user base)  
 
 ## Meeting Videos
 
