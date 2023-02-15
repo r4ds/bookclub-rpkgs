@@ -1,28 +1,87 @@
 # (PART) Maintenance and distribution {-}
 
 # Software development practices
+**Goal**: zoom back now and consider software development practices
 
-**Learning objectives:**
+- More productive  
+- Raise quality of work  
+- (more reproducibility?)
 
-- THESE ARE NICE TO HAVE BUT NOT ABSOLUTELY NECESSARY
+## Recommendations 
 
-## SLIDE 1
+- An IDE with support for R package development  
 
-- ADD SLIDES AS SECTIONS (`##`).
-- TRY TO KEEP THEM RELATIVELY SLIDE-LIKE; THESE ARE NOTES, NOT THE BOOK ITSELF.
+- Version control (Git) + Hosted version control (GitHub)
 
-## Meeting Videos
+- Continuous Integration / continuous deployment: Mostly automatic `R CMD check`
 
-This chapter did not exist for cohorts 1-3.
+Pros: 
 
-### Cohort 4
+- Do the right thing: **experiment, document, test, check, collaborate**
 
-`r knitr::include_url("https://www.youtube.com/embed/VIDURL")`
+- Use the same tools/workflows than experts
 
-<details>
-<summary> Meeting chat log </summary>
+## Git and Github
+
+Git manages the evolution of a set of files (repository).
+
+- 94 % of VC is Git
+
+- GitHub is dominant followed by GitLab and bitbucket
+
+- Lot of resources: [Happy git and Github for the useR])(https://cran.r-project.org/web/packages/validate/vignettes/cookbook.html)
+
+It allows: 
+
+- Communications with users (Issues)
+
+- Collaboration (PR, ask features)
+
+- Distribution (`devtools::install_github`) or now with `pak` install specific SHA
+
+(SHA-1 is sude by Git instead of adding numbers, Secure Hash Algorithms)
+
+- Website: see `pkgdown`  
+
+## CI/CD
+
+For a package: 
+
+1. Source package in GH  
+    * Multiple developers have permissions to push   
+    * External can push via PR
+    
+2. Main idea: development tasks can be executed automatically when certain events happens
+
+Example: Automate R `CMD check`
+
+### More!!! GitHub Action (GHA)
+
+`usethis` have function that copy some GHA workflow into a specific folder `.github`.
+
+You have a curated already made workflow here : https://github.com/r-lib/actions/#readme
+
+When using `usethi::use_github_action_check_standard`
 
 ```
-LOG
+#> ✔ Creating '.github/'
+#> ✔ Adding '*.html' to '.github/.gitignore'
+#> ✔ Creating '.github/workflows/'
+#> ✔ Saving 'r-lib/actions/examples/check-standard.yaml@v2' to .github/workflows/R-CMD-check.yaml'
+#> • Learn more at <https://github.com/r-lib/actions/blob/v2/examples/README.md>.
+#> ✔ Adding R-CMD-check badge to 'README.md'```
 ```
-</details>
+
+
+* Create `.github/workflow/`
+
+* Add new needed lines in `.gitignore`
+
+* Add a shiny badge at the top of your README.md
+
+It has plenty of other uses! 
+
+- `usethis::use_pkgdown_github_page()`
+
+- `usethis::use_github_action("test_covergae")`
+
