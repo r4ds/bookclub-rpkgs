@@ -2,7 +2,130 @@
 
 **Learning objectives:**
 
-- THESE ARE NICE TO HAVE BUT NOT ABSOLUTELY NECESSARY
+- How to determine package version and why it matters. 
+- Difference between major and minor update
+- Learn about breaking change and backward compatibility   
+- How to communicate them to users
+
+## Package evolution 
+
+CRAN keeps history of package on GH and you can access it! 
+
+### Package version number
+
+- `package_version()` is a function that convert strings with either `.` or `-` to s3 object that deal with version numbers
+
+```{r package_version} 
+version <- package_version(c("1.0", c("0-9-1")))
+class(version)
+typeof(version)
+```
+
+
+- `utils::packageVersion()` allows us to get the version of a package: useful to do check on package in function 
+
+
+- even if `-` is accepted it is not recommended 
+
+- You should use at least 3 components on your numbering system 
+
+## Backward compatibility and breaking change  
+
+
+Let start with what is not a breaking change: 
+
+- adding new functions, adding an arguments, fixing a bug!
+
+If you do that do not worry (too much).
+
+A breaking change will not allow reproducibility of previous codes with the new version. 
+
+A good example is when you introduce a change and other package on CRAN that depebnd on it do not pass anymore the `R CMD check`.
+
+Some examples are: 
+
+- Removing a function 
+
+- Removing an argument 
+
+- Narrowing the set of valid inputs to a function 
+
+
+## Major vs minor patch
+
+- the numbering system help communicate change and evolution to users 
+
+```
+<major>.<minor>.<patch>        # released version
+<major>.<minor>.<patch>.<dev>  # in-development version
+```
+
+- **Patch release**: small release, just bug fixing
+
+- **Minor release**: the same + change that are backward compatible
+
+- **Major release**: change that are not backward compatible, affect most users, stable API
+
+You can use: `usethis::use_version()` to help you keep tracl on it 
+
+## Pros and cons of breaking change
+
+- useR usually do not care enought of the version of the package they use 
+
+- `renv` is an option to keep track of it inside of project 
+
+Deal with it! (and provide users fair warning and time see next part)
+
+
+### Lifecycles, stages and badges
+
+it is an other way to communicate to users. It introduces visual badges. 
+
+It can be use at the package, function and arguments levels.
+
+find more with `usethis::lifecycle()` function! 
+
+### Deprecated a function
+
+Lifecycle ha a vignette on it: [`vignette("communicate", package = "lifecycle")`](https://lifecycle.r-lib.org/articles/communicate.html)
+
+You can generate warning and message to the users with `lifecyle` package: 
+
+```
+Warning message:
+Problem while computing `..1 = across(where(is.factor) & !is.ordered, as.character)`.
+ℹ️ Predicate functions must be wrapped in `where()`.
+
+# Bad data %>% select(is.ordered)
+
+# Good data %>% select(where(is.ordered))
+
+ℹ️ Please update your code. This message is displayed once per session.
+```
+
+You should graduate the warning! 
+
+### Dealing with change in a dependency 
+
+A functionality you are using will be changed!!!!
+
+One option: 
+
+```{r eval=FALSE}
+your_function <- function(...) {
+  if (packageVersion("otherpkg") >= "1.3.9000") {
+    otherpkg::their_new_function()
+  } else {
+    otherpkg::their_old_function()
+  }
+  # the rest of the function
+}
+```
+
+### Superseding a function
+
+Try to preserve old behavior but you want to let them know that they should change!!!
+
 
 ## SLIDE 1
 
