@@ -13,8 +13,9 @@ If you would like to present, please see the sign-up sheet for your cohort (link
 - Cohort 1 (started 2020-09-29, ended 2020-12-15): [meeting videos](https://youtube.com/playlist?list=PL3x6DOfs2NGiXMln8bxY7e0XgA5z1cp-8)
 - Cohort 2 (started 2021-03-13, ended 2021-06-05): [meeting videos](https://youtube.com/playlist?list=PL3x6DOfs2NGhRtG2Oj1aI9mWTGY6KKUJB)
 - Cohort 3 (started 2022-03-30, ended 2022-08-17): [meeting videos](https://youtube.com/playlist?list=PL3x6DOfs2NGi8NcKmNxw_Hk4-leUsivZv)
-- [Cohort 4](https://docs.google.com/spreadsheets/d/161KcusuKQlNcmYyjVszV6hdzBSJzDA6GpulS_Bj5RwU/edit?usp=sharing) (started 2022-10-05): [Wednesdays, 20:00 CST/CDT](https://www.timeanddate.com/worldclock/converter.html?iso=20221006T010000&p1=24&p2=1440) | [meeting videos](https://youtube.com/playlist?list=PL3x6DOfs2NGhksG9nEcxtFD4ylI0LCMjZ)
+- Cohort 4 (started 2022-10-05, ended 2023-03-22): [meeting videos](https://youtube.com/playlist?list=PL3x6DOfs2NGhksG9nEcxtFD4ylI0LCMjZ)
 - Cohort 5 (ended 2022-12-16): [meeting videos](https://www.youtube.com/playlist?list=PL3x6DOfs2NGhXh0_1fKhoPQ9sm4OAf8oV)
+- Cohort 6 (begins soon!)
 
 <hr>
 

@@ -85,3 +85,39 @@ It has plenty of other uses!
 
 - `usethis::use_github_action("test_covergae")`
 
+
+## Meeting Videos
+
+This was a somewhat different chapter for cohorts 1-3.
+
+### Cohort 1
+
+`r knitr::include_url("https://www.youtube.com/embed/SHAdJmjvQ44")`
+
+`r knitr::include_url("https://www.youtube.com/embed/RlE8P3f10ZU")`
+
+
+### Cohort 2
+
+`r knitr::include_url("https://www.youtube.com/embed/pedUcPFrZMQ")`
+
+
+### Cohort 3
+
+`r knitr::include_url("https://www.youtube.com/embed/LkSKXeZTD-0")`
+
+<details>
+<summary> Meeting chat log </summary>
+
+```
+00:29:06	Ryan Metcalf:	https://blog.jdriven.com/2020/10/automating-hosting-revealjs-slides-on-gitlab/
+00:53:57	Arun Chavan:	https://rstudio.github.io/distill/website.html
+00:55:46	Brendan Lam:	Cool! I didn’t even remember what's on my repo
+01:05:13	Brendan Lam:	As someone who didn't know what Docker is, this was very informative. thanks, Ryan!
+```
+</details>
+
+
+### Cohort 4
+
+`r knitr::include_url("https://www.youtube.com/embed/hbh7SF_ffhM")`

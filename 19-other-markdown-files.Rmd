@@ -113,12 +113,13 @@ e.g.:
 
 ### Cohort 4
 
-`r knitr::include_url("https://www.youtube.com/embed/VIDURL")`
+`r knitr::include_url("https://www.youtube.com/embed/9Xux7LQXPWg")`
 
 <details>
 <summary> Meeting chat log </summary>
 
 ```
-LOG
+00:21:30	Schafer, Toryn:	https://cran.r-project.org/web/packages/lifecycle/index.html
+00:40:58	Olivier Leroy:	https://yaml.org/spec/1.1/
 ```
 </details>
