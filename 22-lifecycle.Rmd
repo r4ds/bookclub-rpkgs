@@ -134,6 +134,8 @@ Try to preserve old behavior but you want to let them know that they should chan
 
 ## Meeting Videos
 
+This was a somewhat different chapter for cohorts 1-3.
+
 ### Cohort 1
 
 `r knitr::include_url("https://www.youtube.com/embed/Dh-kbknqa3E")`
@@ -186,12 +188,21 @@ Questions: (link no longer available)
 
 ### Cohort 4
 
-`r knitr::include_url("https://www.youtube.com/embed/VIDURL")`
+`r knitr::include_url("https://www.youtube.com/embed/RIOdG96LyGc")`
 
 <details>
 <summary> Meeting chat log </summary>
 
 ```
-LOG
+00:55:28	Neil Birrell: usethis::use_lifecycle()
+01:00:18	Neil Birrell: Warning message:
+Problem while computing `..1 = across(where(is.factor) & !is.ordered, as.character)`.
+ℹ️ Predicate functions must be wrapped in `where()`.
+
+# Bad data %>% select(is.ordered)
+
+# Good data %>% select(where(is.ordered))
+
+ℹ️ Please update your code. This message is displayed once per session.
 ```
 </details>

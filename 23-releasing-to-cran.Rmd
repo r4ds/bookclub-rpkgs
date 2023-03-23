@@ -140,12 +140,14 @@ If you get accepted:
 
 ### Cohort 4
 
-`r knitr::include_url("https://www.youtube.com/embed/VIDURL")`
+`r knitr::include_url("https://www.youtube.com/embed/eK1YB8Lmgws")`
 
 <details>
 <summary> Meeting chat log </summary>
 
 ```
-LOG
+00:15:26	Olivier Leroy: See cran.r-project.org you have the cran team
+00:34:21	Toryn Schafer: https://parsnip.tidymodels.org/reference/rand_forest.html
+00:47:46	Olivier Leroy: cowsay
 ```
 </details>

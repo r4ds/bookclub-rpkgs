@@ -147,12 +147,32 @@ The categories of checks are:
 
 ### Cohort 4
 
-`r knitr::include_url("https://www.youtube.com/embed/VIDURL")`
+`r knitr::include_url("https://www.youtube.com/embed/dmk4CG9ILvE")`
+
+`r knitr::include_url("https://www.youtube.com/embed/fuFjAj1_Xq0")`
 
 <details>
 <summary> Meeting chat log </summary>
 
 ```
-LOG
+00:08:43	R4DS Online Learning Community:	New Zealand has extreme insects: https://en.wikipedia.org/wiki/Dryococelus_australis
+00:10:57	Rebecca Butler:	(popping in as a fly on the wall even though I've never made a meeting for this club)
+00:29:41	Olivier Leroy:	Am  the only one that use CRAN view ?
+00:40:10	Olivier Leroy:	GitHub is starting to be really smart on it repo recommandation
+00:49:28	Olivier Leroy:	Company that sell data products do not sometimes want their package public
+00:50:31	Olivier Leroy:	Dealing with a lot of private package we have a lot of credentials issues (mainly bad practices)
+00:58:06	Olivier Leroy:	For the users one package make it easier, one example could be {sf}
+00:58:27	Olivier Leroy:	Default is that it is hard to build around {sf}
+01:08:03	Jenny Bryan:	The Pragmatic Programmer
+01:08:56	R4DS Online Learning Community:	https://www.manning.com/books/the-programmers-brain
+01:10:50	Rebecca Butler:	I want to see a list of the blogs Jenny follows :)
+01:11:11	Olivier Leroy:	Reacted to "I want to see a list..." with 👍
+01:17:39	R4DS Online Learning Community:	Non-defaults in RStudio: usethis::use_blank_slate()
+01:18:58	Olivier Leroy:	Thank you!
+01:19:03	Gus Lipkin:	Thank you!
+01:19:06	Rebecca Butler:	Thank you for your time, Jenny!
+01:19:12	Schafer, Toryn:	Thank you!
+01:19:13	Ryan McShane:	Thank you, and thank you for Happy Git with R!
+01:19:14	Neil Birrell:	Thanks so much for your time and mahi on the book and packages Jenny!
 ```
 </details>
