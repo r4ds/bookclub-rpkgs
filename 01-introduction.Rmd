@@ -4,10 +4,9 @@
 
 **Learning objectives:**
 
-1. Explain the **book club format.**
-2. Explain **what** an **R package** is.
-3. Describe **why** we should **develop packages.**
-4. Discuss the philosophy behind the use of the **`devtools` and `usethis` packages** in **package development.**
+-  Explain **what** an **R package** is.
+-  Describe **why** we should **develop packages.**
+-  Discuss the philosophy behind the use of the **`devtools` and `usethis` packages** in **package development.**
 
 ## What is an R package?
 
@@ -17,12 +16,8 @@
    
 * R packages can be defined by their structure:
    * Discussed throughout the book club
-<<<<<<< HEAD
    * At its core, packages are defined by the conventions of how files and directories are organized: `/R`; `DESCRIPTION` file; `/tests`; `/data`; etc. 
-=======
    * At its core, packages are defined by the conventions of how files and directories are organized: `/R`; `DESCRIPTION` file; `/tests`; `/data`; etc. 
->>>>>>> 0b223f8a0b149ebb98e300da014c5b7dabcdbd81
-   * [Packaging Data Analytical Work Reproducibly Using R (and Friends)](https://peerj.com/preprints/3192/)
 
 ## Installing and using packages
 
