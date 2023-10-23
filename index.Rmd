@@ -13,8 +13,6 @@ description: "This is the product of the R4DS Online Learning Community's R Pack
 
 # Welcome {-}
 
-Welcome to the bookclub! 
-
 This is a companion for the book [_R Packages_](https://r-pkgs.org/) by Hadley Wickham and Jenny Bryan (2nd edition, copyright 2023).
 
 -  These are **shared slides!**
@@ -23,24 +21,26 @@ This is a companion for the book [_R Packages_](https://r-pkgs.org/) by Hadley W
    -  Available at [r4ds.io/rpkgs](https://r4ds.io/rpkgs).
 -  We follow the [R4DS Online Learning Community Code of Conduct](https://r4ds.io/conduct).
 
+## Book club meetings {-}
+
+-  [Volunteer leads discussion of a chapter](https://docs.google.com/spreadsheets/d/1C75auf7ceIt3zieY85Hmb1oVkVNtSzRoZTmSU7SVYRc/edit?usp=sharing)
+   -  **This is the best way to learn the material.**
+-  Presentations: 
+   -  Review of material
+   -  Questions you have
+   -  Maybe live demo
+-  More info about editing: [this github repo](https://github.com/r4ds/bookclub-rpkgs).
+-  Recorded, available on the [R4DS Online Learning Community YouTube Channel](https://r4ds.io/youtube).
+-  **Camera** is **optional,** but **encouraged.**
+
 ## Pace {-}
 
--  Meet **every week.**
-   -  Try to **always meet** even if presenter can't.
+-  Meet ***every*** week except holidays, etc
+   -  We'll discuss even if presenter unavailable
 -  Meetings = **1 hour.**
--  Cover **1 chapter per week.**
-   -  Exception: Chapter 3 is super short.
--  **Split content** if you need to!
-
-## Format {-}
-
--  [**Volunteer to lead discussion!**](://docs.google.com/spreadsheets/d/1C75auf7ceIt3zieY85Hmb1oVkVNtSzRoZTmSU7SVYRc/edit?usp=sharing)
-   -  **This is the best way to learn the material!**
--  **Update shared slides**.
-   -  Instructions in [github repo](https://github.com/r4ds/bookclub-rpkgs).
-   -  **Embedded code** is almost always easier to follow than live demos!
--  Presentations **recorded** & available on [**R4DS Online Learning Community YouTube Channel**](https://youtube.com/playlist?list=PL3x6DOfs2NGjSSjJdHz4uqeAxqiuBSEaz).
--  **Camera** is **optional,** but **encouraged.**
+-  **Goal:** 1 chapter/week
+-  Ok to split overwhelming chapters
+-  Ok to combine short chapters
 -  If we need to **slow down** and discuss, **let me know.**
    -  Most likely someone has the same question 
    -  We are all here to learn 
@@ -51,7 +51,7 @@ If you feel comfortable sharing, unmute or raise your hand!
 
 -  **Who** are you?
 -  **Where** are you joining from?
--  **Previous clubs?**
+-  **Previous clubs?** (R4DS or other)
 -  **How long** have you been using R?
 -  **What** are you most looking forward to learning?
 
@@ -106,7 +106,15 @@ to
 -  [`git`'s documentation](https://git-scm.com/doc)
 -  [MShiny Cohort 2 Introduction](https://www.youtube.com/watch?v=beOYuHG9Xng&list=PL3x6DOfs2NGjhwrYvdmrKRNcvXX7X6ldt)
 
-## Chapter 1: Learning objectives: {-}
+## Learning objectives {-}
+
+-  Students who study with LOs in mind ***retain more.***
+-  **Tips:**
+   -  "After today's session, you will be able to..."
+   -  *Very* roughly **1 per section.**
+-  Likely need to be refined
+
+## Today's learning objectives {-}
 
 -  Explain **what** an **R package** is.
 -  Describe **why** we should **develop packages.**
@@ -114,14 +122,14 @@ to
 
 ## What is an R package? {-}
 
-* R packages can be defined based on their utility:
-   * A means to bundle code, data, documentation, and tests that can easily be shared with others. 
-   * A package opens up the use of several workflow packages/tools.
+-  R packages can be defined based on their utility:
+   -  A means to bundle code, data, documentation, and tests that can easily be shared with others. 
+   -  A package opens up the use of several workflow packages/tools.
    
-* R packages can be defined by their structure:
-   * Discussed throughout the book club
-   * At its core, packages are defined by the conventions of how files and directories are organized: `/R`; `DESCRIPTION` file; `/tests`; `/data`; etc. 
-   * At its core, packages are defined by the conventions of how files and directories are organized: `/R`; `DESCRIPTION` file; `/tests`; `/data`; etc. 
+-  R packages can be defined by their structure:
+   -  Discussed throughout the book club
+   -  At its core, packages are defined by the conventions of how files and directories are organized: `/R`; `DESCRIPTION` file; `/tests`; `/data`; etc. 
+   -  At its core, packages are defined by the conventions of how files and directories are organized: `/R`; `DESCRIPTION` file; `/tests`; `/data`; etc. 
 
 ## Installing and using packages {-}
 

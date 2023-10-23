@@ -15,7 +15,7 @@ If you would like to present, please see the sign-up sheet for your cohort (link
 - Cohort 3 (started 2022-03-30, ended 2022-08-17): [meeting videos](https://youtube.com/playlist?list=PL3x6DOfs2NGi8NcKmNxw_Hk4-leUsivZv)
 - Cohort 4 (started 2022-10-05, ended 2023-03-22): [meeting videos](https://youtube.com/playlist?list=PL3x6DOfs2NGhksG9nEcxtFD4ylI0LCMjZ)
 - Cohort 5 (ended 2022-12-16): [meeting videos](https://www.youtube.com/playlist?list=PL3x6DOfs2NGhXh0_1fKhoPQ9sm4OAf8oV)
-- [Cohort 6](https://docs.google.com/spreadsheets/d/1C75auf7ceIt3zieY85Hmb1oVkVNtSzRoZTmSU7SVYRc/edit?usp=sharing) (started 2023-05-03, facilitated by Trevin Flickinger): [Wednesdays, 09:00 AM CST/CDT](https://www.timeanddate.com/worldclock/converter.html?iso=20230503T140000&p1=24&p2=1440) | [meeting videos](https://youtube.com/playlist?list=PL3x6DOfs2NGjSSjJdHz4uqeAxqiuBSEaz)
+- [Cohort 6](https://docs.google.com/spreadsheets/d/1C75auf7ceIt3zieY85Hmb1oVkVNtSzRoZTmSU7SVYRc/edit?usp=sharing) (started 2023-11-06): [Mondays, 09:00 AM CST/CDT](https://www.timeanddate.com/worldclock/converter.html?iso=20231106T220000&p1=24&p2=1440) | [meeting videos](https://youtube.com/playlist?list=PL3x6DOfs2NGjSSjJdHz4uqeAxqiuBSEaz)
 
 <hr>
 
