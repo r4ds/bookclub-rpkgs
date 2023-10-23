@@ -249,8 +249,8 @@ Recommendation for conditional cases is to use `@examplesIf` tag
 
 Alternative is using RMarkdown but downsides:
 
-- code in ````R` blocks is never run
-- codes in ````{r}` is run every time you document
+- code in ```` ```R ```` blocks is never run
+- codes in ```` ```{r} ```` is run every time you document
 
 ## Re-using documentation
 
