@@ -105,3 +105,188 @@ to
 -  [`usethis`'s pull request helpers](https://usethis.r-lib.org/articles/pr-functions.html)
 -  [`git`'s documentation](https://git-scm.com/doc)
 -  [MShiny Cohort 2 Introduction](https://www.youtube.com/watch?v=beOYuHG9Xng&list=PL3x6DOfs2NGjhwrYvdmrKRNcvXX7X6ldt)
+
+## Chapter 1: Learning objectives: {-}
+
+-  Explain **what** an **R package** is.
+-  Describe **why** we should **develop packages.**
+-  Discuss the philosophy behind the use of the **`devtools` and `usethis` packages** in **package development.**
+
+## What is an R package? {-}
+
+* R packages can be defined based on their utility:
+   * A means to bundle code, data, documentation, and tests that can easily be shared with others. 
+   * A package opens up the use of several workflow packages/tools.
+   
+* R packages can be defined by their structure:
+   * Discussed throughout the book club
+   * At its core, packages are defined by the conventions of how files and directories are organized: `/R`; `DESCRIPTION` file; `/tests`; `/data`; etc. 
+   * At its core, packages are defined by the conventions of how files and directories are organized: `/R`; `DESCRIPTION` file; `/tests`; `/data`; etc. 
+
+## Installing and using packages {-}
+
+-  Packages are available via [Comprehensive R Archive Network (CRAN)](https://cran.r-project.org/index.html)
+-  Packages are also available via different public repos
+   -  [GitHub is the most popular](https://github.com/).
+
+### Installing packages {-}
+
+```{r 01-install-packages, eval=FALSE}
+install.packages("x")
+library("x")
+
+# Getting help
+package?x
+help(package = "x")
+```
+
+## Why develop packages? {-}
+
+-  Allows us to more easily share and use code amongst the team and other collaborators.
+-  Saves yourself and your team's time.
+-  Opens up the use of several tools to more efficiently write code.
+-  Defines a formal organizational structure of where to put things. 
+-  Allows us to develop more robust, rigorous, reproducible analyses.
+-  Helps us write better code.
+
+## Philosophy behind the tools of R Package development {-}
+
+-  Anything that can be automated, should be automated. 
+-  Use functions for package development, avoid doing it by hand. 
+   -  To do this, we need to learn the functions/workflow. 
+   -  Our thinking should be on what we want the package to do, not on how to organize a package. 
+   -  This is where the [`devtools`](https://devtools.r-lib.org/) and [`usethis`](https://usethis.r-lib.org/) package come into play. 
+   -  Tools to insulate us from the low-level details of how packages are built.
+-  `devtools` works nicely with RStudio, so that's the development environment we will use. 
+
+```{r 01-install-devtools-usethis, eval=FALSE}
+install.packages(c("devtools", "usethis"))
+```
+
+## What if we need more detail? {-}
+
+-  The official manual is [Writing R Extensions](https://cran.r-project.org/doc/manuals/R-exts.html).
+   -  This document is exhaustive. 
+   
+## What we won't learn {-}
+
+-  Important topics not covered in the book
+   -  Git and Github
+   -  Compiled code
+   -  Markdown and Rmarkdown
+
+## A note {-}
+
+-  Don't get overwhelmed
+   -  Some stuff you may never use.
+   -  Remember, an R package at it's core is just an `R` directory.
+  
+-  You are not expected to know everything.
+   -  We are all learning.
+   -  None of us is as smart as all of us.
+   -  It's okay to say "I don't know."
+   -  We can stop at anytime to discuss.
+
+
+## Meeting Videos
+
+### Cohort 1
+
+`r knitr::include_url("https://www.youtube.com/embed/FR6NsbkYhcw")`
+
+
+### Cohort 2
+
+`r knitr::include_url("https://www.youtube.com/embed/7YgH8qfyzFU")`
+
+
+### Cohort 3
+
+`r knitr::include_url("https://www.youtube.com/embed/QOmdmGMxl_Q")`
+
+<details>
+<summary> Meeting chat log </summary>
+
+```
+00:07:46	Rex:	Brisbane, Australia
+00:36:26	Collin Berke:	On a scale from 1 - 5, how familiar are you with using git for version control?
+00:36:51	Ryan Metcalf:	4
+00:36:52	Brendan Lam:	2
+00:36:52	Arun Chavan:	3
+00:36:53	Larissa Shaughnessy:	2
+00:36:54	Isabella Velásquez:	4
+00:36:57	Rex Parsons:	3
+00:37:19	Collin Berke:	On a scale from 1 - 5, how familiar are you with using GitHub?
+00:37:38	Rex Parsons:	4
+00:37:38	Arun Chavan:	4
+00:37:38	Isabella Velásquez:	5
+00:37:39	Brendan Lam:	2
+00:37:41	Larissa Shaughnessy:	3
+00:38:14	Collin Berke:	On a scale from 1 - 5, how valuable would it be to devote a week to introducing git and GitHub?
+00:38:29	Brendan Lam:	3
+00:38:31	Arun Chavan:	2
+00:38:35	Larissa Shaughnessy:	4
+00:38:35	Ryan Metcalf:	4
+00:38:36	Rex Parsons:	4
+00:38:48	Isabella Velásquez:	I am comfortable with Git, but if it’s valuable for the group!
+01:05:36	Rex Parsons:	Thanks, Collin!
+```
+</details>
+
+
+### Cohort 4
+
+`r knitr::include_url("https://www.youtube.com/embed/BaGzNVLqfAE")`
+
+<details>
+<summary> Meeting chat log </summary>
+
+```
+00:10:03	Schafer, Toryn:	https://docs.google.com/spreadsheets/d/161KcusuKQlNcmYyjVszV6hdzBSJzDA6GpulS_Bj5RwU/edit#gid=0
+00:15:59	Schafer, Toryn:	Who are you?
+Where are you calling in from?
+How long have you been using R?
+What are you most looking forward to during the group?
+00:16:11	Jamie Hogg:	Hi all, I can't use my microphone right now. Apologies. I am a PhD student at QUT in Brisbane, Australia. I have been using R for about 2 years or so.
+00:23:48	Schafer, Toryn:	2.5
+00:23:50	Virgilio Gonzenbach:	Q1: 4 (dont handle merges like a pro :c )
+00:23:51	Howard Baek:	3.3
+00:23:54	Sofi GS:	2
+00:23:55	defuneste:	3
+00:23:59	Oluwafemi Oyedele:	3
+00:24:04	Jamie Hogg:	maybe 3. Same here, never worked on a true collaborative project
+00:24:15	Jamie Hogg:	2
+00:24:20	Howard Baek:	5
+00:24:23	Schafer, Toryn:	5
+00:24:24	defuneste:	3
+00:24:26	Sofi GS:	3
+00:24:27	Virgilio Gonzenbach:	4
+00:24:32	Oluwafemi Oyedele:	3
+00:24:51	defuneste:	1
+00:24:54	Virgilio Gonzenbach:	1.5
+00:24:56	Schafer, Toryn:	2
+00:24:58	Howard Baek:	1.4
+00:24:59	Sofi GS:	2
+00:25:06	Jamie Hogg:	3
+00:25:21	Oluwafemi Oyedele:	4
+00:32:50	Jamie Hogg:	where is this signup document your discussing?
+00:33:03	Schafer, Toryn:	https://docs.google.com/spreadsheets/d/161KcusuKQlNcmYyjVszV6hdzBSJzDA6GpulS_Bj5RwU/edit#gid=0
+00:33:35	Jamie Hogg:	great! Thank you
+```
+</details>
+
+
+### Cohort 5
+
+`r knitr::include_url("https://www.youtube.com/embed/iJahyHlPz0I")`
+
+<details>
+<summary> Meeting chat log </summary>
+
+```
+00:08:26	shamsuddeen:	https://docs.google.com/spreadsheets/d/1ygvVSCNuGRYy78KCtBsmmH0boZpWJi-XshTvIQMHe2s/edit
+00:19:43	Trevin Flickinger:	GitLab and Bitbucket are two other public options for packages
+00:27:29	Trevin Flickinger:	I’m okay with a two week break
+00:27:44	Trevin Flickinger:	Advanced R is on a break those two weeks as well
+```
+</details>
