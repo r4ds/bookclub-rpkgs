@@ -173,7 +173,7 @@ install.packages(c("devtools", "usethis"))
 
 ## What if we need more detail? {-}
 
--  The official manual is [Writing R Extensions](https://cran.r-project.org/doc/manuals/R-exts.html).
+-  The official manual is [Writing R Extensions](https://rstudio.github.io/r-manuals/r-exts/).
    -  This document is exhaustive. 
    
 ## What we won't learn {-}
