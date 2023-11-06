@@ -196,19 +196,19 @@ install.packages(c("devtools", "usethis"))
    -  We can stop at anytime to discuss.
 
 
-## Meeting Videos
+## Meeting Videos {-}
 
-### Cohort 1
+### Cohort 1 {-}
 
 `r knitr::include_url("https://www.youtube.com/embed/FR6NsbkYhcw")`
 
 
-### Cohort 2
+### Cohort 2 {-}
 
 `r knitr::include_url("https://www.youtube.com/embed/7YgH8qfyzFU")`
 
 
-### Cohort 3
+### Cohort 3 {-}
 
 `r knitr::include_url("https://www.youtube.com/embed/QOmdmGMxl_Q")`
 
@@ -242,7 +242,7 @@ install.packages(c("devtools", "usethis"))
 </details>
 
 
-### Cohort 4
+### Cohort 4 {-}
 
 `r knitr::include_url("https://www.youtube.com/embed/BaGzNVLqfAE")`
 
@@ -284,7 +284,7 @@ What are you most looking forward to during the group?
 </details>
 
 
-### Cohort 5
+### Cohort 5 {-}
 
 `r knitr::include_url("https://www.youtube.com/embed/iJahyHlPz0I")`
 
