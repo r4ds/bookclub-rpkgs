@@ -1,22 +1,23 @@
 # The whole game
 
-**We are going to create a toy package to:**
+**Learning objectives:**
 
-1. Paint the Big Picture and suggest a workflow for **developing a package.**
-2. **Understand the process** to develop, document, and test a function.
-3. Describe the process to **install and experiment** with a package's functions.
-4. Show how to share our packages on **Github**.
+-   **Create** a **toy package.**
+-   Recognize the **entire workflow** for **developing a package.**
+-   **Understand the process** to develop, document, and test a function.
+-   Describe the process to **install and experiment** with a package's functions.
+-   Share our packages on **GitHub.**
 
-## Common features seen packages
+## Common features of packages {-}
 
-* Functions to address a specific need.
-* Version control and an open development process maybe using **Git** and **Github**.
-* Established workflows to:
-  * Document each function using tools like **roxygen2**.
-  * Document the package as whole using vignettes, markdown files (like `README.md` and `NEWS.md`) and package websites.
-  * Test the code using tools like **testthat**.
+-   Functions to address a specific need.
+-   Version control and an open development process maybe using **Git** and **Github**.
+-   Established workflows to:
+    -   Document each function using tools like **roxygen2**.
+    -   Document the package as a whole using vignettes, markdown files (like `README.md` and `NEWS.md`) and package websites.
+    -   Test the code using tools like **testthat**.
   
-## Creating a folder for the regexcite package
+## Install/update devtools {-}
 
 1. Install and confirm your current version of **devtools**.
 
@@ -28,8 +29,9 @@ packageVersion("devtools")
 
 * Latest version as of the writing of these notes is  [2.4.5](https://github.com/r-lib/devtools/releases/tag/v2.4.5).
 
+## Create a folder for the package {-}
 
-2. **Create a new package folder** outside of any RStudio Project, R package, Git repo, or, OneDrive/GoogleDrive sync folder. If you are in an RStudio project you can use the next code to create the folder outside your project.
+2. **Create a new package folder** outside of any RStudio Project, R package, Git repo, or, OneDrive/GoogleDrive sync folder.
 
 ```r
 usethis::create_package("../regexcite")
@@ -38,23 +40,25 @@ usethis::create_package("../regexcite")
 ![](images/02-the-whole-game/01-build-options.png)
 ![](images/02-the-whole-game/02-project-files.png)
 
-* Files created (options to view 'dotfiles')
-   - `.Rbuildignore`: Files ignored when the package is built from source. 
-   - `.Rproj.user`: A directory used by RStudio
-   - `.gitignore`: A file to ignore files for version control.
-   - `DESCRIPTION`: Provides metadata about your package. 
-   - `NAMESPACE`: Declares functions to export and external functions to import from other packages. 
-   - `R`: Will hold all of the `.R` files with function definitions.
-   - `projectName.Rproj`: File that makes this directory a project with relative paths. 
+-   Files created (options to view 'dotfiles')
+    - `.Rbuildignore`: Files ignored when the package is built from source.
+    - `.Rproj.user`: A directory used by RStudio
+    - `.gitignore`: A file to ignore files for version control.
+    - `DESCRIPTION`: Provides metadata about your package.
+    - `NAMESPACE`: Declares functions to export and external functions to import from other packages.
+    - `R`: Will hold all of the `.R` files with function definitions.
+    - `projectName.Rproj`: File that makes this directory a project with relative paths. 
   
 
-## Starting git
+## Start git {-}
 
 3. Load **devtools** in the regexcite's project with `library(devtools)`.
 
 4. Create the directory `.git` and create your first commit by calling `use_git()`.
 
 ![](images/02-the-whole-game/03-starting-git.png)
+
+## Check that it worked {-}
 
 5. Confirm your results.
 
@@ -64,9 +68,9 @@ usethis::create_package("../regexcite")
 
 ![](images/02-the-whole-game/06-confirm-commit.png)
 
-## Defining first function
+## Create the first R file {-}
 
-6. Call `use_r("funtion_name")` create a script below the `R/` subdirectory.
+6. Call `use_r("function_name")` to create a script below the `R/` subdirectory.
 
 ```r
 use_r("strsplit1")
@@ -75,6 +79,8 @@ use_r("strsplit1")
 # • Call `use_test()` to create a matching test file
 ```
 
+## Define the first function {-}
+
 7. **Define the function** in the new file.
 
 ```r
@@ -82,6 +88,8 @@ strsplit1 <- function(x, split) {
   strsplit(x, split = split)[[1]]
 }
 ```
+
+## Load all {-}
 
 8. Load all your functions by calling `load_all()` as it simulates the process of **building**, **installing**, and **attaching** the regexcite package.
 
@@ -96,7 +104,9 @@ strsplit1(x, split = ",")
 #> [1] "alfa"    "bravo"   "charlie" "delta"
 ```
 
-9. **Commit the changes** using the terminal (alt + shift + m).
+## Commit the changes {-}
+
+9. **Commit the changes** using the terminal (alt + shift + m). (but be careful about adding all!)
 
 ```
 # Select all changes
@@ -109,7 +119,7 @@ git commit -m "Creating the strsplit1 function"
 git diff HEAD~1..HEAD
 ```
 
-## Updating package metadata
+## R CMD check {-}
 
 10. *Make sure that your package can be installed* by running `R CMD check .` on your terminal, calling `check()` in your console or clicking over the `Check` button (Ctrl + Shift + E) of *Build* menu.
 
@@ -128,6 +138,8 @@ Duration: 58.7s
 0 errors ✔ | 1 warning ✖ | 0 notes ✔
 ```
 
+## Update package metadata {-}
+
 11. Update the `DESCRIPTION` file.
 
 |**Section**|**From**|**To**|
@@ -135,6 +147,8 @@ Duration: 58.7s
 |Title|What the Package Does (One Line, Title Case)|Make Regular Expressions More Exciting|
 |Authors@R|person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),<br>  comment = c(ORCID = "YOUR-ORCID-ID"))|person("Angel", "Feliz", , "angel@example.com", role = c("aut", "cre"))|
 |Description|What the package does (one paragraph)|Convenience functions to make some common tasks with string manipulation and regular expressions a bit easier.|
+
+## Pick a license {-}
 
 12. **Pick any license** as experienced developers won't touch unlicensed code because *they have no legal right to use it*.
 
@@ -146,15 +160,17 @@ use_mit_license()
 #> ✔ Adding '^LICENSE\\.md$' to '.Rbuildignore'
 ```
 
-## Documenting and exporting functions
+## Add document skeleton {-}
 
-13. If you use RStudio, select the function to document and click on `Insert Roxygen`.
+13. If you use RStudio, select the function to document and click on `Insert Roxygen` (alt-ctrl-shift-R).
 
 ![](images/02-the-whole-game/07-selecting-to-document.png)
 
 ![](images/02-the-whole-game/08-insert-roxygen.png)
 
 ![](images/02-the-whole-game/09-insert-roxygen-result.png)
+
+## Fill in documentation {-}
 
 14. Update the documentation and add an example.
 
@@ -174,9 +190,11 @@ use_mit_license()
 #' strsplit1(x, split = ",")
 ```
 
+## Build documentation {-}
+
 15. Run `document()` or *Build > More > Document* (ctrl + shift + d) to:
- - Build the `man/strsplit1.Rd` file.
- - Update the ``NAMESPACE` file based on `@export` tags found in roxygen comments.
+    -   Build the `man/strsplit1.Rd` file.
+    -   Update the ``NAMESPACE` file based on `@export` tags found in roxygen comments.
 
 ```r
 document()
@@ -186,11 +204,13 @@ document()
 # Writing strsplit1.Rd
 ```
 
+## View documentation {-}
+
 16. Run `?strsplit1` to see the result and `check()` to validate your package's status. 
 
 ![](images/02-the-whole-game/10-documentatio-created.png)
 
-## Testing our package functions
+## Set up test infrastructure {-}
 
 17. Call `use_testthat()` sets up the testing framework by:
   - Adding Suggests: testthat to DESCRIPTION
@@ -199,6 +219,8 @@ document()
   - Updating the `DESCRIPTION`
 
 18. Call `use_test("strsplit1")` to create the file `tests/testthat/test-strsplit1.R` where we are going to write our test.
+
+## Write a test {-}
 
 19. Change the test's description and update the test.
 
@@ -224,11 +246,13 @@ test()
 # 🔥 Your tests are lit 🔥
 ```
 
-## Using functions from other packages
+## Use functions from other packages {-}
 
-> To use functions from other packages you need to use the next explicit syntax package_name::function() even form default packages like `stats` and `utils`.
+> To use functions from other packages you need to use the explicit syntax package_name::function() even for default packages like `stats` and `utils`.
 
 21. Call `use_package("stringr")` to update the `DESCRIPTION` file.
+
+## Rename files {-}
 
 22. Rename the function's source and test files by calling `rename_files("old_name", "new_name")`
 
@@ -237,6 +261,8 @@ rename_files("strsplit1", "str_split_one")
 # ✔ Moving 'R/strsplit1.R' to 'R/str_split_one.R'
 # ✔ Moving 'tests/testthat/test-strsplit1.R' to 'tests/testthat/test-str_split_one.R'
 ```
+
+## Update function definition {-}
 
 23. Update the `R/str_split_one.R` file.
 
@@ -266,6 +292,8 @@ str_split_one <- function(string, pattern, n = Inf) {
 }
 ```
 
+## Update tests {-}
+
 24. Update the `tests/testthat/test-str_split_one.R'` file.
 
 ```r
@@ -283,6 +311,8 @@ test_that("str_split_one() exposes features of stringr::str_split()", {
 })
 ```
 
+## Re-check {-}
+
 25. Run `check()` to `document()`, `load_all()`, `test()` and validate all the changes applied.
 
 ```r
@@ -292,7 +322,7 @@ str_split_one("a, b, c", pattern = ", ")
 # [1] "a" "b" "c"
 ```
 
-## Sharing the package in Github
+## Share the package on Github {-}
 
 26. Run `use_github()` to update the `DESCRIPTION` file and creating a new repo on `Github`.
 
@@ -327,6 +357,8 @@ Selection: 1
 # ✔ Opening URL 'https://github.com/AngelFelizR/regexcite'
 ```
 
+## Add a README {-}
+
 27. Run `use_readme_rmd()` to:
   - Create the source file for package home page on Github.
   - Add some lines to .Rbuildignore
@@ -340,33 +372,35 @@ use_readme_rmd()
 # ✔ Writing '.git/hooks/pre-commit'
 ```
 
-28. Update the `README.Rmd` with stuff liberally from `DESCRIPTION` and any formal and informal tests or examples you have.
+## Update README {-}
 
-29. Render the `README.md` file with by calling `build_readme()` or use GitHub Actions to re-render `README.Rmd` every time you push.
+28. Update the `README.Rmd` with stuff from `DESCRIPTION` and any formal and informal tests or examples you have.
 
-30. Call `check()` to validate the changes and push the changes Github.
+29. Render the `README.md` file by calling `build_readme()` or use GitHub Actions to re-render `README.Rmd` every time you push.
+
+30. Call `check()` to validate the changes, and push the changes to Github.
 
 
-## Summary
+## Summary {-}
 
 |**Setup Package**|**Setup Functions**|**Validation**|
 |:----------------|:------------------|:-------------|
 |- `create_package()` <br> - `use_git()` <br> - `use_mit_license()` <br> - `use_testthat()` <br> - `use_github()` <br> - `use_readme_rmd()`|- `use_r()` <br> - `use_test()` <br> - `use_package()`|- `load_all()` <br>  - `document()` <br> - `test()` <br> - `check()`|
 
 
-## Meeting Videos
+## Meeting Videos {-}
 
-### Cohort 1
+### Cohort 1 {-}
 
 `r knitr::include_url("https://www.youtube.com/embed/FR6NsbkYhcw")`
 
 
-### Cohort 2
+### Cohort 2 {-}
 
 `r knitr::include_url("https://www.youtube.com/embed/7YgH8qfyzFU")`
 
 
-### Cohort 3
+### Cohort 3 {-}
 
 `r knitr::include_url("https://www.youtube.com/embed/3vdXk_tYG-g")`
 
@@ -383,7 +417,7 @@ use_readme_rmd()
 </details>
 
 
-### Cohort 4
+### Cohort 4 {-}
 
 `r knitr::include_url("https://www.youtube.com/embed/UKASy8ynWvg")`
 
@@ -431,7 +465,7 @@ use_readme_rmd()
 </details>
 
 
-### Cohort 5
+### Cohort 5 {-}
 
 `r knitr::include_url("https://www.youtube.com/embed/WNIUmfvc5ws")`
 
