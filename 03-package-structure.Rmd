@@ -74,19 +74,19 @@ Installed = on your system, ready to use
     -   NEVER use inside a package
 -   `require("pkg", lib.loc = "mylib")` does same but only *warns* if `pkg` is missing
 
-## Meeting Videos
+## Meeting Videos {-}
 
-### Cohort 1
+### Cohort 1 {-}
 
 `r knitr::include_url("https://www.youtube.com/embed/3r-EPc9XqxE")`
 
 
-### Cohort 2
+### Cohort 2 {-}
 
 `r knitr::include_url("https://www.youtube.com/embed/vfrAbmqjR1c")`
 
 
-### Cohort 3
+### Cohort 3 {-}
 
 `r knitr::include_url("https://www.youtube.com/embed/qXJOy8f9TCM")`
 
@@ -102,7 +102,7 @@ Installed = on your system, ready to use
 </details>
 
 
-### Cohort 4
+### Cohort 4 {-}
 
 Chapters 3 and 4 were covered together.
 
