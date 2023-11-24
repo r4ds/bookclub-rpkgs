@@ -151,7 +151,7 @@ Every namespace environment has the same ancestors:
 - base **namespace**: base environment bindings
 - global environment
 
-![](images/11-dependencies-mindset/namespace.png)
+![](images/10-dependencies-mindset/namespace.png)
 
 ## Attaching versus loading 
 

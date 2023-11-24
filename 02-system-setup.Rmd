@@ -45,7 +45,7 @@ rstudioapi::versionInfo()$version
 -   `pak::pak("r-lib/devtools)`
 -   `pak::pak()` = "update everything related to current project"
 
-![](images/02_system-setup/pak-pak-dev-devtools.png)
+![](images/02-system-setup/pak-pak-dev-devtools.png)
 
 ## devtools and friends {-}
 
