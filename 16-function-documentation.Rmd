@@ -35,7 +35,7 @@ Four main steps:
 3. Preview documentation with `?function`
 4. Rinse and repeat
 
-![](images/10-object-documentation/10-object-documentation-stages.png)
+![](images/16-function-documentation/function-documentation-stages.png)
 
 ### roxygen2 comments, blocks, and tags
 
@@ -290,7 +290,7 @@ Can call a `.Rmd` file for frequently repeated text
 
 ## Object documentation, an overview
 
-![](images/10-object-documentation/10-roxygen-namespace.png)
+![](images/16-function-documentation/roxygen-namespace.png)
 
 - Documentation files are rendered from a syntax loosely based on `LaTex`.
   - `HTML`
@@ -311,7 +311,7 @@ Can call a `.Rmd` file for frequently repeated text
   2. Slow, but the links work
     - You may need to adjust some settings if build and reload doesn't work 
   
-![](images/10-object-documentation/10-object-documentation-workflow.png)  
+![](images/16-function-documentation/function-documentation-workflow.png)  
   
 
 

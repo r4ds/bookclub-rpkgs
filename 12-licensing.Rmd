@@ -36,7 +36,7 @@
     - Military or commercial context.
     - Too restrictive, no one can use it.
   - Protect yourself
-  ![](images/09-licensing/09-no-guarantee.png)
+  ![](images/12-licensing/no-guarantee.png)
  - Interesting [blog post](https://notstatschat.rbind.io/2019/02/18/absolutely-no-warranty/) regarding the `NO WARRANTY` clause and other statistical analysis tools. 
  
 ## Major license categories
@@ -98,7 +98,7 @@
        `use_cc0_license()`
     - Example
         - Code posted to the R4DS Online Learning Community Slack
-        ![](images/09-licensing/09-r4ds-cc0-license.png)
+        ![](images/12-licensing/r4ds-cc0-license.png)
   - Require attribution when data is used.
     - [CC BY license](https://choosealicense.com/licenses/cc-by-4.0/) with 
       `use_ccby_license()`
@@ -195,7 +195,7 @@
   - Interesting discussion on use of Stack Overflow code
     - Code is CC BY-SA license, which is only compatible with GPLv3
   
-![](images/09-licensing/09-license-compatibility.png)
+![](images/12-licensing/license-compatibility.png)
 Picture from [Wikipedia](https://en.wikipedia.org/wiki/License_compatibility#Compatibility_of_FOSS_licenses)
 
 * How to include

@@ -55,7 +55,7 @@ Compared to the alternatives (like using `source`), `load_all()` helps you to it
 - Code in a package: 
   - is run **when the package is built**
   
-![](images/07-r-code/installation.png)
+![](images/06-r-code/installation.png)
 
 - Code in `/R` is executed and results are saved when the binary package is built (often, by CRAN) ("build time")
 - The cached results are re-loaded and made available for use When you load a package with `library()` ("load time")
@@ -97,7 +97,7 @@ dataTableDependency <- list(
 
 The solution is to call `system.file()` from a function, at run time.
 
-![](images/07-r-code/system-file-fix.png)
+![](images/06-r-code/system-file-fix.png)
 
 ### Real world example: Aliasing a function
 

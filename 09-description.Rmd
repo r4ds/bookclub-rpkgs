@@ -17,7 +17,7 @@ Note: These slides were written for an old version of this chapter, which incorp
 - `usethis::create_package("mypackage")` adds a `DESCRIPTION` file
   - You can set a custom `DESCRIPTION` file with `usethis.description`
   
-![](./images/08-package-metadata/description-file.png)
+![](./images/09-description/description-file.png)
 Example `DESCRIPTION` file:
 
 ```r
@@ -41,7 +41,7 @@ RoxygenNote: 7.2.0
 
 What does your package do?
 
-![](./images/08-package-metadata/pkg-example.png)
+![](./images/09-description/pkg-example.png)
 
 ### Title
 
@@ -72,7 +72,7 @@ Description: A system for 'declaratively' creating graphics,
 
 Shows up on CRAN like so:
 
-![](./images/08-package-metadata/cran-pkgs.png)
+![](./images/09-description/cran-pkgs.png)
 
 ## Author
 

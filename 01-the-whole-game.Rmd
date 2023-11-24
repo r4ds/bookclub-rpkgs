@@ -37,8 +37,8 @@ packageVersion("devtools")
 usethis::create_package("../regexcite")
 ```
 
-![](images/02-the-whole-game/01-build-options.png)
-![](images/02-the-whole-game/02-project-files.png)
+![](images/01-the-whole-game/01-build-options.png)
+![](images/01-the-whole-game/02-project-files.png)
 
 -   Files created (options to view 'dotfiles')
     - `.Rbuildignore`: Files ignored when the package is built from source.
@@ -56,17 +56,17 @@ usethis::create_package("../regexcite")
 
 4. Create the directory `.git` and create your first commit by calling `use_git()`.
 
-![](images/02-the-whole-game/03-starting-git.png)
+![](images/01-the-whole-game/03-starting-git.png)
 
 ## Check that it worked {-}
 
 5. Confirm your results.
 
-![](images/02-the-whole-game/04-confirming-git-creation.png)
+![](images/01-the-whole-game/04-confirming-git-creation.png)
 
-![](images/02-the-whole-game/05-confirm-commit.png) 
+![](images/01-the-whole-game/05-confirm-commit.png) 
 
-![](images/02-the-whole-game/06-confirm-commit.png)
+![](images/01-the-whole-game/06-confirm-commit.png)
 
 ## Create the first R file {-}
 
@@ -164,11 +164,11 @@ use_mit_license()
 
 13. If you use RStudio, select the function to document and click on `Insert Roxygen` (alt-ctrl-shift-R).
 
-![](images/02-the-whole-game/07-selecting-to-document.png)
+![](images/01-the-whole-game/07-selecting-to-document.png)
 
-![](images/02-the-whole-game/08-insert-roxygen.png)
+![](images/01-the-whole-game/08-insert-roxygen.png)
 
-![](images/02-the-whole-game/09-insert-roxygen-result.png)
+![](images/01-the-whole-game/09-insert-roxygen-result.png)
 
 ## Fill in documentation {-}
 
@@ -208,7 +208,7 @@ document()
 
 16. Run `?strsplit1` to see the result and `check()` to validate your package's status. 
 
-![](images/02-the-whole-game/10-documentatio-created.png)
+![](images/01-the-whole-game/10-documentatio-created.png)
 
 ## Set up test infrastructure {-}
 

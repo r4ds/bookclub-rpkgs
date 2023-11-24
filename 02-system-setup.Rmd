@@ -2,193 +2,224 @@
 
 **Learning objectives:**
 
-- How to check which version of R and RStudio you are using
-- Discover `devtools`
-- Learn about the `{usethis}` package
-- Understand the distict difference between useRs and developeRs
+-   Check which version of R you are using
+-   Check which version of RStudio you are using
+-   Use `{pak}` to install packages
+-   Use `{devtools}` to simplify common package development tasks
+-   Configure your `.Rprofile` to operate in developer mode
+-   Set RStudio hotkeys for package development tasks
+-   Enable a full build toolchain on your system
+-   Find and fix issues with your developer setup
 
-## Prepare your system
+Note: These slides incorporate some content from [What They Forgot to Teach You About R](https://rstats.wtf/) by Jennifer Bryan, Jim Hester, Shannon Pileggi, and E. David Aja
 
-To start the preparation of development environment, lets get our bearings.
+## R version {-}
+
+-   `R.Version()` (capital V) for list
+-   `R.version` (lowercase v, no parens; alias = `version`) for simpler print
+-   `R.version.string` for just the version
+-   `sessionInfo()` for more details
+-   {sessioninfo} package for more, prettier details
 
 ```{r, How to check your R version, eval=TRUE}
-R.Version()
-
+R.version.string
 ```
 
-```{r, Another way to check your R version, eval=TRUE}
-sessionInfo()
+## RStudio Version {-}
+
+-   [Download & install from posit](https://posit.co/download/rstudio-desktop/)
+
+```{r system-setup-rstudio-version, eval=FALSE}
+names(rstudioapi::versionInfo())
+#> [1] "citation" "mode" "version" "long_version" "release_name"
+
+rstudioapi::versionInfo()$version
+#> [1] ‘2023.9.1.494’
 ```
 
-Ok, that was fun, but the version check isn't in the book! We need to follow the author, right?
+## pak {-}
 
-Let's load some packages to prepare authoring some packages!
+-   "Faster and more reliable" package installation
+-   Deals with packages loaded in current session
+-   Resolves system dependencies
+-   `pak::pak("r-lib/devtools)`
+-   `pak::pak()` = "update everything related to current project"
 
-```{r, Prepare your system, eval=FALSE}
-install.packages(c("devtools", "roxygen2", "testthat", "knitr"))
-```
+![](images/02-system-setup/pak-pak-dev-devtools.png)
 
-> NOTE: For some reason, this script caused an infinite loop of restart R, attempt to install, request to restart R, attempt to install...infinity. If this should happen, select *No*.
+## devtools and friends {-}
 
-The author recommends increasing to the *Preview* version of RStudio Integrated Development Environment (IDE). We are considering outselves developers, right?
+`{devtools}`: "Tools to Make Developing R Packages Easier"
 
-- Usually this isn't needed or required for common users (we're not common)
-- It puts you in a position to be subject to bugs (not as many as the daily builds though)
-- [Preview version](https://www.rstudio.com/products/rstudio/download/preview/)
-- [Released version]( https://www.rstudio.com/products/rstudio/download/)
+-   `{usethis}` (via Depends): "Automate Package and Project Setup"
+-   `{remotes}`: (but use `{pak}` instead)
+-   `{pkgbuild}`: "Find Tools Needed to Build R Packages"
+-   `{pkgload}`: "Simulate Package Installation and Attach"
+-   `{rcmdcheck}`: "Run 'R CMD check' from 'R' and Capture Results"
+-   `{sessioninfo}`: "R Session Information"
+-   `{testthat}`: "Unit Testing for R"
+-   `{roxygen2}`: "In-Line Documentation for R"
+-   `{lifecycle}`: "Manage the Life Cycle of your Package Functions"
+-   `{pkgdown}`: "Make Static HTML Documentation for a Package"
+-   `{profvis}`: "Interactive Visualizations for Profiling R Code"
 
-## devtools, usethis, and you
+## .Rprofile {-}
 
-At some point in your development career...you will find you need to reorder to progress further. This is exactly what happened to the `{devtools}` package. In 2018, it was reordered and split into seven sub-packages:
+-   `usethis::use_devtools()`
+-   ***DO*** include things to make development easier
+-   ***DO NOT*** alter operation of analysis code (etc)
 
-- `{remotes}`
-- `{pkgbuild}`
-- `{pkgload}`
-- `{rcmdcheck}`
-- `{revdepcheck}`
-- `{sessioninfo}`
-- `{usethis}`
+## Jon's .Rprofile {-}
 
-What is cool here, we already used one of these packages!!!
+```{r system-setup-jons-rprofile, eval=FALSE}
+# Quick disable ----------------------------------------------------------------
+# Comment this out and reload R to quickly turn things off.
+options(jon_load_stuff = TRUE)
 
-You can think of devtools as a wrapper providing the ability to:
+# My settings ------------------------------------------------------------------
+# Don't set ANY of these when non-interactive
+if (interactive() && getOption("jon_load_stuff", FALSE)) {
+  ## Safer coding --------------------------------------------------------------
+  options(
+    warnPartialMatchArgs = TRUE,
+    warnPartialMatchDollar = TRUE,
+    warnPartialMatchAttr = TRUE
+  )
+  rlang::global_handle()
 
-- set user-friendly defaults
-- introduce helpful interactive behaviour
-- combine functionality from multiple sub-packages
+  ## Display -------------------------------------------------------------------
+  options(
+    continue = "  ",
+    width = 80,
+    tidymodels.dark = TRUE
+  )
 
-There is a difference in useRs and developeRs. They are:
+  ## usethis -------------------------------------------------------------------
+  options(
+    usethis.full_name = "Jon Harmon",
+    usethis.description = list(
+      `Authors@R` = 'person("Jon", "Harmon",
+                          email = "jonthegeek@gmail.com",
+                          role = c("aut", "cre"),
+                          comment = c(ORCID = "0000-0003-4781-4346"))',
+      License = "MIT + file LICENSE"
+    ),
+    usethis.destdir = "C:/Users/jonth/Dropbox (Personal)/R"
+  )
+  # Some things still want a GITHUB_PAT env var
+  Sys.setenv(GITHUB_PAT = gitcreds::gitcreds_get()$password)
 
-- useRs should attach devtools and think of it as the provider of your favorite functions for package development
-- developeRs should **NOT** depend on devtools, but should instead access functions via the package that is their primary home
-  - devtools should rarely appear in the role of `foo` in a qualified call of the form `foo::fcn()`. Instead, `foo` should be the package where `fcn()` is defined.
-  - An exception to this is that we continue to feature `devtools::install_github()` as the way to install the development version of a package in its README
-- If required, ensure you report bugs to each sub-package
+  ## Caching -------------------------------------------------------------------
+  ## Technically these COULD change behavior so turn them off if something
+  ## is weird in these packages.
+  options(
+    zoom.cache_disk = TRUE,
+    yt_cache_disk = TRUE,
+    tigris_use_cache = TRUE,
+    styler.cache_root = "styler-perm"
+  )
 
-Example of how to simulate installing and loading a package (interactive development)
+  ## Load packages -------------------------------------------------------------
+  ## ONLY load dev-focused packages! Turn these off if you're working on a
+  ## package that wraps any of these!
+  suppressMessages(require(devtools))
+  suppressMessages(require(reprex))
+  suppressMessages(require(andthis)) # My personal usethis extension
 
-```{r, Interactive pacakge load, eval=TRUE}
-library(devtools)
-load_all()
-```
+  ## Branch & time in prompt ---------------------------------------------------
+  ## pak::pak("prompt")
+  prompt::set_prompt(
+    function(...) {
+      paste0(
+        "[",
+        prompt::git_branch(),
+        " ",
+        format(Sys.time(), "%T"),
+        "] > "
+      )
+    }
+  )
 
-If used inside an R package, this is the preferred call:
+  ## Check to-dos in new RStudio session ---------------------------------------
+  setHook(
+    "rstudio.sessionInit",
+    function(newSession) {
+      if (newSession) {
+        if (length(rstudioapi::getActiveProject())) {
+          # I want to explicitly exclude revdep from the search.
+          to_read <- fs::dir_ls(getwd()) |>
+            stringr::str_subset("revdep$", negate = TRUE)
 
-```{r, Inside an R Package, eval=TRUE}
-pkgload::load_all()
-```
+          todor::todor(search_path = to_read)
+        }
+      }
+    },
+    action = "append"
+  )
 
-
-### Personal startup configuration
-Attach devtools with the following script:
-
-```{r, Installing DevTools, eval=TRUE}
-library(devtools)
-```
-
-Doing this everytime you restart your session gets old...quick! Lets be more efficient with our keystrokes.
-
-Let's edit our `.Rprofile` file. If it does not exist on your computer, you can run `use_devtools()` to create it.
-
-The output of my command looks like this:
-
-```{r, Example .Rprofile entry, eval=FALSE}
-use_devtools()
-• Include this code in '.Rprofile' to make devtools available in all interactive sessions.
-  if (interactive()) {
-    suppressMessages(require(devtools))
+  ## Current project quick-load ------------------------------------------------
+  ## Name these with . so they don't show up in the global environment
+  .nectar <- function() {
+    andthis::open_proj("nectar")
   }
-  [Copied to clipboard]
-• Modify '/Users/rmetcalf/.Rprofile'
-• Restart R for changes to take effect
+  .rapid <- function() {
+    andthis::open_proj("rapid")
+  }
+  .bk <- function() {
+    andthis::open_proj("beekeeper")
+  }
+  .api2r <- function() {
+    .nectar()
+    .rapid()
+    .bk()
+  }
+}
 ```
 
-Caution, Warning, HUGE RED FLAG!!!! You are not a Super-person yet!
+## RStudio hotkeys {-}
 
-In general, it’s a bad idea to attach packages in .Rprofile, as it invites you to create R scripts that don’t reflect all of their dependencies via explicit calls to library(foo). But devtools is a workflow package that smooths the process of package development and is, therefore, unlikely to get baked into any analysis scripts.
+-   `Ctrl + Shift + L` = `devtools::load_all()` (Section 4.4)
+-   `Ctrl + Shift + D` = `devtools::document()` (Chapter 16)
+-   `Ctrl + Shift + E` = `devtools::check()` (Section 4.5)
+-   `Ctrl + Shift + B` = `devtools::install()` (Section 3.5)
 
-> Note how we still take care to only attach in interactive sessions.
+## RStudio hotkeys: Tests {-}
 
-I may be too harsh. The following is a good example when `usethis` helps and can be added to your .Rprofile.
+`Tools > Modify keyboard shortcuts...`
 
-```{r, Example R Code, eval=FALSE}
-options(
-  usethis.full_name = "Jane Doe",
-  usethis.description = list(
-    `Authors@R` = 'person("Jane", "Doe", email = "jane@example.com", role = c("aut", "cre")), 
-    comment = c(ORCID = "YOUR-ORCID-ID"))',
-    License = "MIT + file LICENSE",
-    Version = "0.0.0.9000"
-  ),
-  usethis.protocol  = "ssh"  
-)
+-   Current `.R` file (or corresponding testthat file)
+    -   "Run a test file": `Ctrl + T`
+    -   "Report test coverage for a file": `Ctrl + R`
+-   Entire package
+    -   "Test package": `Ctrl + Shift + T`
+    -   "Report test coverage for a package": `Ctrl + Shift + R`
+
+More in chapter 13!
+
+## R build toolchain {-}
+
+-   Need compiler and related tools to install some packages from source
+    -   These are system tools, not R packages
+-   RStudio should help you set this up
+-   [See book](https://r-pkgs.org/setup.html#setup-tools) for your OS
+
+## Developer setup situation report {-}
+
 ```
-
-For history purposes (or at some point it may change....)
-
-```{r, Install DevTools and UseThis, eval=FALSE}
-devtools::install_github("r-lib/devtools")
-devtools::install_github("r-lib/usethis")
+[slides02-03 10:29:23] > dev_sitrep()
+── R ─────────────────────────────────────────────────────────────────────────────────────────────────
+• version: 4.3.2
+• path: 'C:/Program Files/R/R-4.3.2/'
+── Rtools ────────────────────────────────────────────────────────────────────────────────────────────
+• path: 'C:/rtools43/usr/bin/'
+── RStudio ───────────────────────────────────────────────────────────────────────────────────────────
+• version: 2023.9.1.494
+── devtools ──────────────────────────────────────────────────────────────────────────────────────────
+• version: 2.4.5.9000
+── dev package ───────────────────────────────────────────────────────────────────────────────────────
+• package: 'bookclub-rpkgs'
+• path: 'C:/Users/jonth/Dropbox (Personal)/R/bookclub-rpkgs/'
 ```
-
-## R build toolchain
-
-Any good developer must have a good compiler. The following three sections will expand on how this may be accomplished via the three main operating systems.
-
->NOTE: At this point, these may not be required. The compiler options will becomre important when a source code contains C or C++ code.
-
-### Windows
-
-On Windows the collection of tools needed for building packages from source is called [Rtools](https://cran.r-project.org/bin/windows/Rtools/).
-
-Rtools is **NOT** an R package and therefore cannot be installed using `install.packages('Rtools')`
-
-During the Rtools installation you may see a window asking you to *Select Additional Tasks*.
-
-- **DO NOT** select the box for ***Edit the system PATH***.
-- **DO** select the box for ***Save version information to registry***.
-
-### macOS
-
-If development is on a Mac, you will require Xcode.
-
-In shell/terminal run the following code:
-
-```{bash, eval=FALSE}
-xcode-select --install
-```
-
->NOTE: Xcode is large....like, ~90GBs large (an estimate with all simulators)! There are options to reduce the size and can be found [here](https://apple.stackexchange.com/questions/287307/reduce-size-of-the-xcode-application#:~:text=Go%20to%20~%2FLibrary%2FDeveloper,%2FXcode%2FiOS%20DeviceSupport%2F%20.).
-
-Alternatively, you can also download Xcode from the [Mac App Store](https://itunes.apple.com/ca/app/xcode/id497799835?mt=12).
-
-### Linux
-
-Linux install is the simplest (dependent on your distro of choice and package manager).
-
-Ensure you include the following:
-
-- R
-- R development tools
-
-For example, on Ubuntu (and Debian):
-
-```{bash, eval=FALSE}
-sudo apt-get update & upgrade
-sudo apt-get install r-base-dev package
-```
-
-Other Linux distributions may have alternative commands.
-
-### Verify system prep
-
-To validate everything is installed or up to date, run the following:
-
-```{r, Validation and Update if required, eval=FALSE}
-devtools::dev_sitrep()
-```
-
-Update any packages based on recommendations.
 
 ## Meeting Videos
 
