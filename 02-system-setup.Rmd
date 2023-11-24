@@ -221,19 +221,19 @@ More in chapter 13!
 • path: 'C:/Users/jonth/Dropbox (Personal)/R/bookclub-rpkgs/'
 ```
 
-## Meeting Videos
+## Meeting Videos {-}
 
-### Cohort 1
+### Cohort 1 {-}
 
 `r knitr::include_url("https://www.youtube.com/embed/3r-EPc9XqxE")`
 
 
-### Cohort 2
+### Cohort 2 {-}
 
 `r knitr::include_url("https://www.youtube.com/embed/vfrAbmqjR1c")`
 
 
-### Cohort 3
+### Cohort 3 {-}
 
 `r knitr::include_url("https://www.youtube.com/embed/SEJmtdIWC-g")`
 
@@ -252,7 +252,7 @@ More in chapter 13!
 </details>
 
 
-### Cohort 4
+### Cohort 4 {-}
 
 Chapters 3 and 4 were covered together.
 
