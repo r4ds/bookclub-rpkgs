@@ -42,7 +42,7 @@ The rest of this chapter digs into the differences & transitions
 
 ## Bundle vs binary {-}
 
-Bundle = platform-specific
+Binary = platform-specific
 
 -   `R/*.R` to `R/*.rdb`, etc (efficient storage of pkg contents)
 -   `Meta` dir with pkg metadata as `.rds`
