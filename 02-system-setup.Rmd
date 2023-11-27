@@ -90,7 +90,6 @@ if (interactive() && getOption("jon_load_stuff", FALSE)) {
   ## Display -------------------------------------------------------------------
   options(
     continue = "  ",
-    width = 80,
     tidymodels.dark = TRUE
   )
 
