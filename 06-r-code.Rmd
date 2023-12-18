@@ -5,35 +5,46 @@
 **Learning objectives:**
 
 - **Organize functions** into files.
-- Maintain a **consistent coding style.**
+- Maintain a **consistent coding style**.
+- Recognize the **requirements for functions** in a package.
 - Compare and contrast **functions in a package** versus **functions in a script.**
 - Use the fundamental workflows for **test-driving** and formally **checking** an in-development package.
 
-## Organise functions into files
-
-### Only one hard rule
+## Mandatory conventions to organise functions
 
 - Function definitions must be in `.R` files in the `R/` directory.
 
-### Conventions
+## Optional conventions to organise functions
 
-- File names should be meaningful and convey which functions are defined within
-- The two extremes are bad:
+- **File names should be meaningful** and convey which functions are defined within
+- Avoid having:
   - One file per function
   - All functions in the same file
-- Group functions into files
-  - One function in one file if the function is very large, with lots of documentation
-  - Main function and supporting function in one file (e.g. [tidyr/R/separate](https://github.com/tidyverse/tidyr/blob/v1.1.2/R/separate.R))
-  - A family of related functions in one file (e.g. [tidyr/R/rectangle.R](https://github.com/tidyverse/tidyr/blob/v1.1.2/R/rectangle.R))
-  - One function in one file if the function doesn't neatly fit any other grouping (e.g [tidyr/R/uncount.R](https://github.com/tidyverse/tidyr/blob/v1.1.2/R/uncount.R)) 
-  - Small helper functions used in functions across different files are typically stored in `R/utils.R` by convention (e.g [spotifyr/R/utils.R](https://github.com/charlie86/spotifyr/blob/master/R/utils.R))
-  - If its hard to predict in which file a function lives in, it's time to separate your functions into more files.
+- A single .R file can have:
+  - A **main function** and its supporting helpers like the [tidyr::separate](https://github.com/tidyverse/tidyr/blob/v1.1.2/R/separate.R) function
+  - A **family of related functions** like the [tidyr::hoist and tidyr::unnest](https://github.com/tidyverse/tidyr/blob/v1.1.2/R/rectangle.R) functions
+  - A **very large function** with lots of documentation like the [tidyr::uncount](https://github.com/tidyverse/tidyr/blob/v1.1.2/R/uncount.R) function.
+- For **small helper functions** used in functions across different files are typically stored in `R/utils.R` by convention (e.g [spotifyr/R/utils.R](https://github.com/charlie86/spotifyr/blob/master/R/utils.R))
+
+> **If its hard to predict in which file a function lives**, it's time to separate your functions into more files.
+
+## Rstudio ways to jump to a function
+
+1. `Ctrl + .`
+
+![](images/06-r-code/01-file-finder.png)
+
+2. With your *cursor in a function* name press `F2`.
+
+3. Ctrl + `click over function name`.
+
+> You can return to your original file by clicking over the back arrow.
+
+![](images/06-r-code/02-back-arrow.png)
 
 ## Fast feedback via `load_all()`
 
-Reminder to use `devtools::load_all()` to try out the functions in file under `/R`.
-
-Compared to the alternatives (like using `source`), `load_all()` helps you to iterate more quickly and provides an excellent approximation to the namespace regime of an installed package.
+Reminder to use `devtools::load_all()` to try out the functions in file under `R/` as it provides an excellent approximation to the namespace regime of an installed package.
 
 ## Code style
 
@@ -44,159 +55,285 @@ Compared to the alternatives (like using `source`), `load_all()` helps you to it
   - `usethis::use_tidy_style()` is wrapper that applies one of the above functions depending on whether the current project is an R package or not.
   - `styler::style_file()` restyles a single file.
   - `styler::style_text()` restyles a character vector.
+  
+> Make sure you are using **version control system** before using any of this functions.
 
 
 ## Understanding when code is executed
 
-### When code is executed in scripts vs. in packages
+When the **binary package is built** (often, by CRAN) all the code in `R/` is executed and the **results are saved**. 
 
-- Code in scripts, run interactively (in an IDE or with `source()`) or non-interactively with `Rscript`:
-  - is run … when you run it(!)
-- Code in a package: 
-  - is run **when the package is built**
-  
 ![](images/06-r-code/installation.png)
 
-- Code in `/R` is executed and results are saved when the binary package is built (often, by CRAN) ("build time")
-- The cached results are re-loaded and made available for use When you load a package with `library()` ("load time")
+Later cached results are re-loaded and made available for use by loading the package with `library()` function.
 
-- This means that:
-  - for macOS and Windows users of CRAN packages, build time is whenever CRAN built the binary package for their OS.
-  - for those who install packages from source, build time is when they (built and) installed the package.
-  
-(Building of the package is what is accomplished by `R CMD INSTALL --build`, not `R CMD build`, which makes a bundled package, i.e. a "source tarball").
+> Play special attention to any **R code outside of a function**.
 
-### Real world example: `Sys.time()`
 
-```
-x <- Sys.time()
-```
+## Aliasing a function recomendation
 
-- In a script `x` tells you when the script was run. 
-- In a package, `x` tells you when the package was built.
+|**Code**|**Result**|
+|:-------|:---------|
+|`foo <- pkgB::blah`|It will fix the definition of `pkgB::blah()` at the version present on the machine where the binary package is built. <br> <br> But if a bug is discovered in `pkgB::blah()` and subsequently fixed, the package will still use the older, buggy version, until your package is rebuilt and your users upgrade, which is completely out of your control.|
+|`foo <- function(...) pkgB::blah(...)`|With this little change now if an user calls `foo()`, the package will work the `pkgB::blah()` function at the version installed on the user's machine at that very moment.|
 
-### Real world example: `system.file()`
+## Dynamic file path 
 
-The shinybootstrap2 package once had this code below `R/` which works fine when the package is built on the same machine as it is used on.
+The prior code used to fail on user's machine as `system.file()` was called at **build-time** and the **result stored in the variable dataTableDependency** and saved in the binary package.
 
-```
-dataTableDependency <- list(
-  htmlDependency(
-    "datatables", "1.10.2",
-    c(file = system.file("www/datatables", package = "shinybootstrap2")),
-    script = "js/jquery.dataTables.min.js"
-  ),
-  htmlDependency(
-    "datatables-bootstrap", "1.10.2",
-    c(file = system.file("www/datatables", package = "shinybootstrap2")),
-    stylesheet = c("css/dataTables.bootstrap.css", "css/dataTables.extra.css"),
-    script = "js/dataTables.bootstrap.js"
-  )
-)
-```
+And when someone installs the binary package on their machine, **the path isn't updated to their path**.
 
-The solution is to call `system.file()` from a function, at run time.
+If, on the other hand, htmlDependency() is called from a function at run-time, everything will work fine.
 
-![](images/06-r-code/system-file-fix.png)
-
-### Real world example: Aliasing a function
-
-#### Don't do this
-
-```
-foo <- pkgB::blah
-```
-
-#### Do this
-
-```
-foo <- function(...) pkgB::blah(...)
-```
-The first definition will cause foo() in your package to reflect the definition of pkgB::blah() at the version present on the machine where the binary package is built (often CRAN), at that moment in time.
-
-The main take away from the examples is: **Any R code outside of a function is suspicious and should be carefully reviewed.**
+![](images/06-r-code/03-system-file-fix.png)
 
 ## Respect the R landscape
 
-- People will use your package in situations that you never imagined. 
-- This means that you have to pay attention to the R landscape (i.e. not only available functions and objects, but all the global settings)
+As people will use your package in many situations you should avoid editing the global settings, so we should avoid applying any of the functions in `R/`:
 
-### Examples of actions that change the R landscape
+- Loading a package with `library()` or `require()`.
+- Loading code with `source()`.
+- Changing a global option with `options()`.
+- Modifying the working directory with `setwd()`.
+- Specifying seeds for creating random numbers with `set.seed()`. 
+- Setting graphical parameters with `par()`.
+- Setting environment variable with `Sys.setenv()`.
+- Setting aspects of the locale with `Sys.setlocale()`.
 
-- Loading a package with `library()` 
-- Changing global options with `options()`
-- Changing the working directory with `setwd()`
-
-### How to know when you have changed the R landscape
-
-- If the behavior of other functions differs before and after running your function, you have modified the landscape. 
-
-### Tips to avoid changing the landscape with your functions
-
-- Don't use `library()` or `require()`. Use the `DESCRIPTION` to specify your package's requirements.
-- Never use `source()` to load from a file. 
-- Non-exhaustive list of other functions that should be used with caution.
-  - `options()`
-  - `par()`
-  - `setwd()`
-  - `Sys.setenv()`
-  - `set.seed()`
-- Flip side of this is that you shouldn't rely on user's landscape. For example, functions that rely on sorting strings are dangerous, because sort order depends on the system locale.
+> If you must use them, make sure to **clean up** after yourself.
 
 
-### What if you have to use one of the above functions and alter the landscape?
+## Sorting strings can be dangerous
 
-- Make sure to clean up after yourself. 
-
-#### Manage state with withr
-
-- `withr::defer()` is inspired by `base::on.exit()`.
-- The general pattern is:
-  - to capture the original state
-  - schedule its eventual restoration
-  - then make the state change
-- for example, below, where some setters like `options()` and `par()` return the old value when you provide a new one, allowing you to do something like this. 
+As they depend on the **system locale**.
 
 ```
-f <- function(x, y, z) {
-  ...
-  old <- options(mfrow = c(2, 2), pty = "s")
-  defer(options(old))
-  ...
+x <- c("bernard", "bérénice", "béatrice", "boris")
+
+withr::with_locale(c(LC_COLLATE = "fr_FR"), sort(x))
+#> [1] "béatrice" "bérénice" "bernard"  "boris"
+withr::with_locale(c(LC_COLLATE = "C"), sort(x))
+#> [1] "bernard"  "boris"    "béatrice" "bérénice"
+```
+
+> **Avoid relying on the user’s landscape**
+
+
+## Restore state with `base::on.exit()`
+
+`on.exit` records the expression given as its argument as needing to be **executed when the current function exits even when exiting due to an error**.
+
+It is really useful for functions like `options()` and `par()` as they return the old value when you provide a new value.
+
+```r
+pi
+#> [1] 3.141593
+
+neat <- function(x, sig_digits) {
+  op <- options(digits = sig_digits)
+  on.exit(options(op), add = TRUE)
+  
+  print(x)
+}
+
+neat(pi, 2)
+#> [1] 3.1
+
+pi
+#> [1] 3.141593
+```
+
+## Restore state with `withr::defer()`
+
+`withr::defer()` is basically a drop-in substitute for on.exit().
+
+```r
+pi
+#> [1] 3.141593
+
+neater <- function(x, sig_digits) {
+  op <- options(digits = sig_digits)
+  defer(options(op))
+  print(x)
+}
+
+neater(pi, 2)
+#> [1] 3.1
+
+pi
+#> [1] 3.141593
+```
+
+## `base::on.exit()` vs `withr::defer()`
+
+`base::on.exit()` **overwrites** the deferred actions registered in the previous call.
+
+```r
+on_exit_last_one_wins <- function() {
+  cat("put on socks\n")
+  on.exit(cat("take off socks\n"))
+  
+  cat("put on shoes\n")
+  on.exit(cat("take off shoes\n"))
+}
+
+on_exit_last_one_wins()
+#> put on socks
+#> put on shoes
+#> take off shoes
+```
+
+## `base::on.exit()` vs `withr::defer()`
+
+`withr::defer()` **adds** expressions to the top of the stack of deferred actions.
+
+```r
+defer_stack <- function() {
+  cat("put on socks\n")
+  defer(cat("take off socks\n"))
+  
+  cat("put on shoes\n")
+  defer(cat("take off shoes\n"))
+}
+defer_stack()
+#> put on socks
+#> put on shoes
+#> take off shoes
+#> take off socks
+```
+
+## `base::on.exit()` vs `withr::defer()`
+
+To get such behavior with `on.exit()`, remember to call it with `add = TRUE, after = FALSE`.
+
+```r
+on_exit_stack <- function() {
+  cat("put on socks\n")
+  on.exit(cat("take off socks\n"), add = TRUE, after = FALSE)
+  
+  cat("put on shoes\n")
+  on.exit(cat("take off shoes\n"), add = TRUE, after = FALSE)
+}
+on_exit_stack()
+#> put on socks
+#> put on shoes
+#> take off shoes
+#> take off socks
+```
+
+## `base::on.exit()` vs `withr::defer()`
+
+`withr::defer()` can control over the environment the deferred events are associated with.
+
+```r
+local_digits <- function(sig_digits, envir = parent.frame()) {
+  op <- options(digits = sig_digits)
+  defer(options(op), envir = envir)
+}
+
+neatful <- function(x) {
+  local_digits(1)
+  print(x)
+  local_digits(3)
+  print(x)
+  local_digits(5)
+  print(x)
+}
+
+neatful(pi)
+#> [1] 3
+#> [1] 3.14
+#> [1] 3.1416
+
+pi
+#> [1] 3.141593
+```
+
+## `withr` pre-made helpers
+
+- `local_*()` functions are best for modifying state “from now until the function exits”
+
+```r
+neat_local <- function(x, sig_digits) {
+  withr::local_options(list(digits = sig_digits))
+  print(x)
+  # imagine lots of code here
 }
 ```
 
-- `withr::defer()` can also be using in the global environment for developing code interactively, and cleaned up with `withr::deferred_clear()`. 
+- `with_*()` functions are best for executing a small snippet of code with a modified state and **minimize the footprint of your state modifications**.
 
-#### Restoring state with `base::on.exit()`
-
-- Very similar to `withr::defer()`
-- Note that we use the `add = TRUE` argument, which adds to the list of deferred cleanup tasks rather than replace them.
-
-```
-g <- function(a, b, c) {
-  ...
-  scratch_file <- tempfile()
-  on.exit(unlink(scratch_file), add = TRUE)
-  file.create(scratch_file)
-  ...
+```r
+neat_with <- function(x, sig_digits) {
+  # imagine lots of code here
+  withr::with_options(
+    list(digits = sig_digits),
+    print(x)
+  )
+  # ... and a lot more code here
 }
 ```
 
-#### Isolate side-effects
+## `withr` pre-made helpers
 
-- Often you can't avoid creating side effects, e.g. printing output or creating plots
-- Good practice is to isolate them in functions that only produce output.
-- e.g. instead of combining them into one function, write two functions for data wrangling and plotting, respectively. 
+|**Do / undo this**|**withr functions**|
+|:-----------------|:------------------|
+|Set an R option|`local_options()`, `with_options()`|
+|Set an environment variable|`local_envvar()`, `with_envvar()`|
+|Change working directory|`local_dir()`, `with_dir()`|
+|Set a graphics parameter|`local_par()`, `with_par()`|
 
 
-#### When you do need side-effects
+## `withr::defer()`can defer events on the global environment
 
-- Most common when your package talks to an external system
-- You may need to:
-  - Display a message when your package loads
-  - Set custom options for your package with `options()`
-- Use `.onLoad()` and `.onAttach()` (mostly the former)
+Deferred events can be set on the **global environment** *to facilitate the interactive development of code that is intended to be executed inside a function or test*. 
+
+A message alerts the user to the fact that an explicit `deferred_run()` is the only way to trigger these deferred events.
+
+```r
+defer(print("hi"))
+#> Setting deferred event(s) on global environment.
+#>   * Execute (and clear) with `withr::deferred_run()`.
+#>   * Clear (without executing) with `withr::deferred_clear()`.
+
+pi
+#> [1] 3.141593
+
+# this adds another deferred event, but does not re-message
+local_digits(3)
+
+pi
+#> [1] 3.14
+
+deferred_run()
+#> [1] "hi"
+
+pi
+#> [1] 3.141593
+```
+
+## When you do need side-effects
+
+If your package talks to an **external system** you might need to do some initial setup when the package loads with `.onLoad()` or `.onAttach()` conventionally stored in `R/zzz.R`.
+
+Some common uses of `.onLoad()` and `.onAttach()` are:
+
+- To set custom options for your package with `options()`.
+
+```r
+.onLoad <- function(libname, pkgname) {
+  op <- options()
+  op.dplyr <- list(
+    dplyr.show_progress = TRUE
+  )
+  toset <- !(names(op.dplyr) %in% names(op))
+  if (any(toset)) options(op.dplyr[toset])
+
+  invisible()
+}
+```
+
+- To display an informative message when the package is attached.
 
 ```
 .onAttach <- function(libname, pkgname) {
@@ -205,7 +342,7 @@ g <- function(a, b, c) {
 ```
 
 - Use `.onUnload()` to to clean up side effects. 
-- `.onLoad()` etc. are conventionally stored in `R/zzz.R`
+
 
 ## Constant health checks
 
@@ -219,31 +356,23 @@ Here is a typical sequence of calls when using devtools for package development:
 6. `check()`
 
 
-Experienced developers cycle through these steps several times in an hour or day (remember, fast feedback!). Lack of comfort with these steps often leads to a dysfunctional workflow that is run infrequently (maybe once per month) and makes it difficult to spot bugs as they arise. That dysfunctional workflow looks like:
-
-
-1. Edit one or more files below `R/`.
-2. Build, install, and use the package. Iterate occasionally with previous step.
-3. Write documentation (once the code is “done”).
-4. Write tests (once the code is “done”).
-5. Run `R CMD check` right before submitting to CRAN or releasing in some other way.
-
-The value of fast feedback also applies to running `document()`, `test()`, and `check()`. There are problem that can't be detected from using `load_all()` and running a few interactive examples. Finding and fixing bugs right after they were created is much easier than troubleshooting them weeks or months after you last touched the code.
-
-
 ## CRAN notes
 
-- If you are submitting to CRAN, you must use only ASCII characters in your `.R` files. i.e. 0-9, a-Z, common punctuation
-- If you need to use a Unicode character, you can specify it in the special unicode escape "\\u1234" format. 
+If you are submitting to CRAN, you must use only **ASCII characters** in your `.R` files:
 
+  - 0-9
+  - a-z
+  - A-Z
+  - Common punctuation
+  - Unicode escape like `"\u1234"`. The function `stringi::stri_escape_unicode()` can be useful.
+  
+The functions `tools::showNonASCII()` and `tools::showNonASCIIfile(file)` help you find the offending file(s) and line(s).
+
+```r
+tools::showNonASCIIfile("R/foo.R")
+#> 666: #' If you<e2><80><99>ve copy/pasted quotes, watch out!
 ```
-x <- "This is a bullet •"
-y <- "This is a bullet \u2022"
-identical(x, y)
-#> [1] TRUE
-cat(stringi::stri_escape_unicode(x))
-#> This is a bullet \u2022
-```
+
 
 ## Meeting Videos
 
