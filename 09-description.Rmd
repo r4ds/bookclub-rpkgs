@@ -2,20 +2,24 @@
 
 # DESCRIPTION
 
-Note: These slides were written for an old version of this chapter, which incorporated NAMESPACE. The NAMESPACE section should likely be moved to chapter 11 and/or 12.
-
 **Learning objectives:**
 
-- Understand the `DESCRIPTION` file and the most important package metadata
+  - Understand the `DESCRIPTION` file and the most important package metadata
   - Declare dependencies with `Imports`, `Suggests`, `Depends`, `LinkingTo`, and `Enhances` fields
-- Add title, description, authors
-- Preview license, version
+  - Add title, description, authors
+  - Preview license, version
 
-## `DESCRIPTION` File
+## `DESCRIPTION` File {-}
 
+- `DESCRIPTION` file stores important metadata about a package.
+  - E.g., what packages are needed, what the package does, maintainer contact info
 - Every package has a `DESCRIPTION` and if it has a `DESCRIPTION` file then it is a package 
 - `usethis::create_package("mypackage")` adds a `DESCRIPTION` file
   - You can set a custom `DESCRIPTION` file with `usethis.description`
+- If you create a lot of packages -> default content of `DESCRIPTION` by seting `usethis.description` to a named list.     - [usethis setup](https://usethis.r-lib.org/articles/usethis-setup.html)
+- `DESCRIPTION` uses a file format called DCF (Debian Control Format)
+  - Each line is a field name and value sep by a colon (:). If a value has multiple lines indent (4 spaces) the following lines. 
+- The [desc package](https://desc.r-lib.org/) can help with `DESCRIPTIONS` programmatically. 
   
 ![](./images/09-description/description-file.png)
 Example `DESCRIPTION` file:
@@ -37,30 +41,26 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.0
 ```
 
-## Title and description
-
-What does your package do?
-
-![](./images/09-description/pkg-example.png)
-
-### Title
+## Title {-}
 
 - `Title` is a one line description of the package
   - Plain text
   - Capitalized title
   - Does not end in a period
   - Shows up on CRAN download page
+  - keep it short, under 65 characters ideally
   - Do not include package name
   - Put the names of R packages, software, and APIs inside single quotes
   - Do not start with "A package for..." or "This package does...".
-  
-### Description
+ 
+## Description {-}
 
 - `Description` can be up to a paragraph
   - Each line up to 80 characters
   - Indent subsequent lines with 4 spaces
   - Put the names of R packages, software, and APIs inside single quotes
   - You can use acronyms here
+  - If you need to add more info on the package description, add it to the README.md
   
 ```
 Title: Create Elegant Data Visualisations Using the Grammar of Graphics
@@ -70,16 +70,18 @@ Description: A system for 'declaratively' creating graphics,
     and it takes care of the details.
 ```
 
-Shows up on CRAN like so:
+## Shows up on CRAN like so: {-}
 
-![](./images/09-description/cran-pkgs.png)
+![](./images/09-description/title_cran.png)
 
-## Author
+![](./images/09-description/desc_cran.png)
 
-Who are you?
+## Author: who are you? {-}
 
+- Use the `Authors@R` field 
 - Contains executable R code `utils::person()`
 - Fields are used to generate citation for package
+- Use email that you will have access for a while.
 
 ```
 person(given = NULL, family = NULL, middle = NULL,
@@ -89,12 +91,12 @@ person(given = NULL, family = NULL, middle = NULL,
 
 ```
 Authors@R: person("Hadley", "Wickham", email = "hadley@rstudio.com",
-  role = c("aut", "cre"))
+  role = c("aut", "cre"), comment = c(ORCID = "0000-0001-1234-5678"))
 ```
 
 - Name (given, family)
 - Email address
-- Role:
+- Role: Every packages needs at least one author (aut) and one maintainer (cre)
   - `cre`: the current maintainer*
   - `aut`: authors who have made significant contributions*
   - `ctb`: contributors who have made smaller contributions
@@ -102,8 +104,6 @@ Authors@R: person("Hadley", "Wickham", email = "hadley@rstudio.com",
   - `fnd`: funder
 - Comment
   - Can use this to add ORCID
-  
-* need at least one
 
 List multiple authors with `c()`:
 
@@ -114,13 +114,12 @@ Authors@R: c(
     person("RStudio", role = c("cph", "fnd")))
 ```
 
-## License
+## License {-}
 
-If you want to share your package, include a license.
-
-You can use `usethis::use_*_license()` for configuration.
-
-More in Chapter 9! -> now chapter 12 TODO see if the note from this session need to stay here or move to chapter 12
+- License field is mandatory
+- If you want to share your package, include a license.
+- You can use `usethis::use_*_license()` for configuration.
+- More in Chapter 12!
 
 **Notes from session**
 
@@ -133,97 +132,81 @@ The thing Collin Berke showed is called re-exporting, and that's different from 
 Tan:
 re-exporting also avoids some of the permissive licensing issues!
 
-## Version
+## Imports, Suggests, and friends {-}
 
-- Determines if dependencies are satisfied
-- Two integers and separated by `.` or `-` (recommended to use `.`)
-- Starts at `0.0.0.9000`
-  - Based on Semantic Versioning and by the X.Org versioning schemes
+- `Imports` are packages users need at runtime and will be installed or (updated?) when users install your package via `install.packages()`
+- `Suggests` are packages needed for dev tasks or for optional functionality but are not required 
+- Both use a comma-separated list of package names with a package on each line ordered alphabetically 
+- Do `usethis::use_package()`
+- You can also indicate a specific package version
+  - If you state a min version, the user will automatically get an upgrade notification when they install your package
+- What min version to indicate requires careful considerations! 
 
-Equivalent examples:
-```
-numeric_version("1.9") == numeric_version("1.9.0")
-```
-
-Can update version number by running `usethis::use_version()` or `usethis::use_dev_version()`.
-
-## Other fields
-
-### `URL` and `BugReports`
-
-- The `URL` field is commonly used to advertise the package’s website and to link to a public source repository
-- `BugReports` is the URL where bug reports should be submitted
-
-`usethis::use_github()` will automatically create these for you; `usethis::use_github_links()` can add them for you.
-
-### `Encoding`
-
-- Required if DESCRIPTION does not consist entirely of ASCII character
-- Default is `Encoding: UTF-8`
-
-### `Collate`
-
-- Controls the order in which files are sourced
-  - Most common if you're using S4 (a system for object oriented programming)
-
-### `LazyData`
-
-- If true, data is lazy loaded so users don't have to run `data()`
-- `usethis::use_data()` does this for you
-
-### `Roxygen*`
-
-`create_package()` creates fields related to the roxygen package
-
-## NAMESPACE file
-
-```
-# Generated by roxygen2 (4.0.2): do not edit by hand
-S3method(as.character,expectation)
-S3method(compare,character)
-export(auto_test)
-export(auto_test_package)
-export(colourise)
-export(context)
-exportClasses(ListReporter)
-exportClasses(MinimalReporter)
-importFrom(methods,setRefClass)
-useDynLib(testthat,duplicate_)
-useDynLib(testthat,reassign_function)
+```{r, eval=FALSE}
+# The default is 'Imports'
+# Exact minimum version '==' but can use '>=' which is recommended 
+usethis::use_package('dplyr', min_version = "1.0.0")
+# the minimum version is the one installed 
+usethis::use_package('ggplot2', 'Suggests', min_version = TRUE)
 ```
 
-Each line contain a directive. 8 directives exist and can be divided in: 
+## `Depends` and `Linking to` {-}
 
-- exported from this package:  
-    * `export()`: export function  
-    * `exportPattern()`: export all functions that match a pattern  
-    * `exportClasses()`, `exportMethodsFrom()`: S4 classes and methods  
-    * `S3method()`: S3 methods 
+- `Depends` indicates what packages your package depends on. BUT it's recommended to use `Imports`, not `Depends` (why in Ch10)
+- Currently, `Depends` is used to indicate a min version of R itself: `Depends: R (>=4.0.0)`:  The main takeaway is: if you state a minimum of R, you should have a reason and you should take reasonable measures to test your claim regularly.
+- `Linking to` indicates if your packages uses C or C++ code from another package. 
+- `Enhances` packages listed here are 'enhanced' by your package. It's sometimes hard to define this so we recommend not to use it. 
 
-- imported from another package:  
-    * `import()`: import **all** function from a package 
-    * `importFrom()`: import select functions  
-    * `importClassesFrom()`, `importMethodsFrom()`: import S4 Classes and methods
-    
-  
-Better not to do it by "hand" but with {roxygen2} :
+## An R version gotcha {-}
 
-- Namespace definitions live next to the function: ie reading the function you know if it is imported or not
+- `.rds` files used the 'version 2' serialization format, but since April 2019 the new default is Version 3
+- R versions prior to 3.5.0 (April 2018) cannot read `.rds` files that use Version 3
+- Many R  packages have a lurking `.rds` file that if re-generated with a modern R version then the required R version is automatically bumped to 3.5.0
 
-- one tag `@export` : generate the correct dirrective 
+```
+NB: this package now depends on R (>= 3.5.0)
+  WARNING: Added dependency on R >= 3.5.0 because serialized objects in
+  serialize/load version 3 cannot be read in older versions of R.
+  File(s) containing such objects:
+    'path/to/some_file.rds'
+```
 
-- {roxygen2} make NAMESPACE tidy: even if you do more than one `@importFrom foo bar` you only get one directive `importFrom(foo, bar)`
+- So be deliberate about the `version` of `.rds` files until R versions prior to 3.5.0 have falled off the edge of what you intend to support 
+- And, the more reverse dependencies your package has, the more thought you need to give to your package’s stated minimum versions, especially for R itself
 
-{roxygen2} vignette on how to do it: https://roxygen2.r-lib.org/articles/namespace.html
-  
-## Final notes
+
+## Other fields {-}
+
+-  `Version` where your package is in its lifecylce and how it's evolving (Ch21)
+-  `LazyData` relevant if your package makes data available to the user: `LazyData: true` and users won't have to use `data()`
+-  `Encoding` by default is `Encoding: UTF-8` which is the most common 
+-  `Collate` controls the order in which R files are sourced. 
+-  `vignetteBuilder` lists any package that your package needs as a vignette engine (Ch 17) 
+-  `SystemRequirements` description of dependencies external to R
+
+```
+SystemRequirements: C++17
+SystemRequirements: GNU make
+SystemRequirements: TensorFlow (https://www.tensorflow.org/
+``` 
+
+- We recommmend not to use the `Date` field, it will be auto populated when building 
+
+## Custom fields {-}
 
 Full list of what can be in the `DESCRIPTION` file is in the [R extensions manual](https://cran.r-project.org/doc/manuals/R-exts.html#The-DESCRIPTION-file).
 
 You can also created your own but CRAN does have constraints
-
+- Don't re-purpose the official field names used by R
 - Only English words
 - Use `Config/` prefix or `Note` suffix
+- Also `create_package()` writes to more fields related to the use of roxygen2 package for documentation (Ch16)
+
+```
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.1
+```
+
 
 ## Meeting Videos
 
