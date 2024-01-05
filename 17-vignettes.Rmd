@@ -130,7 +130,7 @@ Sometimes it is necessary to refer to another file from a vignette. The best way
 - An external file that could be useful to users or elsewhere in the package (not just in vignettes): Put such a file in inst/ [(Section 9.3)](https://r-pkgs.org/misc.html#sec-misc-inst), perhaps in inst/extdata/ [(Section 8.4)](https://r-pkgs.org/data.html#sec-data-extdata), and refer to it with system.file() or [fs::path_package()](https://fs.r-lib.org/reference/path_package.html) [( Section 8.4.1)](https://r-pkgs.org/data.html#sec-data-system-file). Example from [vignette("sf2", package = "sf"):](https://r-spatial.github.io/sf/articles/sf2.html)
 
 
-````{r}
+```{r}
 library(sf)
 fname <- system.file("shape/nc.shp", package="sf")
 fname
