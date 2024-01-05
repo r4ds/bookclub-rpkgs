@@ -13,7 +13,7 @@
 
 - `DESCRIPTION` file stores important metadata about a package.
   - Required pkgs, what pkg does, maintainer contact info, etc
-- Every package has a `DESCRIPTION`; anything with `DESCRIPTION` file is a package 
+- Every package has `DESCRIPTION`; anything with `DESCRIPTION` is a package 
 - `usethis::create_package("mypackage")` adds `DESCRIPTION` file
 - Set `DESCRIPTION` defaults as named list in `usethis.description` (see [usethis setup](https://usethis.r-lib.org/articles/usethis-setup.html))
 - `DESCRIPTION` file format = DCF (Debian Control Format)
