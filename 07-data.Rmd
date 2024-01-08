@@ -2,12 +2,354 @@
 
 **Learning objectives:**
 
-- THESE ARE NICE TO HAVE BUT NOT ABSOLUTELY NECESSARY
+- Understand why and how to include data in a package
+- Differentiate between types of package data
+- Learn how to document data in your package
 
-## SLIDE 1
+## Why data? {-}
 
-- ADD SLIDES AS SECTIONS (`##`).
-- TRY TO KEEP THEM RELATIVELY SLIDE-LIKE; THESE ARE NOTES, NOT THE BOOK ITSELF.
+Reasons to include data in a package:
+
+- for function documentation
+- to distribute the data itself ("data package")
+- for internal use in functions
+
+## Overview of main use cases and paths {-}
+
+- R objects for the user: `data/`
+- R objects for internal use: `R/sysdata.rda`
+- Raw data for the user: `inst/extdata/`
+- Other uses: dynamic state data, persistent config data
+
+## 7.1 Exported data {-}
+
+**R objects for the user**
+
+- `.rda` files from `save()`
+- single R objects, same name as file
+- `LazyData: true` in `DESCRIPTION`
+
+To do this easily, `usethis::use_data()` saves data to the `data/` directory
+
+For example:
+
+```
+my_pkg_data <- sample(1000)
+usethis::use_data(my_pkg_data)
+```
+
+## 7.1 Exported data {-}
+
+Package users can then access the data:
+
+`pkg::my_pkg_data`
+
+```
+library(pkg)
+my_pkg_data
+```
+
+## 7.1 Exported data {-}
+
+```
+my_pkg_data <- sample(1000)
+usethis::use_data(my_pkg_data)
+```
+
+Stay tuned for where the data-creation code goes. Should **not** go in your `R/` directory.
+
+Other types of files not recommended.
+
+## 7.1 Exported data {-}
+
+Lazy-loading
+
+`LazyData: true` in `DESCRIPTION`
+
+```
+lobstr::mem_used()
+#> 57.35 MB
+library(nycflights13)
+lobstr::mem_used()
+#> 59.28 MB
+
+invisible(flights)
+lobstr::mem_used()
+#> 99.98 MB
+```
+
+Note that `use_data()` automatically sets this.
+
+## 7.1.1 Preserve the origin story of package data {-}
+
+- Make a data-creating script (e.g. to clean up raw data from elsewhere and get it ready to be included in the package)
+- Keep in `data-raw/` as a `.R` file.
+- List `data-raw/` in `.Rbuildignore`
+- A typical script in `data-raw/` includes code to prepare a dataset and ends with a call to `use_data()`
+
+To do this:
+
+```
+usethis::use_data_raw() # creates `data_raw/` folder and lists it in `.Rbuildignore`
+usethis::use_data_raw("my_pkg_data") #??
+```
+
+## 7.1.2 Documenting datasets {-}
+
+- Just like exporting a function, when you export data, you need to document it.
+- Document the **name** of the data and save it in `R/`, alongside your function scripts (that way the `man` file will get generated)
+
+For example:
+```
+#' World Health Organization TB data
+#'
+#' A subset of data from the World Health Organization Global Tuberculosis
+#' Report ...
+#'
+#' @format ## `who`
+#' A data frame with 7,240 rows and 60 columns:
+#' \describe{
+#'   \item{country}{Country name}
+#'   \item{iso2, iso3}{2 & 3 letter ISO country codes}
+#'   \item{year}{Year}
+#'   ...
+#' }
+#' @source <https://www.who.int/teams/global-tuberculosis-programme/data>
+"who"
+```
+
+## 7.1.2 Documenting datasets {-}
+
+```
+#' World Health Organization TB data
+#'
+#' A subset of data from the World Health Organization Global Tuberculosis
+#' Report ...
+#'
+#' @format ## `who`
+#' A data frame with 7,240 rows and 60 columns:
+#' \describe{
+#'   \item{country}{Country name}
+#'   \item{iso2, iso3}{2 & 3 letter ISO country codes}
+#'   \item{year}{Year}
+#'   ...
+#' }
+#' @source <https://www.who.int/teams/global-tuberculosis-programme/data>
+"who"
+```
+
+Note the tags `@format` and `@source`
+
+**Never `@export` a data set.**
+
+## 7.1.3 Non-ASCII characters in data {-}
+
+- To include non-ASCII characters, use UTF-8 encoding.
+- Include `Encoding: UTF-8` in the `DESCRIPTION`
+- If you use `usethis::create_package()`, the encoding will automatically be listed in the `DESCRIPTION`
+- To make sure strings have UTF-8 encoding, use functions like `Encoding()`, `enc2utf8()`, and `iconv()` in your data preparation scripts in `data-raw/`. 
+
+## 7.2 Internal data {-}
+
+**R objects for functions' internal use, not accessible to the user**
+
+Small, simple objects:
+
+- define with `c()` or `data.frame()` in `R/` code, e.g. `R/data.R`.
+
+Larger objects:
+
+- store in `R/sysdata.rda` --> automatically lazy-loaded on demand.   
+
+Example use case: large tables of color data (`munsell` and `dichromat`)
+
+## 7.2 Internal data {-}
+
+```
+internal_this <- ...
+internal_that <- ...
+
+usethis::use_data(internal_this, internal_that, internal = TRUE)
+```
+
+- Makes the objects `internal_this` and `internal_that` available to functions you write. Also available when you call `devtools::load_all()`. 
+- The code to generate internal data also lives in an R script in `data-raw/`, same as with exported data.
+
+## 7.2 Internal data {-}
+
+**Unlike data/, where you use one .rda file per exported data object, you store all of your internal data objects together in the single file R/sysdata.rda.**
+
+So presumably, you'll have to keep updating the `usethis::use_data(... internal = TRUE)` line of code if you want to add any more objects during package development.
+
+## 7.2 Internal data {-}
+
+Differences from exported data:
+
+- Because internal data is not exported, it doesn't need to be documented.
+- `LazyData: true` in `DESCRIPTION` only applies to exported data in the `data/` folder. **Internal data is always lazy-loaded.**
+
+## 7.3 Raw data files {-}
+
+**Raw data files, accessible to the user e.g. for showing examples of loading/parsing raw data**
+
+- Stored in the `inst/` folder (which I think stands for "install")--when the package is installed, all files in `inst/` are moved up one level to the top-level directory. (Cannot have names that conflict).
+- In the installed package, files will end up being in the `extdata` folder.
+
+## 7.3 Raw data files {-}
+
+- Use case: a key part of the package's functionality is to act on an external file. E.g. packages that read in files of different types, like `readr` or `readxl`.
+
+- Use case: a data package wants to provide .csv versions of the data, instead of just R objects. E.g. in `palmerpenguins`, the objects `penguins` and `penguins_raw` are also represented as `extdata/penguins.csv` and `extdata/penguins_raw.csv`.
+
+## 7.3.1 Filepaths {-}
+
+If you want to list the data files distributed with a package, can use `system.file()`. For example:
+
+```
+system.file("extdata", package = "readxl") |> list.files()
+#>  [1] "clippy.xls"    "clippy.xlsx"   "datasets.xls"  "datasets.xlsx"
+#>  [5] "deaths.xls"    "deaths.xlsx"   "geometry.xls"  "geometry.xlsx"
+#>  [9] "type-me.xls"   "type-me.xlsx"
+```
+
+However, since the file path changes when the package is installed, the file path will be different for you vs. for the user of the package.
+
+But! Using `devtools::load_all()` will make calls to `system.file()` just work.
+
+Can also use `fs::path_package()`.
+
+? I don't quite understand when/why we would want to use file paths like this.
+
+## Summary of exported, internal, and raw data {-}
+
+| |Exported | Internal | Raw
+|---|---|---|---|
+|What | R objects for user | R objects for functions | Non-R objects for user|
+|Use case | Data for testing; data package | Funs need e.g. lookup table, external info | Practice loading in data/interacting with external files|
+|Where to put it | data/___.rda | R/sysdata.rda | inst/extdata/|
+|File format | Multiple .rda files | Single .rda file, sysdata.rda | Any format (usually not .rda). E.g. csv, xls, etc.|
+|How to make/store it | `usethis::use_data(my_pkg_data)` | `usethis::use_data(this, that, internal = T)` | ? |
+|Where to make it | `data-raw/___.R` | `data-raw/___.R` | `data-raw/___.R` ?|
+|How do users access it? | `pkg::my_pkg_data` or `library(pkg); my_pkg_data` | They don't. | File paths?|
+|Lazy-loaded? | If set in DESCRIPTION| Always | ?|
+|Documented? | Yes, in R/ | No | ?|
+
+
+## 7.4 Internal state {-}
+
+**Storing user-specific or system-specific data that functions need, but that cannot be known until the package is loaded**
+
+Use this method when:
+
+- Info needs to be determined at load time, or info is dynamic
+- It's cumbersome or hard for the user to pass the info in as a function argument
+
+Example use cases:
+
+- Allow user to get/set a list of information
+- Functions need to know the current project directory (e.g. `usethis`)
+- Functions need to know the user's home directory on Google Drive (e.g. `googledrive`)
+
+For more info: [Package-Wide Variables/Cache in R Packages](https://trestletech.com/2013/04/package-wide-variablescache-in-r-package/)
+
+## 7.4 Internal state {-}
+
+Let's say you want to store the user's favorite letters. Here is your first attempt:
+
+```
+# make some very small starting data within the file
+favorite_letters <- letters[1:3]
+
+#' Report my favorite letters
+#' @export
+mfl <- function() {
+  favorite_letters
+}
+
+#' Change my favorite letters
+#' @export
+set_mfl <- function(l = letters[24:26]) {
+  old <- favorite_letters
+  favorite_letters <<- l # trying to overwrite a variable in the global environment
+  invisible(old)
+}
+```
+
+## 7.4 Internal state {-}
+
+But this fails!
+
+- You can't change the binding for objects in the package namespace
+- Only define small data objects like `favorite_letters` if they are permanent/you won't need to modify them.
+
+## 7.4 Internal state {-}
+
+As an alternative, we can use an **internal package environment**.
+
+Let's name our environment `the` for easy reading of the variables.
+
+```
+the <- new.env(parent = emptyenv())
+the$favorite_letters <- letters[1:3]
+
+#' Report my favorite letters
+#' @export
+mfl2 <- function() {
+  the$favorite_letters
+}
+
+#' Change my favorite letters
+#' @export
+set_mfl2 <- function(l = letters[24:26]) {
+  old <- the$favorite_letters
+  the$favorite_letters <- l
+  invisible(old)
+}
+```
+
+So, now we are creating and changing objects within the internal environment, instead of within the global environment.
+
+Now this should work:
+
+```
+mfl2()
+#> [1] "a" "b" "c"
+
+set_mfl2(c("j", "f", "b"))
+
+mfl2()
+#> [1] "j" "f" "b"
+```
+
+## 7.4 Internal state {-}
+
+Some notes on internal package environments:
+
+- The environment persists only for the current R session
+- We use "the" as the environment name so we can read things like "the favorite letters" or "the object" in plain English.
+
+When to define the environment:
+- Before it will be used. To be safe, `R/aaa.R`
+- Can put it in a lower script if it will only be used for e.g. one family of functions.
+
+## 7.5 Persistent user data {-}
+
+What if you want data to persist *across R sessions* and not be re-initialized every time the package is loaded?
+
+- Must store the data on the disk
+- Where do we put the file???
+
+There are [standards](https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html) for storing data to the user's disk, and you usually shouldn't do it.
+
+## 7.5 Persistent user data {-}
+
+If you must...
+
+> For R version 4.0 or later (hence a version dependency is required or only conditional use is possible), packages may store user-specific data, configuration and cache files in their respective user directories obtained from tools::R_user_dir(), provided that by [sic] default sizes are kept as small as possible and the contents are actively managed (including removing outdated material).
+
+Can use `tools::R_user_dir()` to get a file path for where to store the data in the user's directory.
+
+Do you **really** need to store data on the user's disk? There might be other packages/tools that can help that you can use instead.
 
 ## Meeting Videos
 
