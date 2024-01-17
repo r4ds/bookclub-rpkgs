@@ -4,22 +4,28 @@
 
 **Learning objectives:**
 
-  - Understand the `DESCRIPTION` file and the most important package metadata
+  - Understand the purpose and the typical contents of `DESCRIPTION` file and the most important package metadata
   - Declare dependencies with `Imports`, `Suggests`, `Depends`, `LinkingTo`, and `Enhances` fields
   - Add `Title`, `Description`, `Authors`
   - Preview `License`, `Version`
 
+You need this to make your packages recognizable to R and other packages, 
+but it will also help you understand how other packages are being set up
+and how they interoperate.
+
 ## `DESCRIPTION` File {-}
 
 - `DESCRIPTION` file stores important metadata about a package.
-  - Required pkgs, what pkg does, maintainer contact info, etc
+  + Required pkgs, what pkg does, maintainer contact info, etc.
+  + Myriad of tools interact with `DESCRIPTION` file; most
+   importantly `install.packages("your_package")` or
+   `remotes::install.github("you_are/your_package")`
 - Every package has `DESCRIPTION`; anything with `DESCRIPTION` is a package 
 - `usethis::create_package("mypackage")` adds `DESCRIPTION` file
-- Set `DESCRIPTION` defaults as named list in `usethis.description` (see [usethis setup](https://usethis.r-lib.org/articles/usethis-setup.html))
-- `DESCRIPTION` file format = DCF (Debian Control Format)
-  - Each line is a field name & value sep by `:`
-  - If a value has multiple lines indent following lines 4 spaces. 
-- [{desc}](https://desc.r-lib.org/) can help with `DESCRIPTION`s programmatically. 
+- `DESCRIPTION` file format = DCF (Debian Control Format; see [`read.dcf`](https://rdrr.io/r/base/dcf.html))
+  + Each line is a field `Name: value` (the name is typically in proper case)
+  + If a value has multiple lines, indent the overflow lines by 4 spaces. 
+- [{desc}](https://desc.r-lib.org/) can help with `DESCRIPTION` files programmatically. 
   
 
 ## Example `DESCRIPTION` File {-}
@@ -46,10 +52,10 @@ RoxygenNote: 7.2.0
 `Title` = 1-line description of the package
 
 - Plain text
-- Title Case
+- Nominal Sentence in Title Case
 - Does not end in a period
 - Shows on CRAN download page & `Packages` tab in RStudio
-- Keep it short (ideally < 65 characters)
+- Keep it short (some tools truncate to 65 characters)
 - Do not include package name
 - Put the names of R packages, software, and APIs inside 'single quotes'
 - Do not start with "A package for..." or "This package does...".
@@ -58,11 +64,13 @@ RoxygenNote: 7.2.0
 
 `Description` can be up to a paragraph
 
+- One paragraph with 2 to 4 sentences giving a concise description of 
+  what the package does or what it is for
 - Each line up to 80 characters
 - Indent subsequent lines with 4 spaces
 - Put the names of R packages, software, and APIs inside 'single quotes'
 - Can use acronyms here
-- If you want more detailed info, add it to `README.md`
+- If you want to add more detailed info, add it to `README.md`
 
 ## Title & Description Example {-}
 
@@ -78,14 +86,32 @@ Description: A system for 'declaratively' creating graphics,
 
 ![](./images/09-description/title_cran.png)
 
-![](./images/09-description/desc_cran.png)
+![](https://r-pkgs.org/images/cran-package-ggplot2.png)
+
+## Version {-}
+
+- Package number in the form `<major>.<minor>.<patch>`
+  or `<major>.<minor>.<patch>.<dev>`
+  * See principles at https://semver.org/
+  * *Major* version when you make incompatible API changes
+  * *Minor* version when you add functionality in a backward compatible manner
+  * *Patch* version when you make backward compatible bug fixes
+  * Other engagement rules: see e.g.
+    [BioconductoR](https://contributions.bioconductor.org/versionnum.html#versionnum)
+- Parsed and compared by
+[`base::package_version()`](https://rdrr.io/r/base/numeric_version.html)
+- Forms the basis of dependency checking
+
+The topic of version numbering will come up again later in 
+[Chapter 21](https://r-pkgs.org/lifecycle.html#sec-lifecycle-version-number).
 
 ## Author: who are you? {-}
 
-- Use the `Authors@R` field 
-- Contains executable R code `utils::person()`
-- Fields are used to generate citation for package
-- Use email that you will have access for a while.
+- `Author:` + `Maintainer:` plain text or `Authors@R:` executable R code `utils::person()`
+- Fields are used to generate citation for the package
+- Email is required for the package maintainer
+    * provide the email address that you will have access to for a while
+      for bug reports and feedback
 
 ```
 person(given = NULL, family = NULL, middle = NULL,
@@ -109,7 +135,7 @@ Authors@R: person("Hadley", "Wickham", email = "hadley@rstudio.com",
   - `cph`: copyright holder if someone other than author
   - `fnd`: funder
 - Comment
-  - Can use this to add ORCID
+  - Can use this to add [ORCID](http://orcid.org)
 
 ## Multiple authors {-}
 
@@ -122,6 +148,23 @@ Authors@R: c(
     person("RStudio", role = c("cph", "fnd")))
 ```
 
+## URL and BugReports {-}
+
+- `URL`: 
+    * the github development repo
+    * the compiled `bookdown` / `pkgdown` site
+- `BugReports`:
+    * the github issues page
+    * the email address of the maintainer
+- `usethis::use_github()` and `usethis::use_github_links()` 
+    automatically generate these
+
+
+```
+URL: https://devtools.r-lib.org/, https://github.com/r-lib/devtools
+BugReports: https://github.com/r-lib/devtools/issues
+```
+
 ## License {-}
 
 - License field is mandatory
@@ -131,28 +174,52 @@ Authors@R: c(
 
 ## `Imports` & `Suggests` {-}
 
-- `Imports` = packages users need at runtime; will be installed or updated when users install your package
-- `Suggests` = packages needed for dev tasks or optional functionality (not required) 
+- `Imports`:
+  * you use `package::function()` in your code
+  * hence your package users will need the imported package at runtime
+  * will be installed or updated when users install your package
+  * `library()` will complain if the available version is below the one
+    that the package requires
+- `Suggests`:
+  * packages needed for dev tasks, vignettes, tests, other optional functionality (not required) 
 - Both use comma-separated list of package names (ideally 1 pkg/line, alphabetical) 
 
-## `usethis::use_package()` {-} 
+# `usethis::use_package()` {-} 
 
-- Can also indicate specific package version (`arrow (>= 14.0.0)`)
-  - User will be asked to update (if necessary) when they install your package
+- Most of the time, should indicate the minimum specific package version (`arrow (>= 14.0.0)`)
+  * User will be asked to update (if necessary) when they install your package
 - What min version to indicate requires careful consideration! 
 
-```{r, eval=FALSE}
-# Default is 'Imports'
-usethis::use_package('dplyr', min_version = "1.0.0")
-# Use whatever you have installed as minimum 
-usethis::use_package('ggplot2', 'Suggests', min_version = TRUE)
 ```
+# Default is 'Imports'
+usethis::use_package('dplyr', min_version = '1.0.0')
+# Use whatever you have installed as minimum 
+usethis::use_package('ggplot2', type='Suggests', min_version = TRUE)
+```
+
+## Dependencies {-}
+
+Development tools like `devtools::check()` and `renv::status()` may be able
+to find the missing dependencies. 
+Most often, these happen when you `library(something)` interactively 
+and it is easily available to you when you write and execute the code.
+
+Dependencies is the topic of the whole next chapter (Ch10).
+
+Declaring a minimum version number...
+
+- ensures that the end users will get the functionality they need, but...
+- adds to frustration on enclosed environments where only system administrators 
+  have the privileges to `install.packages()`
+- adds to the frustration of projects with tightly balanced version dependencies  
 
 ## `Depends` and `Linking to` {-}
 
-- `Depends` = packages your package depends on (BUT you usually want `Imports`, not `Depends, why in Ch10)
-- `Depends` also used to indicate a min version of R itself: `Depends: R (>= 4.0.0)`
-  - **Main takeaway:** if you state minimum R version, have a reason & take reasonable measures to test your claim regularly
+- `Depends` is the deprecated way to declare dependencies
+- These days, `Depends` is only used to indicate a min version of R itself: 
+  `Depends: R (>= 4.0.0)`
+  * **Main takeaway:** if you state the minimum R version, 
+    have a reason & take reasonable measures to test your claim regularly
 - `Linking to` indicates if your packages uses C or C++ code from another package. 
 - `Enhances` = packages are 'enhanced' by your package
   - It's sometimes hard to define this so we recommend not to use it. 
@@ -173,40 +240,54 @@ NB: this package now depends on R (>= 3.5.0)
 ```
 
 - If you want to support R < 3.5.0, be careful about `.rds` version
+- The base pipe `|>` requires R >= 4.1.0
 
 ## Other fields {-}
 
 -  `Version` where pkg is in lifecycle / how it's evolving (Ch21)
--  `LazyData: true` if pkg has data for users (won't need `data()`)
+-  `LazyData: TRUE` if pkg has data for users (won't need `data()`)
 -  `Encoding: UTF-8` by default (most common) 
--  `Collate` controls the order in which R files are sourced
--  `VignetteBuilder` lists pkg your pkg needs as a vignette engine (Ch17) 
--  `SystemRequirements` dependencies external to R
+-  `Collate` controls the order in which R files are sourced 
+    (may be an issue when S4 classes are used)
+-  `VignetteBuilder` lists what the pkg needs as a vignette engine (Ch17) 
+-  `NeedsCompilation: no` if only R code and no C/C++/Fortran/Rust/JS code
+-  `SystemRequirements` dependencies external to R in plain text for human eyes
 
 ```
 SystemRequirements: C++17
 SystemRequirements: GNU make
-SystemRequirements: TensorFlow (https://www.tensorflow.org/
+SystemRequirements: TensorFlow (https://www.tensorflow.org/)
 ``` 
 
 - Don't use `Date` field, will auto-populate on build 
 
 ## Custom fields {-}
 
-Full list of `DESCRIPTION` options in the [Writing R Extensions](https://rstudio.github.io/r-manuals/r-exts/Creating-R-packages.html#the-description-file).
+Full list of `DESCRIPTION` options in the 
+[Writing R Extensions](https://rstudio.github.io/r-manuals/r-exts/Creating-R-packages.html#the-description-file).
 
 You can also created your own, but CRAN has constraints:
 
 - Don't re-purpose official field names used by R
 - Only English words
 - Use `Config/` prefix or `Note` suffix
-- `create_package()` writes to more fields related to the use of roxygen2 package for documentation (Ch16)
+
+## What you edit vs. what other tools edit {-}
+
+Some parts of `DESCRIPTION` are automatically updated by the package
+development and documentation tools, e.g. `devtools::document()` or
+`devtools::build()` will add something like:
 
 ```
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.1
 ```
 
+More on that in [Chapter 16](https://r-pkgs.org/man.html).
+
+- `devtools::check()` and `R CMD check` will complain if anything
+in `DESCRIPTION` is not proper.
+- extensive management tool provided by [`{desc}`](https://desc.r-lib.org)
 
 ## Meeting Videos {-}
 
