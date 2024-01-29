@@ -92,6 +92,7 @@ here() # here::here() |  here() # lubridate::here()
 
 - Recommended to use `package::function()` for dependencies in code below `R/`
 - Package namespace saves us from potential user redefinitions of functions
+- (There are other ways than using `::` to address potential name conflicts.)
 
 ### The `NAMESPACE` file
 
@@ -128,6 +129,11 @@ More motivation for namespace
 ### Function lookup for user code
 
 Where does R look for an object?
+
+```{r}
+search()
+```
+
 
 1. The global environment.
 2. The packages that have been attached in reverse order.
