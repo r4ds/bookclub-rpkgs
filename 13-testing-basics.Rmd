@@ -4,12 +4,120 @@
 
 **Learning objectives:**
 
-- THESE ARE NICE TO HAVE BUT NOT ABSOLUTELY NECESSARY
+- benefits of automated testing
+- `testthat` package
+- basics of testing and principles
 
-## SLIDE 1
+## Why Test?
 
-- ADD SLIDES AS SECTIONS (`##`).
-- TRY TO KEEP THEM RELATIVELY SLIDE-LIKE; THESE ARE NOTES, NOT THE BOOK ITSELF.
+- make sure our code works
+- make sure our code works after making changes
+
+## We already test
+Your workflow may look like the following:
+
+1. Write a function
+2. Load it with `devtools::load_all()`
+3. Experiment with it in the console to see if it works
+4. Rinse and repeat
+
+## Benefits of automated (unit) testing
+
+- Don't have to remember all the ad-hoc testing you've done
+- Fewer bugs, more natural to develop adversarial mindset compared to informal testing
+- Better code structure: if you're having a hard time writing a test you may need
+to refactor your code
+- Test driven development
+- Robust code
+
+## testthat package
+From the `testthat` package website:
+
+
+**Overview**
+
+Testing your code can be painful and tedious, but it greatly increases the quality of your code. testthat tries to make testing as fun as possible, so that you get a visceral satisfaction from writing tests. Testing should be addictive, so you do it all the time. To make that happen, testthat:
+
+
+- Provides functions that make it easy to describe what you expect a function to do, including catching errors, warnings, and messages.
+
+- Easily integrates in your existing workflow, whether it’s informal testing on the command line, building test suites, or using R CMD check.
+
+- Displays test progress visually, showing a pass, fail, or error for every expectation. If you’re using the terminal or a recent version of RStudio, it’ll even colour the output.
+
+testthat draws inspiration from the xUnit family of testing packages, as well as from many of the innovative ruby testing libraries, like rspec, testy, bacon and cucumber.
+
+testthat is the most popular unit testing package for R and is used by thousands of CRAN packages.
+
+## Workflow
+
+1. Setup your package with `testthat`: `usethis::use_testthat(3)`
+2. Make a test: `usethis::use_test()`
+3. Run a set of tests: `testthat:test_file()`
+4. Run entire testing suite: `devtools::test()` or `devtools::check()`
+
+## Setup
+
+run `usethis::use_testhat(3)`
+
+(usually done once per package, can opt into 3e if package already uses `testthat`)
+
+1. creates a **tests/testhat/** directory
+2. Add `testthat` to the Suggests field in the DESCRIPTION and specify `testthat` 3e in the Config/testthat/edition field
+3. Create a file **tests/testthat.R** that runs all your tests when R CMD check runs
+DO NOT EDIT
+
+## Make a test
+
+- Create and open a test file for `foofy.R` with `usethis::use_test("foofy")
+- If test is already made it will just open it.
+- If `foofy.R` is active in the editor, `usethis::use_test()` is enough
+- ** File name/structure for tests should match the R file structure
+
+## Test file structure
+```
+test_that("multiplication works", {
+  expect_equal(2 * 2, 4)
+})
+```
+
+Basic form:
+
+```
+test_that("test description", {
+  expect_xyz()
+  expect_xyz()
+  expect_xyz()
+})
+```
+
+Recommended 2-6 expect functions inside a test
+
+## Expect functions
+
+- an exception is the atom of testing
+- they start with `expect_`
+- two main arguments, first is the actual result and second is what you expect
+- if actual and expected don't agree, testthat throws an error
+- some expectations have additional arguments for finer details
+- over 40 expectations in the testthat package
+
+## Expect functions
+- Testing for equality with some tolerance `expect_equal()`
+- `expect_identical()` more strict
+- `expect_true()` and `expect_false()` check if something is TRUE or FALSE
+- Testing errors: `expect_error()`
+- `expect_length(object, n)`
+- `expect_match(object, regexp, ...)`
+
+And many more!
+
+## Snapshot tests
+- sometimes difficult or awkward to describe expected results with code
+- snapshots are a great solution to this problem
+- record a result in a separate, human-readable file and then compare at a later time
+- useful for monitoring user interface, testing images or other complicated objects
+
 
 ## Meeting Videos
 
