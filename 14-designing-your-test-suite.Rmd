@@ -2,12 +2,327 @@
 
 **Learning objectives:**
 
-- THESE ARE NICE TO HAVE BUT NOT ABSOLUTELY NECESSARY
+- Understanding the Purpose of Tests.
+- Key Considerations in Test Writing.
+- Practical Ways to Use `covr` Package.
+- High-Level Principles for Effective Testing
+- Addressing Limitations of `testthat`.
+- Optimizing Test Setup
 
-## SLIDE 1
+## What to test? {-}
 
-- ADD SLIDES AS SECTIONS (`##`).
-- TRY TO KEEP THEM RELATIVELY SLIDE-LIKE; THESE ARE NOTES, NOT THE BOOK ITSELF.
+> *Whenever you are tempted to type something into a print statement or a debugger expression, write it as a test instead.*  <br> **Martin Fowler**
+
+Test are really good:
+
+- They make your code **less likely to change** inadvertently.
+
+Test can be bad:
+
+- They can make **harder to change** your code on purpose.
+
+
+## What to test? {-}
+
+- Focus on testing the **external interface** to your functions, to make easier to update the functions.
+
+- Strive to test each behaviour in **one test**.
+
+- Avoid testing ***simple code*** that you're confident will work.
+
+- Always write a test when you **discover a bug**.
+
+
+## Direct your test writing efforts {-}
+
+![](images/14-designing-your-test-suite/01-covr-logo.png)
+
+The [covr](https://covr.r-lib.org) package can be used to determine which lines of your package's source code are (or are not!) executed when the test suite is run. 
+
+The goal is to *reach 100%*, but take in consideration that:
+
+- Going from 90% or 99% coverage to 100% is not always the best use of your development time and energy.
+
+- You better focus your testing energy on code that is tricky.
+
+## Ways to use covr {-}
+
+- `devtools::test_coverage_active_file()`: For exploring the coverage of an **individual file**.
+
+- `devtools::test_coverage()`: For exploring the coverage of the **whole package**.
+
+- `usethis::use_github_action("test-coverage")`: Configures a GitHub Actions (GHA) workflow that constantly monitors your test coverage. This is very useful before **merging pull requests**.
+
+## High-level principles for testing {-}
+
+- A test should ideally be self-sufficient and **self-contained**.
+
+- Test code should be **obvious** rather than DRY.
+
+- The **interactive workflow shouldn't leak** into and undermine the test suite.
+
+> Writing good tests for a code base often **feels more challenging** than writing the code in the first place.
+
+## Self-sufficient tests {-}
+
+Eliminate any code outside of `test_that()`:
+
+- *If the code is at top-level*: Objects or functions defined there will have a **test file scope**.
+
+- *If top-level code is interleaved between `test_that()` calls*: Objects or functions defined there will have a **partial file scope**.
+
+## With code at top-level {-}
+
+```r
+dat <- data.frame(x = c("a", "b", "c"), y = c(1, 2, 3))
+
+skip_if(today_is_a_monday())
+
+test_that("foofy() does this", {
+  expect_equal(foofy(dat), ...)
+})
+
+dat2 <- data.frame(x = c("x", "y", "z"), y = c(4, 5, 6))
+
+skip_on_os("windows")
+
+test_that("foofy2() does that", {
+  expect_snapshot(foofy2(dat, dat2))
+})
+```
+
+
+## Without code at top-level {-}
+
+To solve this problem you need to **relax some of your DRY** ("don't repeat yourself") tendencies, as **good test code is obvious**.
+
+```r
+test_that("foofy() does this", {
+  skip_if(today_is_a_monday())
+  
+  dat <- data.frame(x = c("a", "b", "c"), y = c(1, 2, 3))
+  
+  expect_equal(foofy(dat), ...)
+})
+
+test_that("foofy() does that", {
+  skip_if(today_is_a_monday())
+  skip_on_os("windows")
+  
+  dat <- data.frame(x = c("a", "b", "c"), y = c(1, 2, 3))
+  dat2 <- data.frame(x = c("x", "y", "z"), y = c(4, 5, 6))
+  
+  expect_snapshot(foofy(dat, dat2))
+})
+```
+
+> This also makes the test **easier to understand**.
+
+## Self-contained tests {-}
+
+Each `test_that()` test has its own execution environment:
+
+- An R object you create inside a test does not exist after the test exits.
+
+```r
+exists("thingy")
+#> [1] FALSE
+
+test_that("thingy exists", {
+  thingy <- "thingy"
+  expect_true(exists(thingy))
+})
+#> Test passed
+
+exists("thingy")
+#> [1] FALSE
+```
+
+## `testthat` Limitations {-}
+
+testthat doesn't know how to cleanup:
+
+- The filesystem: creating and deleting files, changing the working directory, etc.
+-The search path: `library()`, `attach()`.
+- Global options, like `options()` and `par()`, and `Sys.setenv()`.
+
+```r
+grep("jsonlite", search(), value = TRUE)
+#> character(0)
+getOption("opt_whatever")
+#> NULL
+Sys.getenv("envvar_whatever")
+#> [1] ""
+
+test_that("landscape changes leak outside the test", {
+  library(jsonlite)
+  options(opt_whatever = "whatever")
+  Sys.setenv(envvar_whatever = "whatever")
+  
+  expect_match(search(), "jsonlite", all = FALSE)
+  expect_equal(getOption("opt_whatever"), "whatever")
+  expect_equal(Sys.getenv("envvar_whatever"), "whatever")
+})
+#> Test passed
+
+grep("jsonlite", search(), value = TRUE)
+#> [1] "package:jsonlite"
+getOption("opt_whatever")
+#> [1] "whatever"
+Sys.getenv("envvar_whatever")
+#> [1] "whatever"
+```
+
+## Use `withr` {-}
+
+It has **not dependencies** and can be added to the DESCRIPTION files with `usethis::use_package("withr", type = "Suggests")`.
+
+```r
+grep("jsonlite", search(), value = TRUE)
+#> character(0)
+getOption("opt_whatever")
+#> NULL
+Sys.getenv("envvar_whatever")
+#> [1] ""
+
+test_that("withr makes landscape changes local to a test", {
+  withr::local_package("jsonlite")
+  withr::local_options(opt_whatever = "whatever")
+  withr::local_envvar(envvar_whatever = "whatever")
+  
+  expect_match(search(), "jsonlite", all = FALSE)
+  expect_equal(getOption("opt_whatever"), "whatever")
+  expect_equal(Sys.getenv("envvar_whatever"), "whatever")
+})
+#> Test passed
+
+grep("jsonlite", search(), value = TRUE)
+#> character(0)
+getOption("opt_whatever")
+#> NULL
+Sys.getenv("envvar_whatever")
+#> [1] ""
+```
+
+## `test_that` options and environment variables {-}
+
+If you checking your code interactively, you might need to call `local_reproducible_output()` before running your test.
+
+```r
+test_that("something specific happens", {
+  local_reproducible_output() # <-- this happens implicitly
+  
+  # your test code, which might be sensitive to ambient conditions, such as
+  # display width or the number of supported colors
+})
+```
+
+## Plan for test failure {-}
+
+If you are testing correctly you should be able to:
+
+1. Start from a new R session.
+2. Call `devtools::load_all()` which loads all defined below `R/`.
+3. Run an individual test or walk through it line-by-line
+
+```r
+# dozens or hundreds of lines of self-sufficient, self-contained tests,
+# all of which you can safely ignore!
+
+test_that("f() works", {
+  useful_thing <- ...
+  x <- somePkg::someFunction(useful_thing)
+  expect_equal(f(x), 2.5)
+})
+```
+
+## Create internal functions for testing {-}
+
+As `devtools::load_all()` loads all defined below `R/`, you can create internal functions to run your tests.
+
+```
+.                              
+├── ...
+└── R
+    ├── ...
+    ├── test-helpers.R
+    ├── test-utils.R
+    ├── testthat.R
+    ├── utils-testing.R
+    └── ...
+```
+
+##  Testthat helper files {-}
+
+`load_all()` always executes any file below `tests/testthat/` that **begins with helper**.
+
+```
+.                              
+├── ...
+└── tests
+    ├── testthat
+    │   ├── helper.R
+    │   ├── helper-blah.R
+    │   ├── helper-foo.R    
+    │   ├── test-foofy.R
+    │   └── (more test files)
+    └── testthat.R
+```
+
+
+## Testthat setup files {-}
+
+Setup files are good for **global test setup** that is tailored for test execution in **non-interactive** or remote environments, like turning off messaging and writing to the clipboard.
+
+- Setup files are not executed by devtools::load_all().
+- Setup files often contain the corresponding teardown code.
+
+```
+.                              
+├── ...
+└── tests
+    ├── testthat
+    │   ├── helper.R
+    │   ├── setup.R
+    │   ├── test-foofy.R
+    │   └── (more test files)
+    └── testthat.R
+```
+
+```r
+op <- options(reprex.clipboard = FALSE, reprex.html_preview = FALSE)
+
+withr::defer(options(op), teardown_env())
+```
+
+## Storing test data {-}
+
+The best location is somewhere below `tests/testthat/`.
+
+```
+.
+├── ...
+└── tests
+    ├── testthat
+    │   ├── fixtures
+    │   │   ├── make-useful-things.R
+    │   │   ├── useful_thing1.rds
+    │   │   └── useful_thing2.rds
+    │   ├── helper.R
+    │   ├── setup.R
+    │   └── (all the test files)
+    └── testthat.R
+```
+
+> To find the correct path in interactive and automated testing use `testthat::test_path()`.
+
+## Where to write files during testing {-}
+
+You should only write files inside the session **temp directory**.
+
+- `withr::local_tempfile()`: Creates a file within the session temp directory whose lifetime is tied to the "local" environment – in this case, the execution environment of an individual test. 
+
+- `withr::local_tempdir()`: Create a self-deleting temporary directory and write intentionally-named files inside this directory.
 
 ## Meeting Videos
 
