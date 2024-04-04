@@ -130,8 +130,8 @@ If you get accepted:
 00:48:13	Brendan Lam:	I don't know what CRAN reviews, but ROpenSci is pretty transparent about how they do software review: https://devguide.ropensci.org/
 01:00:06	Arun Chavan:	omg
 01:03:13	Brendan Lam:	Thanks Collin! You've done an exceptionally good job leading this cohort.
-01:05:48	Arun Chavan:	https://rfordatascience.slack.com/archives/C0183F9UC2V/p1659977487900379
-01:06:22	collinberke:	https://rfordatascience.slack.com/archives/C0183F9UC2V/p1659977487900379
+01:05:48	Arun Chavan:	https://dslcio.slack.com/archives/C0183F9UC2V/p1659977487900379
+01:06:22	collinberke:	https://dslcio.slack.com/archives/C0183F9UC2V/p1659977487900379
 01:08:19	collinberke:	https://avehtari.github.io/ROS-Examples/
 01:11:12	Brendan Lam:	Same
 ```

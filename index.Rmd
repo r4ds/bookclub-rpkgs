@@ -1,6 +1,6 @@
 --- 
 title: "R Packages Book Club"
-author: "The R4DS Online Learning Community"
+author: "The Data Science Learning Community"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 documentclass: book
@@ -8,7 +8,7 @@ bibliography: book.bib
 biblio-style: apalike
 link-citations: yes
 github-repo: r4ds/bookclub-rpkgs
-description: "This is the product of the R4DS Online Learning Community's R Packages Book Club."
+description: "This is the product of the Data Science Learning Community's R Packages Book Club."
 ---
 
 # Welcome {-}
@@ -16,10 +16,10 @@ description: "This is the product of the R4DS Online Learning Community's R Pack
 This is a companion for the book [_R Packages_](https://r-pkgs.org/) by Hadley Wickham and Jenny Bryan (2nd edition, copyright 2023).
 
 -  These are **shared slides!**
-   -  Developed by the [R4DS Online Learning Community](https://rfordatasci.com).
-   -  [Join the community](https://r4ds.io/join) to participate.
-   -  Available at [r4ds.io/rpkgs](https://r4ds.io/rpkgs).
--  We follow the [R4DS Online Learning Community Code of Conduct](https://r4ds.io/conduct).
+   -  Developed by the [Data Science Learning Community](https://dslc.io).
+   -  [Join the community](https://dslc.io/join) to participate.
+   -  Available at [dslc.io/rpkgs](https://dslc.io/rpkgs).
+-  We follow the [Data Science Learning Community Code of Conduct](https://dslc.io/conduct).
 
 ## Book club meetings {-}
 
@@ -30,7 +30,7 @@ This is a companion for the book [_R Packages_](https://r-pkgs.org/) by Hadley W
    -  Questions you have
    -  Maybe live demo
 -  More info about editing: [this github repo](https://github.com/r4ds/bookclub-rpkgs).
--  Recorded, available on the [R4DS Online Learning Community YouTube Channel](https://r4ds.io/youtube).
+-  Recorded, available on the [Data Science Learning Community YouTube Channel](https://dslc.io/youtube).
 -  **Camera** is **optional,** but **encouraged.**
 
 ## Pace {-}
@@ -51,7 +51,7 @@ If you feel comfortable sharing, unmute or raise your hand!
 
 -  **Who** are you?
 -  **Where** are you joining from?
--  **Previous clubs?** (R4DS or other)
+-  **Previous clubs?** (DSLC or other)
 -  **How long** have you been using R?
 -  **What** are you most looking forward to learning?
 

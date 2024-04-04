@@ -101,7 +101,7 @@
 
 ## Code from websites {-}
 
--   R4DS Slack uses `CC0` (doesn't impact your license): ![](images/12-licensing/r4ds-cc0-license.png)
+-   DSLC Slack uses `CC0` (doesn't impact your license): ![](images/12-licensing/r4ds-cc0-license.png)
 -   StackOverflow uses `CC BY-SA` (requires `GPL`)
 -   Check!
 

@@ -1,14 +1,14 @@
-# R4DS R Packages Book Club
+# DSLC R Packages Book Club
 
-Welcome to the R4DS R Packages Book Club!
+Welcome to the DSLC R Packages Book Club!
 
 We are working together to read [_R Packages_](https://r-pkgs.org/) by Hadley Wickham and Jenny Bryan (work-in-progress 2nd edition, copyright 2022).
-Join the [#book_club-rpkgs](https://rfordatascience.slack.com/archives/C014C9F4DRS) channel on the [R4DS Slack](https://r4ds.io/join) to participate.
-As we read, we are producing [notes about the book](https://r4ds.io/rpkgs).
+Join the [#book_club-rpkgs](https://dslcio.slack.com/archives/C014C9F4DRS) channel on the [DSLC Slack](https://dslc.io/join) to participate.
+As we read, we are producing [notes about the book](https://dslc.io/rpkgs).
 
 ## Meeting Schedule
 
-If you would like to present, please see the sign-up sheet for your cohort (linked below, and pinned in the [#book_club-rpkgs](https://rfordatascience.slack.com/archives/C014C9F4DRS) channel on Slack)!
+If you would like to present, please see the sign-up sheet for your cohort (linked below, and pinned in the [#book_club-rpkgs](https://dslcio.slack.com/archives/C014C9F4DRS) channel on Slack)!
 
 - Cohort 1 (started 2020-09-29, ended 2020-12-15): [meeting videos](https://youtube.com/playlist?list=PL3x6DOfs2NGiXMln8bxY7e0XgA5z1cp-8)
 - Cohort 2 (started 2021-03-13, ended 2021-06-05): [meeting videos](https://youtube.com/playlist?list=PL3x6DOfs2NGhRtG2Oj1aI9mWTGY6KKUJB)
@@ -44,7 +44,7 @@ Do these steps each time you present another chapter:
 10. When your PR has been accepted ("merged"), `usethis::pr_finish()` to close out your branch and prepare your local repository for future work.
 11. Now that your local copy is up-to-date with the main repo, you need to update your remote fork. Run `gert::git_push("origin")` or click the `Push` button on the `Git` tab of Rstudio.
 
-When your PR is checked into the main branch, the bookdown site will rebuild, adding your slides to [this site](https://r4ds.io/rpkgs).
+When your PR is checked into the main branch, the bookdown site will rebuild, adding your slides to [this site](https://dslc.io/rpkgs).
 
 ## Images
 
