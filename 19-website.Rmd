@@ -23,22 +23,22 @@ We already have:
 -   Vignettes/articles
 -   `README` and `NEWS`
 
-{pkgdown} wraps all of that into a website
+[{pkgdown}](https://pkgdown.r-lib.org/index.html) wraps all of that into a website
 
 ## It's so easy! {-}
 
--   `usethis::use_pkgdown()`:
-    -   Creates `_pkgdown.yml` ({pkgdown} config)
-    -   Adds {pkgdown} things to `.Rbuildignore`
+-   [`usethis::use_pkgdown()`](https://usethis.r-lib.org/reference/use_pkgdown.html):
+    -   Creates `_pkgdown.yml` ([{pkgdown}](https://pkgdown.r-lib.org/index.html) config)
+    -   Adds [{pkgdown}](https://pkgdown.r-lib.org/index.html) things to `.Rbuildignore`
     -   Adds `docs/` (local render) to `.gitignore`
         -   We'll use GitHub Actions to build the real site
--   `pkgdown::build_site()`: render locally & open in browser
+-   [`pkgdown::build_site()`](https://pkgdown.r-lib.org/reference/build_site.html): render locally & open in browser
 
 ## It's even easier! {-}
 
-`usethis::use_pkgdown_github_pages()`:
+[`usethis::use_pkgdown_github_pages()`](https://usethis.r-lib.org/reference/use_pkgdown.html):
 
--   (runs `usethis::use_pkgdown()`)
+-   (runs [`usethis::use_pkgdown()`](https://usethis.r-lib.org/reference/use_pkgdown.html))
 -   Initializes `gh-pages` in pkg GitHub
 -   Turns on GitHub Pages & points to `gh-pages` branch
     -   Free for public repos!
@@ -50,19 +50,19 @@ We already have:
 
 -   You can be done if you want!
 -   Lots more customization options!
--   `vignette("pkgdown", package = "pkgdown")` = good place to start
+-   [`vignette("pkgdown", package = "pkgdown")`](https://pkgdown.r-lib.org/articles/pkgdown.html) = good place to start
 
 ## Hex logos {-}
 
 -   #RStats 💗 hexagons!
 -   Design specs and sticker printing businesses @ [hexb.in/sticker.html](http://hexb.in/sticker.html)
 -   [{hexSticker}](https://github.com/GuangchuangYu/hexSticker) 📦 for that
--   `usethis::use_logo()` to scale & add logo to site
+-   [`usethis::use_logo()`](https://usethis.r-lib.org/reference/use_logo.html) to scale & add logo to site
 
 ## Functions reference {-}
 
 -   `reference/` = list of all function help pages
--   {pkgdown} automatically lists all exported docs
+-   [{pkgdown}](https://pkgdown.r-lib.org/index.html) automatically lists all exported docs
 -   `[function()]` and `[pkg::function()]` auto-link
     -   Be sure to use steps above to set up properly
 
@@ -80,25 +80,25 @@ We already have:
   - title: Data Frame Verbs
 
   - subtitle: Rows
-  desc: >
-    Verbs that principally operate on rows.
-  contents:
-  - arrange
-  - distinct
+    desc: >
+      Verbs that principally operate on rows.
+    contents:
+    - arrange
+    - distinct
   ...
 
   - subtitle: Columns
-  desc: >
-    Verbs that principally operate on columns.
-  contents:
-  - glimpse
-  - mutate
+    desc: >
+      Verbs that principally operate on columns.
+    contents:
+    - glimpse
+    - mutate
   ...
 ```
 
 ## Vignettes & articles {-}
 
--   `Vignettes in *Articles* drop-down
+-   Vignettes in *Articles* drop-down
 -   Link between vignettes with `vignette("some-topic")` or `vignette("some-topic", package = "somepackage")`
     -   Reference functions with backticks and ()
 
@@ -109,13 +109,13 @@ We already have:
 ## Vignettes & articles organisation {-}
 
 -   *Articles* alphabetical by default
--   `?pkgdown::build_articles` to customize
+-   [`?pkgdown::build_articles`](https://pkgdown.r-lib.org/reference/build_articles.html) to customize
 
 ## Non-vignette articles {-}
 
 -   Articles = vignette-like things but not shipped with 📦
 -   Allow you to avoid executing gnarly code
-    -   Code requiring authentication (e.g. {googledrive})
+    -   Code requiring authentication (e.g. [{googledrive}](https://googledrive.tidyverse.org/articles/index.html))
     -   Use 📦 but don't want to formally depend on it
     -   Lots of figures/videos > CRAN's size constraints
 
