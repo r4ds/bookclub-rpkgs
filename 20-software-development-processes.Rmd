@@ -5,21 +5,21 @@
 
 - More productive  
 - Raise quality of work  
-- (more reproducibility?)
+- More reproducibility
 
 ## Recommendations 
 
-- An IDE with support for R package development  
+- An IDE with support for R package development  (Usually RStudio)
 
 - Version control (Git) + Hosted version control (GitHub)
 
-- Continuous Integration / continuous deployment: Mostly automatic `R CMD check`
+- Continuous Integration / Continuous Deployment: Mostly automatic `R CMD check`
 
 Pros: 
 
 - Do the right thing: **experiment, document, test, check, collaborate**
 
-- Use the same tools/workflows than experts
+- Use the same tools/workflows as experts
 
 ## Git and Github
 
@@ -27,19 +27,19 @@ Git manages the evolution of a set of files (repository).
 
 - 94 % of VC is Git
 
-- GitHub is dominant followed by GitLab and bitbucket
+- GitHub is dominant, followed by GitLab and Bitbucket
 
-- Lot of resources: [Happy git and Github for the useR])(https://cran.r-project.org/web/packages/validate/vignettes/cookbook.html)
+- Lot of resources: [Happy git and Github for the useR](https://cran.r-project.org/web/packages/validate/vignettes/cookbook.html)
 
 It allows: 
 
 - Communications with users (Issues)
 
-- Collaboration (PR, ask features)
+- Collaboration (PR, feature requests)
 
 - Distribution (`devtools::install_github`) or now with `pak` install specific SHA
 
-(SHA-1 is sude by Git instead of adding numbers, Secure Hash Algorithms)
+(SHA-1 is used by Git instead of adding numbers, Secure Hash Algorithms)
 
 - Website: see `pkgdown`  
 
@@ -49,19 +49,20 @@ For a package:
 
 1. Source package in GH  
     * Multiple developers have permissions to push   
-    * External can push via PR
+    * External developers can push via PR
     
-2. Main idea: development tasks can be executed automatically when certain events happens
+2. Main idea: development tasks can be executed automatically when certain events happen
 
-Example: Automate R `CMD check`
+Example: Automate R `CMD check` (runs checks remotely, on various OS's)
 
-### More!!! GitHub Action (GHA)
 
-`usethis` have function that copy some GHA workflow into a specific folder `.github`.
+## More GitHub Actions (GHA)
+
+`usethis` has functions that copy GHA workflows into a specific folder `.github`.
 
 You have a curated already made workflow here : https://github.com/r-lib/actions/#readme
 
-When using `usethi::use_github_action_check_standard`
+When using `usethis::use_github_action_check_standard()`
 
 ```
 #> ✔ Creating '.github/'
@@ -71,7 +72,6 @@ When using `usethi::use_github_action_check_standard`
 #> • Learn more at <https://github.com/r-lib/actions/blob/v2/examples/README.md>.
 #> ✔ Adding R-CMD-check badge to 'README.md'```
 ```
-
 
 * Create `.github/workflow/`
 
@@ -85,6 +85,12 @@ It has plenty of other uses!
 
 - `usethis::use_github_action("test_covergae")`
 
+## More info and examples
+
+[Rendering and re-publishing the R Packages book!](https://github.com/hadley/r-pkgs/blob/main/.github/workflows/render.yaml)
+[Quarto-specific workflows](https://github.com/quarto-dev/quarto-actions?tab=readme-ov-file)
+[A reminder of all the checks contained in R CMD check](https://r-pkgs.org/R-CMD-check.html#:~:text=R%20CMD%20check%20runs%20R,debug%20any%20problems%20before%20continuing.)
+[Workflow YAML syntax](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions)
 
 ## Meeting Videos
 
