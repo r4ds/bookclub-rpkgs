@@ -1,125 +1,110 @@
 # Releasing to CRAN
 
-How to prepare and release a package to CRAN
+**Learning objectives:**
+
+-   Prepare a new package for release to CRAN.
+-   Prepare to update a package on CRAN.
+-   Release a new package to CRAN.
+-   Update a package on CRAN.
+-   Deal with CRAN failures.
+-   Wrap up a CRAN release.
+
+## Preparing for 1st submission {-}
+
+1.  `usethis::use_release_issue()` (adds checklist issue to GH)
+2.  Polish `NEWS.md`
+3.  `usethis::use_cran_comments()`
+4.  Update installation instructions in README
+5.  Proofread DESCRIPTION
+6.  `@return` & `@examples` for all `@export`
+7.  `cph` in `Authors@R`
+8.  Check licensing
+9.  Review [extrachecks](https://github.com/DavisVaughan/extrachecks)
+
+## Preparing for update {-}
+
+1.  `usethis::use_release_issue()` (adds checklist issue to GH)
+2.  Check current CRAN check results
+3.  Advance deprecation
+4.  Polish `NEWS.md`
+5.  `urlchecker::url_check()`
+6.  `devtools::build_readme()`
+7.  `revdepcheck::revdep_check(num_workers = 4)` (`usethis::use_revdep()`)
+8.  Update `cran-comments.md`
+
+## Test environments {-}
+
+-   CRAN checks on Win, MacOS, Linux, Solaris, various versions
+-   This is now different from book!
+-   [R-hub v2 is faster & better](https://blog.r-hub.io/2024/04/11/rhub2/)
+-   Need to merge into main (or tell it which branch)
+-   rhub = more complete/CRAN-like checks than usual GHA
+-   `rhub::rhub_setup()`
+-   `rhub::rhub_check()`
+
+## Check results {-}
+
+-   No `ERROR`s or `WARNING`s
+-   Avoid `NOTE`s where possible
+    -   Describe in `cran-comments.md`
+    -   1 `NOTE` on 1st submission (in `cran-comments.md` by default)
 
 
-## preparing for submission 
+## CRAN policies {-}
 
-To get your package ready to release, follow these steps:
+-   Stable email address
+-   Copyright in `DESCRIPTION` file
+-   Reasonable efforts for all platforms
+-   Explicit user permission:
+    -   Global environment
+    -   File system
+    -   Package installation
+    -   Sending info over internet
+    -   Opening other programs
+-   Submissions ~1/month or 1/(2 monts)
 
-1. Pick a version number. (advanced from the existing development version with `.9000` suffix)
-2. Run and document `R CMD check`.
-3. Check that you’re aligned with CRAN policies.
-4. Update `README.md` and `NEWS.md`.
-5. Submit the package to CRAN.
-6. Prepare for the next version by updating version numbers.
-7. Publicise the new version.
+## Release {-}
 
+-   `usethis::use_version("minor")` (or maybe we did this before rhub now?)
+-   `devtools::release()` = does checks we already did
+-   `devtools::submit_cran()`
+-   Click link in confirmation email
 
-## submission process & test environments
+## Failure {-}
 
-- Don't do it manually - just use `devtools::release()`
-- Include a `cran-comments.md` file (`usethis::use_cran_comments()`) to describe the results from an R CMD CHECK and the systems that it was run on (those on your system, rhub or GitHub actions)
+-   Take a deep breath
+-   Fix problems
+-   `usethis::use_version("patch")` (can't resubmit same version)
+-   `## Resubmission` section at top of `cran-comments.md`
+    -   List changes since previous submission
+-   `devtools::submit_cran()`
 
-
-CRAN runs on Windows, Mac OS X, Linux and Solaris. You don't need to test on all but you need to test on some and mention in the comments which you used. 
-
-devtools::release() suggests that you test using rhub - I'm not sure what the difference is between this and the checks done by GitHub actions (if there is any)
-
-If you have an OS-specific problem:
-
-(1) use a virtualisation tool so that you can debug locally 
-
-    \>
-
-(2) send repeatedly to GitHub with actions to test on problematic system 
-
-    \>
-
-(3) send to CRAN and hope for the best
-
-
-## check results
-
-- No `ERROR`s or `WARNING`s
-- avoid as many `NOTE`s as possible - if they can't be avoided, be open about it in the `cran-comments.md`
-- There will always be a `NOTE` for the first release of a package to CRAN, so it's worth mentioning this in the `cran-comments.md` if you're releasing your package for the first time as well.
-
-
-## reverse dependencies
-
-- it's your responsibility to ensure that downstream packages are not broken by your update
-- use `{revdepcheck}` rather than the superseded `devtools::revdep_check()`
-
-    - `usethis::use_revdep()` calls revdepcheck functions and sets things up nicely to incorporate github actions and an email notification - not sure what the current state is though since revdepcheck isn't on CRAN
-
-- if you do cause breaking changes, then mention in the `cran-comments.md` that you have notified downstream package maintainers about the upcoming changes.
-
-
-## CRAN policies
-
-- stable email address
-- copyright in `DESCRIPTION` file
-- make all reasonable efforts to get package working across platforms
-- do not make external changes without explicit user permission:
+Only reply to email if there is nothing to fix.
     
-    - global environment
-    - writing to file system
-    - installing packages
-    - quiting R
-    - sending info over internet
-    - opening other programs
 
-- don't submit updates too frequently: every 1-2 months at most
+## Success! {-}
 
-
-## other pre-submission checks
-
-```r
-goodpractice::gp()
-```
-
-## release using `devtools::release()`
-
-- builds package and runs R CMD CHECK one last time
-- prompts the user to do final checks including spelling, checking on rhub, committing all changes etc
-- uploads the package bundle to CRAN and includes `cran-comments.md`
-
-Afterwards, you'll get a confirmation email from CRAN (to the maintainers email). Once approved, the CRAN maintainer will run the checks and get back to you.
+-   `git push`
+-   `usethis::use_github_release()`
+-   `usethis::use_dev_version()`
+-   `git push`
+-   Finish blog post, share on social media, etc. (`#RStats`)
+-   Add link to blog post in pkgdown news menu
 
 
-## post-release
+## Meeting Videos {-}
 
-If you get rejected:
-
-- no need to respond to the email
-- fix problems identified and include a `## Resubmission` section at the top of `cran-comments.md` showing that it is a resubmission and listing the changes that you made since the previous, rejected submission.
-
-If you get accepted:
-
-- success!
-- when you did the submission, a `CRAN-SUBMISSION` or `CRAN-RELEASE` file was created. You don't need to commit this to GitHub. I usually just wait until it's accepted (hopefully) and when it is, run: `usethis::use_github_release()`. This creates a draft release on GitHub which you can then submit online.
-- add the `.9000` suffix to the version on GitHub to indicate that it's the development version
-
-## publicising it
-
-- tweet about it with #rstats
-- post about it on a blog
-- send it to the [r-packages mailing list](https://stat.ethz.ch/mailman/listinfo/r-packages)
-
-## Meeting Videos
-
-### Cohort 1
+### Cohort 1 {-}
 
 `r knitr::include_url("https://www.youtube.com/embed/isKbovi62k4")`
 
 
-### Cohort 2
+### Cohort 2 {-}
 
 `r knitr::include_url("https://www.youtube.com/embed/5VAvPvL18I0")`
 
 
-### Cohort 3
+### Cohort 3 {-}
 
 `r knitr::include_url("https://www.youtube.com/embed/QOKMXNn1X5o")`
 
@@ -138,7 +123,7 @@ If you get accepted:
 </details>
 
 
-### Cohort 4
+### Cohort 4 {-}
 
 `r knitr::include_url("https://www.youtube.com/embed/eK1YB8Lmgws")`
 
